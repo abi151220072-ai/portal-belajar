@@ -1,0 +1,849 @@
+<html lang="id"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal Belajar</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&amp;family=DM+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d0f14;--su:#151821;--su2:#1c2030;--bo:#252a3a;--ac:#4f8ef7;--ac2:#a78bfa;--ac3:#34d399;--tx:#e8eaf2;--mu:#7b82a0;--da:#f87171;--wa:#fbbf24}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+
+/* SETUP */
+#setupOverlay{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
+.sc{background:var(--su);border:1px solid var(--bo);border-radius:20px;width:100%;max-width:540px}
+.sh{background:linear-gradient(135deg,rgba(79,142,247,.15),rgba(167,139,250,.08));padding:24px;border-bottom:1px solid var(--bo);text-align:center;border-radius:20px 20px 0 0}
+.sh .logo{font-size:44px;margin-bottom:8px}
+.sh h1{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px}
+.sh p{font-size:12.5px;color:var(--mu)}
+.sb{padding:22px}
+.ss{display:none}.ss.active{display:block}
+.sdots{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.sdot{width:8px;height:8px;border-radius:50%;background:var(--bo);transition:.3s}
+.sdot.active{background:var(--ac);width:24px;border-radius:4px}
+.sdot.done{background:var(--ac3)}
+.stitle{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:5px}
+.sdesc{font-size:13px;color:var(--mu);line-height:1.6;margin-bottom:14px}
+.slist{background:var(--su2);border:1px solid var(--bo);border-radius:12px;padding:12px 14px;margin-bottom:14px;list-style:none}
+.slist li{font-size:12.5px;color:var(--mu);padding:6px 0;border-bottom:1px solid var(--bo);display:flex;gap:9px;align-items:flex-start;line-height:1.5}
+.slist li:last-child{border-bottom:none}
+.slist .n{width:19px;height:19px;border-radius:50%;background:var(--ac);display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg label{font-size:11.5px;color:var(--mu);font-weight:500}
+.fg input,.fg textarea{background:var(--su2);border:1px solid var(--bo);border-radius:9px;padding:9px 12px;color:var(--tx);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;width:100%}
+.fg input:focus,.fg textarea:focus{border-color:var(--ac)}
+.fg textarea{min-height:95px;resize:vertical;font-size:12px;line-height:1.5}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--mu)}
+.serr{background:rgba(248,113,113,.1);border:1px solid rgba(248,113,113,.3);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--da);margin-bottom:10px;display:none}
+.serr.show{display:block}
+.ssucc{background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.25);border-radius:8px;padding:9px 12px;font-size:12px;color:var(--ac3);margin-bottom:10px;display:none}
+.ssucc.show{display:block}
+.br{display:flex;gap:8px}
+.br .btn{flex:1}
+.btn{background:var(--ac);color:#fff;border:none;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;display:block;text-align:center;text-decoration:none}
+.btn:hover{opacity:.87}.btn:active{transform:scale(.97)}
+.btn.sec{background:var(--su2);color:var(--tx);border:1px solid var(--bo)}
+.btn.ghost{background:transparent;color:var(--mu);border:1px solid var(--bo)}
+.btn.big{padding:13px;font-size:14px;border-radius:11px}
+code{background:var(--su2);border:1px solid var(--bo);border-radius:5px;padding:1px 6px;font-size:11px;color:var(--ac);font-family:monospace}
+.lnk{color:var(--ac);text-decoration:none}.lnk:hover{text-decoration:underline}
+
+/* LOADING */
+#loadingScreen{position:fixed;inset:0;z-index:900;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.spin{width:36px;height:36px;border:3px solid var(--bo);border-top-color:var(--ac);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* LOGIN MODAL */
+#loginModal{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+#loginModal.open{display:flex}
+.mc{background:var(--su);border:1px solid var(--bo);border-radius:16px;width:100%;max-width:340px;overflow:hidden}
+.mh{padding:16px 18px 12px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between}
+.mh h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700}
+.xbtn{background:none;border:none;color:var(--mu);cursor:pointer;font-size:20px;line-height:1}
+.xbtn:hover{color:var(--tx)}
+.mb{padding:18px}
+.mf{padding:0 18px 18px}
+
+/* APP */
+#appRoot{display:none;height:100vh}
+#appRoot.visible{display:flex}
+.sidebar{width:262px;min-width:262px;background:var(--su);border-right:1px solid var(--bo);display:flex;flex-direction:column;overflow:hidden;transition:.3s}
+.sidebar.col{width:60px;min-width:60px}
+.sdh{padding:15px 12px;display:flex;align-items:center;gap:9px;border-bottom:1px solid var(--bo);flex-shrink:0}
+.lm{width:32px;height:32px;border-radius:10px;flex-shrink:0;background:linear-gradient(135deg,var(--ac),var(--ac2));display:grid;place-items:center;font-family:'Syne',sans-serif;font-weight:800;font-size:14px;color:#fff}
+.lt{font-family:'Syne',sans-serif;font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;transition:opacity .2s;flex:1}
+.sidebar.col .lt{opacity:0}
+.tb{background:none;border:none;cursor:pointer;color:var(--mu);padding:4px;border-radius:6px;flex-shrink:0;transition:.2s}
+.tb:hover{color:var(--tx);background:var(--su2)}
+.dbadge{margin:7px 9px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);border-radius:8px;padding:6px 9px;display:none;align-items:center;gap:7px;flex-shrink:0}
+.dbadge.show{display:flex}
+.ddot{width:6px;height:6px;border-radius:50%;background:var(--ac3);flex-shrink:0;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.dtx{font-size:11px;color:var(--ac3);font-weight:600;flex:1;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.dlo{background:none;border:none;color:rgba(52,211,153,.6);cursor:pointer;font-size:11px;padding:2px 5px;border-radius:5px;transition:.2s;flex-shrink:0}
+.dlo:hover{color:var(--ac3);background:rgba(52,211,153,.1)}
+.sidebar.col .dtx,.sidebar.col .dlo{opacity:0;pointer-events:none}
+.sw{padding:8px 8px 5px;flex-shrink:0}
+.sb2{display:flex;align-items:center;gap:7px;background:var(--su2);border:1px solid var(--bo);border-radius:10px;padding:7px 10px;transition:.2s}
+.sb2:focus-within{border-color:var(--ac)}
+.sb2 input{background:none;border:none;outline:none;color:var(--tx);font-size:13px;width:100%;font-family:'DM Sans',sans-serif}
+.sb2 input::placeholder{color:var(--mu)}
+.sidebar.col .sw{display:none}
+.nl{flex:1;overflow-y:auto;padding:5px;scrollbar-width:thin;scrollbar-color:var(--bo) transparent}
+.cl{font-size:10px;font-weight:600;letter-spacing:.1em;color:var(--mu);text-transform:uppercase;padding:9px 7px 3px;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.sidebar.col .cl{opacity:0}
+.ni{display:flex;align-items:center;gap:8px;padding:8px;border-radius:9px;cursor:pointer;transition:.15s;position:relative;white-space:nowrap}
+.ni:hover{background:var(--su2)}
+.ni.active{background:linear-gradient(90deg,rgba(79,142,247,.15),transparent);color:var(--ac)}
+.ni.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:0 3px 3px 0;background:var(--ac)}
+.nico{width:18px;text-align:center;flex-shrink:0;font-size:14px}
+.nlbl{font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;flex:1;transition:opacity .2s}
+.nbdg{background:var(--ac);color:#fff;font-size:9px;font-weight:700;border-radius:20px;padding:1px 5px;flex-shrink:0;transition:opacity .2s}
+.sidebar.col .nlbl,.sidebar.col .nbdg{opacity:0}
+.sft{padding:8px;border-top:1px solid var(--bo);flex-shrink:0}
+.albtn{display:flex;align-items:center;gap:7px;padding:7px 8px;border-radius:8px;cursor:pointer;color:var(--mu);font-size:12px;transition:.2s;background:none;border:none;width:100%;font-family:'DM Sans',sans-serif}
+.albtn:hover{background:var(--su2);color:var(--tx)}
+.albx{transition:opacity .2s;white-space:nowrap}
+.sidebar.col .albx{opacity:0}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:54px;flex-shrink:0;background:var(--su);border-bottom:1px solid var(--bo);display:flex;align-items:center;gap:10px;padding:0 16px}
+.ttl{font-family:'Syne',sans-serif;font-weight:700;font-size:14px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tact{display:flex;gap:5px;flex-shrink:0}
+.ib{background:var(--su2);border:1px solid var(--bo);color:var(--mu);cursor:pointer;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;transition:.2s}
+.ib:hover{color:var(--tx);border-color:var(--ac)}
+.ib.on{color:var(--ac2);border-color:var(--ac2);background:rgba(167,139,250,.1)}
+.sync{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--ac3);background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.18);border-radius:6px;padding:3px 8px;flex-shrink:0}
+.sdot2{width:6px;height:6px;border-radius:50%;background:var(--ac3);animation:pulse 2s infinite}
+.content{flex:1;overflow:hidden;display:flex;flex-direction:column}
+
+/* HOME */
+.hv{flex:1;overflow-y:auto;padding:20px;scrollbar-width:thin;scrollbar-color:var(--bo) transparent}
+.hv h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:3px}
+.hv .sub{color:var(--mu);font-size:13px;margin-bottom:18px}
+.srow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:20px}
+.scard{background:var(--su);border:1px solid var(--bo);border-radius:13px;padding:13px;position:relative;overflow:hidden}
+.scard::after{content:'';position:absolute;right:-10px;top:-10px;width:50px;height:50px;border-radius:50%;background:var(--sc,var(--ac));opacity:.1}
+.si{font-size:18px;margin-bottom:6px}.sv{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}.slb{font-size:11px;color:var(--mu);margin-top:2px}
+.sectit{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sectit::after{content:'';flex:1;height:1px;background:var(--bo)}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;margin-bottom:20px}
+.mcard{background:var(--su);border:1px solid var(--bo);border-radius:13px;padding:14px;cursor:pointer;transition:.2s}
+.mcard:hover{border-color:var(--ac);transform:translateY(-2px);box-shadow:0 8px 22px rgba(0,0,0,.3)}
+.mcard.inp{border-color:var(--ac2)}
+.mth{width:34px;height:34px;border-radius:9px;margin-bottom:8px;display:grid;place-items:center;font-size:16px}
+.mn{font-weight:600;font-size:13px;margin-bottom:2px}
+.md{font-size:11.5px;color:var(--mu);line-height:1.5;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.mft{margin-top:8px;display:flex;align-items:center;gap:5px}
+.pb{flex:1;height:3px;background:var(--su2);border-radius:3px;overflow:hidden}
+.pf{height:100%;border-radius:3px;background:var(--ac);transition:width .4s}
+.mp{font-size:10px;color:var(--mu);flex-shrink:0}
+
+/* IFRAME */
+.ifv{flex:1;display:none;flex-direction:column;overflow:hidden}
+.ifv.visible{display:flex}
+.iftb{height:40px;background:var(--su2);border-bottom:1px solid var(--bo);display:flex;align-items:center;gap:5px;padding:0 8px;flex-shrink:0}
+.urlb{flex:1;background:var(--su);border:1px solid var(--bo);border-radius:7px;padding:4px 9px;font-size:11px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rdb{display:flex;align-items:center;gap:3px;padding:0 5px;border-left:1px solid var(--bo);margin-left:2px}
+.zv{font-size:11px;font-weight:600;color:var(--tx);min-width:32px;text-align:center}
+.ifw{flex:1;overflow:hidden;position:relative}
+.ifw iframe{width:100%;height:100%;border:none;display:block;background:#fff}
+.ifph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mu);text-align:center;padding:22px}
+.ifph .bi{font-size:40px;opacity:.3}
+.app.max .sidebar,.app.max .topbar{display:none}
+.app.max .ifv{position:fixed;inset:0;z-index:500;background:var(--bg)}
+
+/* MANAGE */
+.mv{flex:1;overflow-y:auto;padding:20px;display:none;scrollbar-width:thin;scrollbar-color:var(--bo) transparent}
+.mv.visible{display:block}
+.aform{background:var(--su);border:1px solid var(--bo);border-radius:14px;padding:17px;margin-bottom:16px}
+.aform h3{font-family:'Syne',sans-serif;font-size:13.5px;font-weight:700;margin-bottom:12px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.fi{background:var(--su2);border:1px solid var(--bo);border-radius:8px;padding:8px 10px;color:var(--tx);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;width:100%}
+.fi:focus{border-color:var(--ac)}
+.flbl{font-size:11px;color:var(--mu);font-weight:500;margin-bottom:4px;display:block}
+.fita{resize:vertical;min-height:50px}
+.dz{border:2px dashed var(--bo);border-radius:11px;padding:20px;text-align:center;cursor:pointer;transition:.2s;margin-bottom:8px}
+.dz:hover,.dz.dgo{border-color:var(--ac);background:rgba(79,142,247,.04)}
+.dz .di{font-size:26px;margin-bottom:5px}
+.dz p{font-size:12px;color:var(--mu)}
+.upr{background:var(--su2);border:1px solid var(--bo);border-radius:8px;padding:9px 11px;margin-bottom:7px;display:none}
+.upr.show{display:block}
+.upr p{font-size:12px;color:var(--mu)}
+.upb{height:4px;background:var(--bo);border-radius:4px;margin-top:6px;overflow:hidden}
+.upf{height:100%;background:var(--ac);border-radius:4px;width:0;transition:width .3s}
+.tbl{background:var(--su);border:1px solid var(--bo);border-radius:13px;overflow:hidden}
+.tblh{display:grid;grid-template-columns:2fr 1.2fr .8fr 84px;padding:8px 12px;font-size:10px;color:var(--mu);font-weight:600;text-transform:uppercase;letter-spacing:.08em;border-bottom:1px solid var(--bo);background:var(--su2)}
+.tblr{display:grid;grid-template-columns:2fr 1.2fr .8fr 84px;padding:9px 12px;align-items:center;border-bottom:1px solid var(--bo);transition:.15s}
+.tblr:last-child{border-bottom:none}
+.tblr:hover{background:var(--su2)}
+.nc{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
+.tsm{width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:13px;flex-shrink:0}
+.tag{font-size:10px;padding:2px 7px;border-radius:20px;background:var(--su2);color:var(--mu);border:1px solid var(--bo);display:inline-block}
+.ra{display:flex;gap:3px}
+.mb2{background:var(--su2);border:1px solid var(--bo);color:var(--mu);border-radius:6px;width:26px;height:26px;display:grid;place-items:center;cursor:pointer;font-size:12px;transition:.2s}
+.mb2:hover{color:var(--tx);border-color:var(--ac)}
+.mb2.del:hover{color:var(--da);border-color:var(--da)}
+.mbtn{background:var(--ac);color:#fff;border:none;border-radius:8px;padding:8px 15px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.mbtn:hover{opacity:.87}.mbtn.sec{background:var(--su2);color:var(--tx);border:1px solid var(--bo)}
+
+/* TOAST & EMPTY */
+.toast{position:fixed;bottom:16px;right:16px;z-index:9999;background:var(--su);border:1px solid var(--bo);border-radius:11px;padding:10px 14px;display:flex;align-items:center;gap:8px;font-size:13px;box-shadow:0 8px 28px rgba(0,0,0,.4);transform:translateY(80px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1)}
+.toast.show{transform:translateY(0);opacity:1}
+.empty{text-align:center;padding:38px 16px;color:var(--mu)}
+.empty .ei{font-size:38px;opacity:.3;margin-bottom:8px}
+.empty p{font-size:13px;line-height:1.6}
+
+/* DOWNLOAD BANNER */
+.dl-banner{background:linear-gradient(135deg,rgba(52,211,153,.1),rgba(79,142,247,.08));border:1px solid rgba(52,211,153,.25);border-radius:14px;padding:18px;margin-bottom:16px;text-align:center}
+.dl-banner h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:6px;color:var(--ac3)}
+.dl-banner p{font-size:12.5px;color:var(--mu);margin-bottom:14px;line-height:1.6}
+
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:var(--bo);border-radius:4px}
+@media(max-width:580px){.sidebar{width:60px;min-width:60px}.sidebar .lt,.sidebar .nlbl,.sidebar .nbdg,.sidebar .cl,.sidebar .sw,.sidebar .albx,.sidebar .dtx,.sidebar .dlo{opacity:0;pointer-events:none}.frow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- SETUP (hanya untuk admin pertama kali) -->
+<div id="setupOverlay">
+<div class="sc">
+  <div class="sh">
+    <div class="logo">📚</div>
+    <h1>Portal Belajar — Setup Admin</h1>
+    <p>Halaman ini hanya muncul sekali untuk admin</p>
+  </div>
+  <div class="sb">
+    <div class="sdots">
+      <div class="sdot done" id="dot0"></div>
+      <div class="sdot done" id="dot1"></div>
+      <div class="sdot done" id="dot2"></div>
+      <div class="sdot active" id="dot3"></div>
+    </div>
+
+    <!-- Step 0 -->
+    <div class="ss" id="step0">
+      <div class="stitle">⚡ Persiapan Firebase</div>
+      <div class="sdesc">Buat proyek Firebase gratis. Hanya perlu <strong>Firestore</strong> saja.</div>
+      <ol class="slist">
+        <li><div class="n">1</div><div>Buka <a class="lnk" href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → klik <strong>Tambah Proyek</strong></div></li>
+        <li><div class="n">2</div><div>Setelah proyek jadi → klik ikon <strong>&lt;/&gt;</strong> (Web) → daftarkan app web</div></li>
+        <li><div class="n">3</div><div>Menu kiri → <strong>Build → Firestore Database</strong> → Create database → pilih <strong>Production mode</strong></div></li>
+        <li><div class="n">4</div><div>Di Firestore → tab <strong>Rules</strong> → ganti semua isinya dengan rules berikut lalu klik <strong>Publish</strong>:<br>
+          <code style="display:block;margin-top:6px;white-space:pre-wrap;font-size:10.5px;line-height:1.7">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{doc=**} {
+      allow read: if true;
+      allow write: if true;
+    }
+  }
+}</code></div></li>
+        <li><div class="n">5</div><div>Kembali ke <strong>Project Settings → Your apps</strong> → salin isi <code>firebaseConfig</code></div></li>
+      </ol>
+      <div class="br">
+        <a class="btn sec" href="https://console.firebase.google.com" target="_blank">Buka Firebase</a>
+        <button class="btn" onclick="goStep(1)">Lanjut →</button>
+      </div>
+    </div>
+
+    <!-- Step 1: Config -->
+    <div class="ss" id="step1">
+      <div class="stitle">🔧 Tempel Konfigurasi Firebase</div>
+      <div class="sdesc">Salin seluruh isi <code>{ ... }</code> dari bagian <strong>firebaseConfig</strong> di Firebase Console.</div>
+      <div class="serr" id="cfgErr">Config kosong.</div>
+      <div class="ssucc show" id="cfgOk">✅ Berhasil! Project: mari-jadi-pintar</div>
+      <div class="fg">
+        <label>Firebase Config</label>
+        <textarea id="cfgJson" placeholder="Tempel di sini, contoh:
+{
+  apiKey: &quot;AIzaSy...&quot;,
+  authDomain: &quot;nama.firebaseapp.com&quot;,
+  projectId: &quot;nama-proyek&quot;,
+  messagingSenderId: &quot;12345&quot;,
+  appId: &quot;1:12345:web:abc&quot;
+}"></textarea>
+      </div>
+      <div class="br">
+        <button class="btn ghost" onclick="goStep(0)">← Kembali</button>
+        <button class="btn" onclick="doVerifyConfig()" id="btnVerify">Verifikasi →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Password admin -->
+    <div class="ss" id="step2">
+      <div class="stitle">🔐 Buat Password Admin</div>
+      <div class="sdesc">Password ini <strong>hanya untuk kamu</strong> sebagai admin. Teman yang buka portal tidak akan diminta password apapun — mereka langsung lihat isi materi.</div>
+      <div class="serr" id="pwErr"></div>
+      <div class="ssucc show" id="pwOk">✅ Password tersimpan!</div>
+      <div class="fg">
+        <label>Password Admin (min 6 karakter)</label>
+        <input type="password" id="devPw" placeholder="Buat password yang kuat…">
+      </div>
+      <div class="fg" style="margin-bottom:14px">
+        <label>Konfirmasi Password</label>
+        <input type="password" id="devPw2" placeholder="Ulangi password…">
+      </div>
+      <div class="br">
+        <button class="btn ghost" onclick="goStep(1)">← Kembali</button>
+        <button class="btn" onclick="doSetPassword()" id="btnSetPw">Lanjut →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Download file -->
+    <div class="ss active" id="step3">
+      <div class="stitle">🎉 Setup Selesai!</div>
+      <div class="sdesc">Sekarang kamu perlu <strong>download file portal yang sudah dikonfigurasi</strong> untuk dibagikan ke teman-temanmu.</div>
+      <div class="dl-banner">
+        <h3>📥 Download File untuk Teman</h3>
+        <p>File ini sudah tertanam konfigurasi Firebase. Teman cukup buka file-nya — langsung lihat semua materi tanpa setup apapun.<br><br>Login admin tersembunyi di dalam file (klik ikon 🔑 di pojok bawah sidebar).</p>
+        <button class="btn big" onclick="downloadConfiguredFile()">📥 Download File Portal</button>
+      </div>
+      <button class="btn sec" style="width:100%;margin-top:8px" onclick="startApp(true)">Masuk ke Portal (tanpa download) →</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- LOADING -->
+<div id="loadingScreen">
+  <div class="spin"></div>
+  <p style="font-size:13px;color:var(--mu)">Menghubungkan ke Firebase…</p>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal">
+<div class="mc">
+  <div class="mh">
+    <h3>🔐 Login Admin</h3>
+    <button class="xbtn" onclick="closeLogin()">×</button>
+  </div>
+  <div class="mb">
+    <div class="serr" id="loginErr"></div>
+    <div class="fg" style="margin-bottom:0">
+      <label>Password Admin</label>
+      <input type="password" id="loginPw" placeholder="Masukkan password admin…" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+  </div>
+  <div class="mf">
+    <button class="btn" style="width:100%" onclick="doLogin()" id="loginBtn">Masuk sebagai Admin</button>
+  </div>
+</div>
+</div>
+
+<!-- APP -->
+<div id="appRoot">
+<div class="app" id="appInner">
+  <aside class="sidebar" id="sidebar">
+    <div class="sdh">
+      <div class="lm">P</div>
+      <div class="lt">Portal Belajar</div>
+      <button class="tb" onclick="toggleSidebar()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+    <div class="dbadge" id="devBadge">
+      <div class="ddot"></div>
+      <span class="dtx">Admin</span>
+      <button class="dlo" onclick="doLogout()">Keluar</button>
+    </div>
+    <div class="sw">
+      <div class="sb2">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()">
+      </div>
+    </div>
+    <nav class="nl">
+      <div class="ni active" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
+      <div class="ni" onclick="showManage()" id="navManage" style="display:none"><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
+      <div id="dynNav"></div>
+    </nav>
+    <div class="sft">
+      <button class="albtn" onclick="openLogin()" id="adminLoginBtn">
+        <span style="font-size:14px">🔑</span>
+        <span class="albx">Login Admin</span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div id="ttl" class="ttl">Dashboard</div>
+      <div class="tact">
+        <div class="sync" id="syncInd"><div class="sdot2"></div><span>Live</span></div>
+        <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+        </button>
+        <button class="ib" onclick="openExternal()" id="btnExt" style="display:none" title="Tab baru">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </button>
+        <button class="ib" onclick="toggleMax()" id="btnMax" style="display:none" title="Layar penuh (F11)">
+          <svg id="maxIco" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+        </button>
+      </div>
+    </div>
+    <div class="content">
+      <!-- HOME -->
+      <div class="hv" id="homeView">
+        <h2 id="greet">Selamat Datang! 👋</h2>
+        <p class="sub">Pilih modul dari sidebar atau kartu di bawah untuk mulai belajar.</p>
+        <div class="srow">
+          <div class="scard" style="--sc:var(--ac)"><div class="si">📚</div><div class="sv" id="stTotal">0</div><div class="slb">Total Modul</div></div>
+          <div class="scard" style="--sc:var(--ac2)"><div class="si">📂</div><div class="sv" id="stCat">0</div><div class="slb">Kategori</div></div>
+          <div class="scard" style="--sc:var(--ac3)"><div class="si">✅</div><div class="sv" id="stDone">0</div><div class="slb">Selesai</div></div>
+          <div class="scard" style="--sc:#fb923c"><div class="si">🕐</div><div class="sv" id="stProg">0</div><div class="slb">Sedang Belajar</div></div>
+        </div>
+        <div class="sectit">Semua Modul</div>
+        <div class="mg" id="modGrid"><div class="empty"><div class="ei">📂</div><p>Belum ada modul ditambahkan.</p></div></div>
+      </div>
+      <!-- IFRAME -->
+      <div class="ifv" id="iframeView">
+        <div class="iftb">
+          <button class="ib" onclick="goBack()" style="width:27px;height:27px">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="urlb" id="urlBar">—</div>
+          <div class="rdb">
+            <button class="ib" onclick="chZoom(-10)" style="width:25px;height:25px;font-size:15px;font-weight:700">−</button>
+            <span class="zv" id="zoomVal">100%</span>
+            <button class="ib" onclick="chZoom(10)" style="width:25px;height:25px;font-size:15px;font-weight:700">+</button>
+            <button class="ib" onclick="resetZoom()" style="width:25px;height:25px;font-size:10px;font-weight:700">1:1</button>
+          </div>
+          <button class="ib" id="btnMaxInner" onclick="toggleMax()" style="width:27px;height:27px;display:none">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+          </button>
+        </div>
+        <div class="ifw" id="iframeWrap"><div class="ifph"><div class="bi">🖥️</div><p>Pilih modul untuk mulai belajar.</p></div></div>
+      </div>
+      <!-- MANAGE -->
+      <div class="mv" id="manageView">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
+          <h2 style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800">⚙️ Kelola Modul</h2>
+          <span class="tag" style="color:var(--ac3);border-color:rgba(52,211,153,.3);background:rgba(52,211,153,.07)">Admin</span>
+        </div>
+        <!-- Download banner untuk admin -->
+        <div class="dl-banner" id="dlBanner">
+          <h3>📥 Bagikan ke Teman</h3>
+          <p>Download file portal yang sudah terkonfigurasi.<br>Teman cukup buka file-nya — langsung lihat materi tanpa setup.</p>
+          <button class="btn" onclick="downloadConfiguredFile()" style="max-width:280px;margin:0 auto">📥 Download File untuk Dibagikan</button>
+        </div>
+        <div class="aform">
+          <h3>📤 Upload File HTML</h3>
+          <div class="dz" id="dropZone" onclick="document.getElementById('fileInput').click()">
+            <div class="di">📁</div>
+            <p>Klik atau <strong>seret file HTML</strong> ke sini<br><span style="font-size:11px">Disimpan di Firestore (maks ±700KB/file)</span></p>
+          </div>
+          <input type="file" id="fileInput" accept=".html,.htm" multiple="" style="display:none" onchange="handleUpload(this.files)">
+          <div class="upr" id="uploadProg"><p id="upText">Menyimpan…</p><div class="upb"><div class="upf" id="upFill"></div></div></div>
+        </div>
+        <div class="aform">
+          <h3>✏️ Tambah via URL</h3>
+          <div class="frow">
+            <div><label class="flbl">Nama Modul *</label><input type="text" class="fi" id="inName" placeholder="Nama modul…"></div>
+            <div><label class="flbl">Kategori</label><input type="text" class="fi" id="inCat" placeholder="Kategori…" list="catList"><datalist id="catList"></datalist></div>
+          </div>
+          <div style="margin-bottom:8px"><label class="flbl">URL File HTML *</label><input type="text" class="fi" id="inUrl" placeholder="https://..."></div>
+          <div class="frow" style="margin-bottom:8px">
+            <div><label class="flbl">Ikon (emoji)</label><input type="text" class="fi" id="inIcon" placeholder="📄" maxlength="4"></div>
+            <div><label class="flbl">Warna</label><input type="color" class="fi" id="inColor" value="#4f8ef7" style="height:37px;padding:4px;cursor:pointer"></div>
+          </div>
+          <div style="margin-bottom:12px"><label class="flbl">Deskripsi</label><textarea class="fi fita" id="inDesc" placeholder="Opsional…"></textarea></div>
+          <div style="display:flex;gap:7px">
+            <button class="mbtn" onclick="addModule()">+ Tambah</button>
+            <button class="mbtn sec" onclick="clearForm()">Bersihkan</button>
+          </div>
+        </div>
+        <div class="sectit">Daftar Modul</div>
+        <div id="tblWrap"><div class="empty"><div class="ei">📂</div><p>Belum ada modul.</p></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"><span id="tIco">✅</span>&nbsp;<span id="tMsg"></span></div>
+
+<!-- Firebase SDK -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-firestore-compat.min.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// CONFIG — Jika FIREBASE_CONFIG diisi, skip setup wizard
+// ══════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  "apiKey": "AIzaSyAF7StvptG77QZCPobAJ7g-5geCZTeYx6w",
+  "authDomain": "mari-jadi-pintar.firebaseapp.com",
+  "databaseURL": "https://mari-jadi-pintar-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "projectId": "mari-jadi-pintar",
+  "storageBucket": "mari-jadi-pintar.firebasestorage.app",
+  "messagingSenderId": "416675371358",
+  "appId": "1:416675371358:web:8c3ca35d8d0b8b103ad7cf",
+  "measurementId": "G-FWTG0KSP8E"
+}; // <<< Diisi otomatis saat download
+
+// ══ STATE ══
+const CFG_KEY = 'pb_cfg';
+let db, unsub, modules = [], isDev = false, isMax = false, zoom = 100, curUrl = null, sCol = false, curStep = 0;
+let _tempCfg = null;
+
+// ══ CRYPTO ══
+async function hashPw(pw) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+
+// ══ CONFIG ══
+function loadCfg() { try { return FIREBASE_CONFIG || JSON.parse(localStorage.getItem(CFG_KEY)); } catch(e) { return null; } }
+function saveCfg(c) { localStorage.setItem(CFG_KEY, JSON.stringify(c)); }
+
+// ══ FIREBASE ══
+function initFB(cfg) {
+  try {
+    firebase.apps.forEach(a=>a.delete());
+    firebase.initializeApp(cfg);
+    db = firebase.firestore();
+    return true;
+  } catch(e) { console.error(e); return false; }
+}
+
+// ══ SETUP STEPS ══
+function goStep(n) {
+  document.getElementById('step'+curStep).classList.remove('active');
+  document.getElementById('dot'+curStep).classList.remove('active');
+  document.getElementById('dot'+curStep).classList.add('done');
+  curStep = n;
+  document.getElementById('step'+n).classList.add('active');
+  document.getElementById('dot'+n).classList.remove('done');
+  document.getElementById('dot'+n).classList.add('active');
+}
+
+async function doVerifyConfig() {
+  const raw = document.getElementById('cfgJson').value.trim();
+  const err = document.getElementById('cfgErr');
+  const ok  = document.getElementById('cfgOk');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (!raw) { showE(err,'Config kosong.'); return; }
+  let cfg;
+  try {
+    const clean = raw.replace(/^(const|var|let)\s+\w+\s*=\s*/,'').replace(/;[\s]*$/,'').trim();
+    cfg = Function('return ('+clean+')')();
+  } catch(e) { showE(err,'❌ Format tidak valid. Salin ulang dari Firebase Console.'); return; }
+  if (!cfg?.apiKey)    { showE(err,'❌ apiKey tidak ditemukan.'); return; }
+  if (!cfg?.projectId) { showE(err,'❌ projectId tidak ditemukan.'); return; }
+  const btn = document.getElementById('btnVerify');
+  btn.textContent='Mencoba koneksi…'; btn.disabled=true;
+  const inited = initFB(cfg);
+  if (!inited) { showE(err,'❌ Gagal inisialisasi Firebase.'); btn.textContent='Verifikasi →'; btn.disabled=false; return; }
+  try {
+    await db.collection('_ping').doc('test').set({t:Date.now()});
+    _tempCfg = cfg;
+    ok.textContent = '✅ Berhasil! Project: '+cfg.projectId;
+    ok.classList.add('show');
+    setTimeout(()=>goStep(2), 900);
+  } catch(e) {
+    if (e.code==='permission-denied') showE(err,'❌ Firestore Rules belum diset. Ikuti langkah ke-4 di halaman sebelumnya.');
+    else showE(err,'❌ Gagal koneksi: '+e.message);
+  } finally { btn.textContent='Verifikasi →'; btn.disabled=false; }
+}
+
+async function doSetPassword() {
+  const pw  = document.getElementById('devPw').value;
+  const pw2 = document.getElementById('devPw2').value;
+  const err = document.getElementById('pwErr');
+  const ok  = document.getElementById('pwOk');
+  const btn = document.getElementById('btnSetPw');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (pw.length<6)  { showE(err,'Password minimal 6 karakter.'); return; }
+  if (pw!==pw2)     { showE(err,'Password tidak cocok.'); return; }
+  btn.textContent='Menyimpan…'; btn.disabled=true;
+  try {
+    const hash = await hashPw(pw);
+    await db.collection('_config').doc('devAuth').set({hash});
+    saveCfg(_tempCfg);
+    ok.textContent='✅ Password tersimpan!';
+    ok.classList.add('show');
+    setTimeout(()=>goStep(3), 800);
+  } catch(e) { showE(err,'❌ Gagal: '+e.message); }
+  finally { btn.textContent='Lanjut →'; btn.disabled=false; }
+}
+
+// ══ DOWNLOAD FILE TERKONFIGURASI ══
+function downloadConfiguredFile() {
+  const cfg = _tempCfg || loadCfg();
+  if (!cfg) { toast('Config tidak ditemukan.','error'); return; }
+  // Ambil HTML halaman ini, ganti FIREBASE_CONFIG = null dengan config asli
+  fetch(location.href)
+    .then(r=>r.text())
+    .then(html=>{
+      const cfgStr = JSON.stringify(cfg, null, 2);
+      const patched = html.replace(
+        /const FIREBASE_CONFIG = null;.*?\/\/ <<< Diisi otomatis saat download/s,
+        `const FIREBASE_CONFIG = ${cfgStr}; // Configured`
+      );
+      const blob = new Blob([patched], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'portal-belajar.html';
+      a.click();
+      toast('✅ File berhasil didownload! Bagikan ke teman-temanmu.','success');
+    })
+    .catch(()=>{
+      // Fallback jika fetch gagal (file:// protocol)
+      const html = document.documentElement.outerHTML;
+      const cfgStr = JSON.stringify(cfg, null, 2);
+      const patched = html.replace(
+        'const FIREBASE_CONFIG = null;',
+        `const FIREBASE_CONFIG = ${cfgStr};`
+      );
+      const blob = new Blob([patched], {type:'text/html'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'portal-belajar.html';
+      a.click();
+      toast('✅ File didownload! Bagikan ke teman.','success');
+    });
+}
+
+// ══ LOGIN ══
+function openLogin()  { document.getElementById('loginModal').classList.add('open'); setTimeout(()=>document.getElementById('loginPw').focus(),100); }
+function closeLogin() { document.getElementById('loginModal').classList.remove('open'); document.getElementById('loginErr').classList.remove('show'); }
+
+async function doLogin() {
+  const pw  = document.getElementById('loginPw').value;
+  const err = document.getElementById('loginErr');
+  const btn = document.getElementById('loginBtn');
+  err.classList.remove('show');
+  if (!pw) { showE(err,'Masukkan password.'); return; }
+  btn.textContent='Memeriksa…'; btn.disabled=true;
+  try {
+    const hash = await hashPw(pw);
+    const doc  = await db.collection('_config').doc('devAuth').get();
+    if (doc.exists && doc.data().hash===hash) {
+      isDev=true; sessionStorage.setItem('pb_dev','1');
+      closeLogin();
+      document.getElementById('loginPw').value='';
+      updateAdminUI();
+      toast('✅ Login berhasil! Selamat datang, Admin.','success');
+    } else {
+      showE(err,'❌ Password salah.');
+    }
+  } catch(e) { showE(err,'❌ Error: '+e.message); }
+  finally { btn.textContent='Masuk sebagai Admin'; btn.disabled=false; }
+}
+
+function doLogout() {
+  isDev=false; sessionStorage.removeItem('pb_dev');
+  updateAdminUI(); showHome();
+  toast('Berhasil logout.','info');
+}
+
+// ══ APP START ══
+function startApp(asDev=false) {
+  document.getElementById('setupOverlay').style.display='none';
+  document.getElementById('loadingScreen').style.display='none';
+  document.getElementById('appRoot').classList.add('visible');
+  if (asDev) { isDev=true; sessionStorage.setItem('pb_dev','1'); }
+  updateAdminUI();
+  startSync();
+}
+
+function startSync() {
+  if (unsub) unsub();
+  const si = document.getElementById('syncInd');
+  si.innerHTML='<div class="sdot2" style="background:var(--wa)"></div><span>Menyambung…</span>';
+  unsub = db.collection('modules').orderBy('order','asc').onSnapshot(snap=>{
+    modules=snap.docs.map(d=>({id:d.id,...d.data()}));
+    si.innerHTML='<div class="sdot2"></div><span>Live</span>';
+    renderAll();
+  }, e=>{
+    si.innerHTML='<div class="sdot2" style="background:var(--da)"></div><span>Error</span>';
+    console.error(e);
+  });
+}
+
+function updateAdminUI() {
+  document.getElementById('devBadge').classList.toggle('show', isDev);
+  document.getElementById('navManage').style.display = isDev?'':'none';
+  document.getElementById('adminLoginBtn').style.display = isDev?'none':'';
+  document.getElementById('greet').textContent = isDev?'Halo, Admin! 👨‍💻':'Selamat Datang! 👋';
+  if (!isDev && document.getElementById('manageView').classList.contains('visible')) showHome();
+  renderAll();
+}
+
+// ══ VIEWS ══
+function showHome() {
+  if(isMax) toggleMax();
+  document.getElementById('homeView').style.display='';
+  document.getElementById('iframeView').classList.remove('visible');
+  document.getElementById('manageView').classList.remove('visible');
+  document.getElementById('ttl').textContent='Dashboard';
+  ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
+  setNav('navHome');
+}
+function showManage() {
+  if(!isDev){openLogin();return;}
+  if(isMax) toggleMax();
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('iframeView').classList.remove('visible');
+  document.getElementById('manageView').classList.add('visible');
+  document.getElementById('ttl').textContent='Kelola Modul';
+  ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
+  setNav('navManage');
+}
+function openModule(id) {
+  const m=modules.find(x=>x.id===id); if(!m) return;
+  const p=getProg(); if(!p[id]){p[id]='progress';saveProg(p);}
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('manageView').classList.remove('visible');
+  document.getElementById('iframeView').classList.add('visible');
+  document.getElementById('ttl').textContent=m.name;
+  document.getElementById('btnReload').style.display='';
+  document.getElementById('btnExt').style.display=m.url?'':'none';
+  document.getElementById('btnMax').style.display='';
+  document.getElementById('urlBar').textContent=m.url||'[File Upload]';
+  curUrl=m.url||null; zoom=100;
+  document.getElementById('zoomVal').textContent='100%';
+  setNav('mod-'+id);
+  loadFrame(m);
+}
+async function loadFrame(m) {
+  const wrap=document.getElementById('iframeWrap');
+  wrap.innerHTML='<div class="ifph"><div class="bi" style="animation:spin .8s linear infinite">⏳</div><p>Memuat…</p></div>';
+  try {
+    let src;
+    if (m.htmlContent) {
+      src=URL.createObjectURL(new Blob([m.htmlContent],{type:'text/html'}));
+    } else if (m.url) {
+      try { const r=await fetch(m.url); src=URL.createObjectURL(new Blob([await r.text()],{type:'text/html'})); }
+      catch(e) { src=m.url; }
+    }
+    wrap.innerHTML='';
+    const f=document.createElement('iframe');
+    f.id='mainFrame'; f.src=src;
+    f.style.cssText='width:100%;height:100%;border:none;display:block;background:#fff';
+    wrap.appendChild(f);
+  } catch(e) {
+    wrap.innerHTML=`<div class="ifph"><div class="bi">⚠️</div><p>Gagal memuat.<br><a href="${m.url||'#'}" target="_blank" style="color:var(--ac)">Buka di tab baru</a></p></div>`;
+  }
+}
+function goBack(){showHome();}
+function reloadFrame(){const f=document.getElementById('mainFrame');if(f){const s=f.src;f.src='';f.src=s;}}
+function openExternal(){if(curUrl)window.open(curUrl,'_blank');}
+
+// ══ MAXIMIZE & ZOOM ══
+function toggleMax() {
+  isMax=!isMax;
+  document.getElementById('appInner').classList.toggle('max',isMax);
+  const ico=document.getElementById('maxIco'), btn=document.getElementById('btnMax'), inner=document.getElementById('btnMaxInner');
+  if(isMax){ico.innerHTML='<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';btn.classList.add('on');inner.style.display='';}
+  else{ico.innerHTML='<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';btn.classList.remove('on');inner.style.display='none';}
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='F11'){e.preventDefault();if(document.getElementById('iframeView').classList.contains('visible'))toggleMax();}
+  if(e.key==='Escape'&&isMax)toggleMax();
+});
+function applyZoom(){const f=document.getElementById('mainFrame');if(!f)return;f.style.transform=`scale(${zoom/100})`;f.style.transformOrigin='top left';f.style.width=`${10000/zoom}%`;f.style.height=`${10000/zoom}%`;document.getElementById('zoomVal').textContent=zoom+'%';}
+function chZoom(d){zoom=Math.min(200,Math.max(50,zoom+d));applyZoom();}
+function resetZoom(){zoom=100;const f=document.getElementById('mainFrame');if(f){f.style.transform='';f.style.width='100%';f.style.height='100%';}document.getElementById('zoomVal').textContent='100%';}
+
+// ══ MODULES CRUD ══
+async function addModule() {
+  if(!isDev){toast('Login dulu sebagai Admin.','error');return;}
+  const name=document.getElementById('inName').value.trim(), url=document.getElementById('inUrl').value.trim();
+  if(!name){toast('Nama modul wajib diisi!','error');return;}
+  if(!url){toast('URL wajib diisi!','error');return;}
+  try {
+    await db.collection('modules').add({name,url,cat:document.getElementById('inCat').value.trim()||'Umum',icon:document.getElementById('inIcon').value.trim()||'📄',color:document.getElementById('inColor').value,desc:document.getElementById('inDesc').value.trim(),type:'url',order:Date.now(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    clearForm(); toast('✅ Modul ditambahkan & tersinkron ke semua pengguna!','success');
+  } catch(e){toast('Gagal: '+e.message,'error');}
+}
+async function deleteModule(id) {
+  if(!isDev)return;
+  if(!confirm('Hapus modul ini?'))return;
+  try{await db.collection('modules').doc(id).delete();toast('Modul dihapus.','success');if(document.getElementById('iframeView').classList.contains('visible'))showHome();}
+  catch(e){toast('Gagal: '+e.message,'error');}
+}
+function markDone(id){const p=getProg();p[id]=p[id]==='selesai'?'belum':'selesai';saveProg(p);renderAll();toast(p[id]==='selesai'?'✅ Ditandai selesai!':'Ditandai belum selesai.','success');}
+function getProg(){try{return JSON.parse(localStorage.getItem('pb_prog')||'{}');}catch(e){return{};}}
+function saveProg(p){localStorage.setItem('pb_prog',JSON.stringify(p));}
+
+// ══ FILE UPLOAD ══
+function handleUpload(files) {
+  if(!isDev){toast('Hanya Admin yang bisa upload.','error');return;}
+  const arr=Array.from(files).filter(f=>f.name.match(/\.html?$/i));
+  if(!arr.length){toast('Pilih file .html saja.','error');return;}
+  processQueue(arr,0);
+}
+async function processQueue(arr,idx) {
+  if(idx>=arr.length){document.getElementById('uploadProg').classList.remove('show');toast(`✅ ${arr.length} file tersinkron ke semua pengguna!`,'success');return;}
+  const file=arr[idx];
+  document.getElementById('uploadProg').classList.add('show');
+  document.getElementById('upText').textContent=`Menyimpan (${idx+1}/${arr.length}): ${file.name}`;
+  document.getElementById('upFill').style.width='30%';
+  if(file.size>700*1024){toast(`⚠️ ${file.name} terlalu besar (maks 700KB).`,'error');processQueue(arr,idx+1);return;}
+  try{
+    const html=await file.text();
+    document.getElementById('upFill').style.width='70%';
+    await db.collection('modules').add({name:file.name.replace(/\.html?$/i,''),htmlContent:html,url:null,cat:'Upload',icon:'📄',color:'#4f8ef7',desc:`${file.name} (${(file.size/1024).toFixed(1)}KB)`,type:'upload',order:Date.now(),createdAt:firebase.firestore.FieldValue.serverTimestamp()});
+    document.getElementById('upFill').style.width='100%';
+    processQueue(arr,idx+1);
+  }catch(e){toast(`Gagal: ${e.message}`,'error');processQueue(arr,idx+1);}
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const dz=document.getElementById('dropZone');
+  if(dz){dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('dgo')});dz.addEventListener('dragleave',()=>dz.classList.remove('dgo'));dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('dgo');handleUpload(e.dataTransfer.files)});}
+});
+
+// ══ RENDER ══
+function renderAll(){renderStats();renderGrid();renderNav();renderTable();renderCatList();}
+function renderStats(){const p=getProg();document.getElementById('stTotal').textContent=modules.length;document.getElementById('stCat').textContent=new Set(modules.map(m=>m.cat)).size;document.getElementById('stDone').textContent=modules.filter(m=>p[m.id]==='selesai').length;document.getElementById('stProg').textContent=modules.filter(m=>p[m.id]==='progress').length;}
+function renderGrid(){
+  const g=document.getElementById('modGrid'),p=getProg();
+  if(!modules.length){g.innerHTML='<div class="empty"><div class="ei">📂</div><p>Belum ada modul ditambahkan.</p></div>';return;}
+  const cats={};modules.forEach(m=>{(cats[m.cat]=cats[m.cat]||[]).push(m)});
+  g.innerHTML=Object.entries(cats).map(([cat,list])=>
+    `<div style="grid-column:1/-1"><div class="sectit" style="font-size:12.5px;margin-bottom:8px">📂 ${cat}</div></div>`+
+    list.map(m=>{const st=p[m.id]||'belum',pct=st==='selesai'?100:st==='progress'?50:0,bdc=st==='selesai'?' ✅':st==='progress'?' 🔄':'';
+    return `<div class="mcard${st==='progress'?' inp':''}" onclick="openModule('${m.id}')"><div class="mth" style="background:${m.color}22">${m.icon}</div><div class="mn">${m.name}${bdc}</div><div class="md">${m.desc||m.url||'File upload'}</div><div class="mft"><div class="pb"><div class="pf" style="width:${pct}%;background:${m.color}"></div></div><div class="mp">${pct}%</div></div></div>`;}).join('')
+  ).join('');
+}
+function renderNav(){
+  const nav=document.getElementById('dynNav'),p=getProg();
+  if(!modules.length){nav.innerHTML='';return;}
+  const cats={};modules.forEach(m=>{(cats[m.cat]=cats[m.cat]||[]).push(m)});
+  nav.innerHTML=Object.entries(cats).map(([cat,list])=>
+    `<div class="cl">📂 ${cat}</div>`+
+    list.map(m=>`<div class="ni" id="mod-${m.id}" data-label="${m.name}" onclick="openModule('${m.id}')"><span class="nico">${m.icon}</span><span class="nlbl">${m.name}</span>${p[m.id]==='selesai'?'<span class="nbdg" style="background:var(--ac3)">✓</span>':''}</div>`).join('')
+  ).join('');
+}
+function renderTable(){
+  const w=document.getElementById('tblWrap');
+  if(!isDev||!modules.length){w.innerHTML='<div class="empty"><div class="ei">📂</div><p>Belum ada modul.</p></div>';return;}
+  const p=getProg();
+  w.innerHTML=`<div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div>${modules.map(m=>{const st=p[m.id]||'belum';return`<div class="tblr"><div class="nc"><div class="tsm" style="background:${m.color}22">${m.icon}</div><span>${m.name}</span></div><div><span class="tag">${m.cat}</span></div><div><span class="tag" style="color:${st==='selesai'?'var(--ac3)':st==='progress'?'var(--ac)':'var(--mu)'}">${st==='selesai'?'Selesai':st==='progress'?'Progress':'Belum'}</span></div><div class="ra"><button class="mb2" onclick="openModule('${m.id}')" title="Buka">▶</button><button class="mb2" onclick="markDone('${m.id}')" title="Selesai">✓</button><button class="mb2 del" onclick="deleteModule('${m.id}')" title="Hapus">✕</button></div></div>`;}).join('')}</div>`;
+}
+function renderCatList(){const dl=document.getElementById('catList');if(!dl)return;dl.innerHTML=[...new Set(modules.map(m=>m.cat))].map(c=>`<option value="${c}">`).join('');}
+function filterNav(){const q=document.getElementById('searchInput').value.toLowerCase();document.querySelectorAll('#dynNav .ni').forEach(el=>{el.style.display=el.dataset.label?.toLowerCase().includes(q)?'':'none'});document.querySelectorAll('.cl').forEach(el=>{el.style.display=q?'none':''});}
+function setNav(id){document.querySelectorAll('.ni').forEach(el=>el.classList.remove('active'));const el=document.getElementById(id);if(el)el.classList.add('active');}
+function clearForm(){['inName','inUrl','inCat','inIcon','inDesc'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});const c=document.getElementById('inColor');if(c)c.value='#4f8ef7';}
+function toggleSidebar(){sCol=!sCol;document.getElementById('sidebar').classList.toggle('col',sCol);}
+function showE(el,msg){el.textContent=msg;el.classList.add('show');}
+function toast(msg,type='success'){const t=document.getElementById('toast');document.getElementById('tMsg').textContent=msg;document.getElementById('tIco').textContent=type==='success'?'✅':type==='error'?'❌':'ℹ️';t.className='toast show';clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),4000);}
+
+// ══ BOOT ══
+window.addEventListener('load',function(){
+  if(typeof firebase==='undefined'){document.body.innerHTML=`<div style="font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;background:#0d0f14;color:#e8eaf2;text-align:center;padding:24px"><div style="font-size:48px">📡</div><h2>Firebase gagal dimuat</h2><p style="color:#7b82a0;max-width:340px;font-size:14px">Pastikan ada koneksi internet saat membuka file ini.</p><button onclick="location.reload()" style="background:#4f8ef7;color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:14px;cursor:pointer">🔄 Coba Lagi</button></div>`;return;}
+  const saved=loadCfg();
+  if(saved){
+    document.getElementById('setupOverlay').style.display='none';
+    document.getElementById('loadingScreen').style.display='flex';
+    if(!initFB(saved)){localStorage.removeItem(CFG_KEY);document.getElementById('loadingScreen').style.display='none';document.getElementById('setupOverlay').style.display='flex';return;}
+    startApp(sessionStorage.getItem('pb_dev')==='1');
+  }
+  // else setup overlay tampil untuk admin
+});
+</script>
+
+
+</body></html>
