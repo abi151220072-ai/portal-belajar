@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
+<html lang="id"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal Belajar</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -254,13 +252,13 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
   </div>
   <div class="sb">
     <div class="sdots">
-      <div class="sdot active" id="dot0"></div>
-      <div class="sdot" id="dot1"></div>
-      <div class="sdot" id="dot2"></div>
-      <div class="sdot" id="dot3"></div>
+      <div class="sdot done" id="dot0"></div>
+      <div class="sdot done" id="dot1"></div>
+      <div class="sdot done" id="dot2"></div>
+      <div class="sdot active" id="dot3"></div>
     </div>
     <!-- Step 0 -->
-    <div class="ss active" id="step0">
+    <div class="ss" id="step0">
       <div class="stitle">⚡ Persiapan Firebase</div>
       <div class="sdesc">Buat proyek Firebase gratis — hanya butuh <strong>Firestore</strong> saja.</div>
       <ol class="slist">
@@ -287,18 +285,18 @@ service cloud.firestore {
     <div class="ss" id="step1">
       <div class="stitle">🔧 Konfigurasi Firebase</div>
       <div class="sdesc">Salin seluruh isi <code>{ ... }</code> dari <strong>firebaseConfig</strong> di Firebase Console.</div>
-      <div class="serr" id="cfgErr"></div>
-      <div class="ssucc" id="cfgOk"></div>
+      <div class="serr" id="cfgErr">Config kosong.</div>
+      <div class="ssucc show" id="cfgOk">✅ Terhubung! Project: mari-jadi-pintar</div>
       <div class="fg">
         <label>Firebase Config</label>
-        <textarea id="cfgJson" placeholder='Tempel di sini:
+        <textarea id="cfgJson" placeholder="Tempel di sini:
 {
-  apiKey: "AIzaSy...",
-  authDomain: "nama.firebaseapp.com",
-  projectId: "nama-proyek",
-  messagingSenderId: "12345",
-  appId: "1:12345:web:abc"
-}'></textarea>
+  apiKey: &quot;AIzaSy...&quot;,
+  authDomain: &quot;nama.firebaseapp.com&quot;,
+  projectId: &quot;nama-proyek&quot;,
+  messagingSenderId: &quot;12345&quot;,
+  appId: &quot;1:12345:web:abc&quot;
+}"></textarea>
       </div>
       <div class="br">
         <button class="btn ghost" onclick="goStep(0)">← Kembali</button>
@@ -310,7 +308,7 @@ service cloud.firestore {
       <div class="stitle">🔐 Buat Password Admin</div>
       <div class="sdesc">Password untuk kamu saja. Teman yang buka portal <strong>tidak perlu password</strong> — langsung lihat materi.</div>
       <div class="serr" id="pwErr"></div>
-      <div class="ssucc" id="pwOk"></div>
+      <div class="ssucc show" id="pwOk">✅ Password tersimpan!</div>
       <div class="fg"><label>Password Admin (min 6 karakter)</label><input type="password" id="devPw" placeholder="Buat password kuat…"></div>
       <div class="fg" style="margin-bottom:14px"><label>Konfirmasi Password</label><input type="password" id="devPw2" placeholder="Ulangi password…"></div>
       <div class="br">
@@ -319,7 +317,7 @@ service cloud.firestore {
       </div>
     </div>
     <!-- Step 3 -->
-    <div class="ss" id="step3">
+    <div class="ss active" id="step3">
       <div class="stitle">🎉 Setup Selesai!</div>
       <div class="sdesc">Download file portal yang sudah dikonfigurasi untuk dibagikan ke teman atau diupload ke GitHub Pages.</div>
       <div class="dl-banner">
@@ -368,11 +366,11 @@ service cloud.firestore {
       <div class="lm">P</div>
       <div class="lt">Portal Belajar</div>
       <button class="tb" onclick="toggleSidebar()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </div>
     <div class="dbadge" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
-    <div class="sw"><div class="sb2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()"></div></div>
+    <div class="sw"><div class="sb2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()"></div></div>
     <nav class="nl">
       <div class="ni active" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
       <div class="ni" onclick="showManage()" id="navManage" style="display:none"><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
@@ -386,9 +384,9 @@ service cloud.firestore {
       <div id="ttl" class="ttl">Dashboard</div>
       <div class="tact">
         <div class="sync" id="syncInd"><div class="sdot2"></div><span>Live</span></div>
-        <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
-        <button class="ib" onclick="openExternal()" id="btnExt" style="display:none" title="Tab baru"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
-        <button class="ib" onclick="toggleMax()" id="btnMax" style="display:none" title="Layar penuh (F11)"><svg id="maxIco" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+        <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
+        <button class="ib" onclick="openExternal()" id="btnExt" style="display:none" title="Tab baru"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
+        <button class="ib" onclick="toggleMax()" id="btnMax" style="display:none" title="Layar penuh (F11)"><svg id="maxIco" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
       </div>
     </div>
     <div class="content">
@@ -411,7 +409,7 @@ service cloud.firestore {
       <!-- IFRAME -->
       <div class="ifv" id="iframeView">
         <div class="iftb">
-          <button class="ib" onclick="goBack()" style="width:28px;height:28px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+          <button class="ib" onclick="goBack()" style="width:28px;height:28px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
           <div class="urlb" id="urlBar">—</div>
           <div class="rdb">
             <button class="ib" onclick="chZoom(-10)" style="width:26px;height:26px;font-size:15px;font-weight:700">−</button>
@@ -419,7 +417,7 @@ service cloud.firestore {
             <button class="ib" onclick="chZoom(10)" style="width:26px;height:26px;font-size:15px;font-weight:700">+</button>
             <button class="ib" onclick="resetZoom()" style="width:26px;height:26px;font-size:10px;font-weight:700">1:1</button>
           </div>
-          <button class="ib" id="btnMaxInner" onclick="toggleMax()" style="width:28px;height:28px;display:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg></button>
+          <button class="ib" id="btnMaxInner" onclick="toggleMax()" style="width:28px;height:28px;display:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg></button>
         </div>
         <div class="ifw" id="iframeWrap"><div class="ifph"><div class="bi">🖥️</div><p>Pilih modul untuk mulai belajar.</p></div></div>
       </div>
@@ -442,7 +440,7 @@ service cloud.firestore {
             <div class="di">📁</div>
             <p>Klik atau <strong style="color:var(--ac)">seret file HTML</strong> ke sini<br><span style="font-size:11px">Pilih mata pelajaran di bawah setelah upload • Maks ±700KB/file</span></p>
           </div>
-          <input type="file" id="fileInput" accept=".html,.htm" multiple style="display:none" onchange="handleUpload(this.files)">
+          <input type="file" id="fileInput" accept=".html,.htm" multiple="" style="display:none" onchange="handleUpload(this.files)">
           <div class="upr" id="uploadProg"><p id="upText">Menyimpan…</p><div class="upb"><div class="upf" id="upFill"></div></div></div>
         </div>
         <!-- Add URL -->
@@ -455,7 +453,79 @@ service cloud.firestore {
           <div style="margin-bottom:10px"><label class="flbl">URL File HTML *</label><input type="text" class="fi" id="inUrl" placeholder="https://..."></div>
           <!-- Subject Picker -->
           <label class="flbl" style="margin-bottom:7px">Pilih Mata Pelajaran</label>
-          <div class="subj-grid" id="subjGrid"></div>
+          <div class="subj-grid" id="subjGrid">
+    <div class="subj-item" data-cat="Matematika" data-icon="📐" data-color="#6366f1" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">📐</div>
+      <div class="subj-nm">Matematika</div>
+    </div>
+    <div class="subj-item" data-cat="Fisika" data-icon="⚡" data-color="#f59e0b" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">⚡</div>
+      <div class="subj-nm">Fisika</div>
+    </div>
+    <div class="subj-item" data-cat="Kimia" data-icon="🧪" data-color="#10b981" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🧪</div>
+      <div class="subj-nm">Kimia</div>
+    </div>
+    <div class="subj-item" data-cat="Biologi" data-icon="🧬" data-color="#34d399" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🧬</div>
+      <div class="subj-nm">Biologi</div>
+    </div>
+    <div class="subj-item" data-cat="IPA" data-icon="🔬" data-color="#06b6d4" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🔬</div>
+      <div class="subj-nm">IPA</div>
+    </div>
+    <div class="subj-item" data-cat="IPS" data-icon="🗺️" data-color="#f97316" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🗺️</div>
+      <div class="subj-nm">IPS</div>
+    </div>
+    <div class="subj-item" data-cat="B. Indonesia" data-icon="📝" data-color="#8b5cf6" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">📝</div>
+      <div class="subj-nm">B. Indonesia</div>
+    </div>
+    <div class="subj-item" data-cat="B. Inggris" data-icon="🌍" data-color="#3b82f6" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🌍</div>
+      <div class="subj-nm">B. Inggris</div>
+    </div>
+    <div class="subj-item" data-cat="Sejarah" data-icon="🏛️" data-color="#d97706" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🏛️</div>
+      <div class="subj-nm">Sejarah</div>
+    </div>
+    <div class="subj-item" data-cat="Geografi" data-icon="🌐" data-color="#0891b2" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🌐</div>
+      <div class="subj-nm">Geografi</div>
+    </div>
+    <div class="subj-item" data-cat="Ekonomi" data-icon="💰" data-color="#059669" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">💰</div>
+      <div class="subj-nm">Ekonomi</div>
+    </div>
+    <div class="subj-item" data-cat="PKN" data-icon="🏅" data-color="#dc2626" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🏅</div>
+      <div class="subj-nm">PKN</div>
+    </div>
+    <div class="subj-item" data-cat="Agama" data-icon="🕌" data-color="#7c3aed" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🕌</div>
+      <div class="subj-nm">Agama</div>
+    </div>
+    <div class="subj-item" data-cat="Seni Budaya" data-icon="🎨" data-color="#db2777" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🎨</div>
+      <div class="subj-nm">Seni Budaya</div>
+    </div>
+    <div class="subj-item" data-cat="PJOK" data-icon="⚽" data-color="#16a34a" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">⚽</div>
+      <div class="subj-nm">PJOK</div>
+    </div>
+    <div class="subj-item" data-cat="Informatika" data-icon="💻" data-color="#2563eb" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">💻</div>
+      <div class="subj-nm">Informatika</div>
+    </div>
+    <div class="subj-item" data-cat="Prakarya" data-icon="🔧" data-color="#78716c" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">🔧</div>
+      <div class="subj-nm">Prakarya</div>
+    </div>
+    <div class="subj-item" data-cat="Lainnya" data-icon="📚" data-color="#6b7280" onclick="selectSubj(this,'subjGrid')">
+      <div class="subj-ico">📚</div>
+      <div class="subj-nm">Lainnya</div>
+    </div></div>
           <div style="margin-bottom:12px"><label class="flbl">Deskripsi</label><textarea class="fi fita" id="inDesc" placeholder="Opsional…"></textarea></div>
           <div style="display:flex;gap:7px">
             <button class="mbtn" onclick="addModule()">+ Tambah Modul</button>
@@ -478,7 +548,16 @@ service cloud.firestore {
 
 <script>
 // ══ FIREBASE CONFIG (diisi otomatis saat download) ══
-const FIREBASE_CONFIG = null; // <<< AUTO-FILLED
+const FIREBASE_CONFIG = {
+  "apiKey": "AIzaSyAF7StvptG77QZCPobAJ7g-5geCZTeYx6w",
+  "authDomain": "mari-jadi-pintar.firebaseapp.com",
+  "databaseURL": "https://mari-jadi-pintar-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "projectId": "mari-jadi-pintar",
+  "storageBucket": "mari-jadi-pintar.firebasestorage.app",
+  "messagingSenderId": "416675371358",
+  "appId": "1:416675371358:web:8c3ca35d8d0b8b103ad7cf",
+  "measurementId": "G-FWTG0KSP8E"
+}; // Configured
 
 // ══ SUBJECT CATEGORIES ══
 const SUBJECTS = [
@@ -776,5 +855,6 @@ window.addEventListener('load',function(){
   }
 });
 </script>
-</body>
-</html>
+
+
+</body></html>
