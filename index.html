@@ -1,8 +1,10 @@
-<html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal Belajar</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -243,7 +245,7 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 <body>
 
 <!-- ══ SETUP OVERLAY ══ -->
-<div id="setupOverlay" style="display: none;">
+<div id="setupOverlay">
 <div class="sc">
   <div class="sh">
     <div class="logo-wrap">📚</div>
@@ -289,14 +291,14 @@ service cloud.firestore {
       <div class="ssucc" id="cfgOk"></div>
       <div class="fg">
         <label>Firebase Config</label>
-        <textarea id="cfgJson" placeholder="Tempel di sini:
+        <textarea id="cfgJson" placeholder='Tempel di sini:
 {
-  apiKey: &quot;AIzaSy...&quot;,
-  authDomain: &quot;nama.firebaseapp.com&quot;,
-  projectId: &quot;nama-proyek&quot;,
-  messagingSenderId: &quot;12345&quot;,
-  appId: &quot;1:12345:web:abc&quot;
-}"></textarea>
+  apiKey: "AIzaSy...",
+  authDomain: "nama.firebaseapp.com",
+  projectId: "nama-proyek",
+  messagingSenderId: "12345",
+  appId: "1:12345:web:abc"
+}'></textarea>
       </div>
       <div class="br">
         <button class="btn ghost" onclick="goStep(0)">← Kembali</button>
@@ -332,10 +334,10 @@ service cloud.firestore {
 </div>
 
 <!-- LOADING -->
-<div id="loadingScreen" style="display: none;"><div class="spin"></div><p style="font-size:13px;color:var(--mu);font-weight:500">Menghubungkan…</p></div>
+<div id="loadingScreen"><div class="spin"></div><p style="font-size:13px;color:var(--mu);font-weight:500">Menghubungkan…</p></div>
 
 <!-- LOGIN MODAL -->
-<div id="loginModal" class="">
+<div id="loginModal">
 <div class="mc">
   <div class="mh"><h3>🔐 Login Admin</h3><button class="xbtn" onclick="closeLogin()">×</button></div>
   <div class="mb">
@@ -359,69 +361,57 @@ service cloud.firestore {
 </div>
 
 <!-- APP -->
-<div id="appRoot" class="visible">
+<div id="appRoot">
 <div class="app" id="appInner">
   <aside class="sidebar" id="sidebar">
     <div class="sdh">
       <div class="lm">P</div>
       <div class="lt">Portal Belajar</div>
       <button class="tb" onclick="toggleSidebar()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
     </div>
-    <div class="dbadge show" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
-    <div class="sw"><div class="sb2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()"></div></div>
+    <div class="dbadge" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
+    <div class="sw"><div class="sb2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()"></div></div>
     <nav class="nl">
-      <div class="ni" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
-      <div class="ni active" onclick="showManage()" id="navManage" style=""><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
-      <div id="dynNav"><div class="cl">📚 Upload</div><div class="ni" id="mod-Kz4UyK1BoLwc849qDxf6" data-label="biologi_ekosistem" onclick="openModule('Kz4UyK1BoLwc849qDxf6')"><span class="nico">📄</span><span class="nlbl">biologi_ekosistem</span></div><div class="ni" id="mod-DskLfzLRSkQGsxvpghEV" data-label="informatika_2" onclick="openModule('DskLfzLRSkQGsxvpghEV')"><span class="nico">📄</span><span class="nlbl">informatika_2</span></div></div>
+      <div class="ni active" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
+      <div class="ni" onclick="showManage()" id="navManage" style="display:none"><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
+      <div id="dynNav"></div>
     </nav>
-    <div class="sft"><button class="albtn" onclick="openLogin()" id="adminLoginBtn" style="display: none;"><span style="font-size:14px">🔑</span><span class="albx">Login Admin</span></button></div>
+    <div class="sft"><button class="albtn" onclick="openLogin()" id="adminLoginBtn"><span style="font-size:14px">🔑</span><span class="albx">Login Admin</span></button></div>
   </aside>
 
   <div class="main">
     <div class="topbar">
-      <div id="ttl" class="ttl">Kelola Modul</div>
+      <div id="ttl" class="ttl">Dashboard</div>
       <div class="tact">
         <div class="sync" id="syncInd"><div class="sdot2"></div><span>Live</span></div>
-        <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
-        <button class="ib" onclick="openExternal()" id="btnExt" style="display:none" title="Tab baru"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg></button>
-        <button class="ib" onclick="toggleMax()" id="btnMax" style="display:none" title="Layar penuh (F11)"><svg id="maxIco" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg></button>
+        <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+        <button class="ib" onclick="openExternal()" id="btnExt" style="display:none" title="Tab baru"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg></button>
+        <button class="ib" onclick="toggleMax()" id="btnMax" style="display:none" title="Layar penuh (F11)"><svg id="maxIco" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
       </div>
     </div>
     <div class="content">
       <!-- HOME -->
-      <div class="hv" id="homeView" style="display: none;">
+      <div class="hv" id="homeView">
         <div class="hv-hero">
           <div class="hero-badge">🔴 Live</div>
-          <h2 id="greet">Halo, Admin! 👨‍💻</h2>
+          <h2 id="greet">Selamat Datang! 👋</h2>
           <p>Pilih modul dari sidebar atau kartu di bawah untuk mulai belajar.</p>
         </div>
         <div class="srow">
-          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">2</div><div class="slb">Total Modul</div></div>
-          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">1</div><div class="slb">Kategori</div></div>
+          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">0</div><div class="slb">Total Modul</div></div>
+          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">0</div><div class="slb">Kategori</div></div>
           <div class="scard" style="--sc:#10b981"><div class="si">✅</div><div class="sv" id="stDone">0</div><div class="slb">Selesai</div></div>
-          <div class="scard" style="--sc:#f59e0b"><div class="si">🕐</div><div class="sv" id="stProg">1</div><div class="slb">Sedang Belajar</div></div>
+          <div class="scard" style="--sc:#f59e0b"><div class="si">🕐</div><div class="sv" id="stProg">0</div><div class="slb">Sedang Belajar</div></div>
         </div>
         <div class="sectit">Semua Modul</div>
-        <div class="mg" id="modGrid"><div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">📚 Upload</div></div><div class="mcard inp" onclick="openModule('Kz4UyK1BoLwc849qDxf6')">
-      <div class="mcat" style="background:#4f8ef718;color:#4f8ef7;border:1px solid #4f8ef730">📄 Upload</div>
-      <div class="mth" style="background:#4f8ef715">📄</div>
-      <div class="mn">biologi_ekosistem 🔄</div>
-      <div class="md">biologi_ekosistem.html (31.3KB)</div>
-      <div class="mft"><div class="pb"><div class="pf" style="width:50%;background:#4f8ef7"></div></div><div class="mp">50%</div></div>
-    </div><div class="mcard" onclick="openModule('DskLfzLRSkQGsxvpghEV')">
-      <div class="mcat" style="background:#4f8ef718;color:#4f8ef7;border:1px solid #4f8ef730">📄 Upload</div>
-      <div class="mth" style="background:#4f8ef715">📄</div>
-      <div class="mn">informatika_2</div>
-      <div class="md">informatika_2.html (25.0KB)</div>
-      <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#4f8ef7"></div></div><div class="mp">0%</div></div>
-    </div></div>
+        <div class="mg" id="modGrid"><div class="empty"><div class="ei">📂</div><p>Belum ada modul.<br>Admin perlu menambahkan modul terlebih dahulu.</p></div></div>
       </div>
       <!-- IFRAME -->
       <div class="ifv" id="iframeView">
         <div class="iftb">
-          <button class="ib" onclick="goBack()" style="width:28px;height:28px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+          <button class="ib" onclick="goBack()" style="width:28px;height:28px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
           <div class="urlb" id="urlBar">—</div>
           <div class="rdb">
             <button class="ib" onclick="chZoom(-10)" style="width:26px;height:26px;font-size:15px;font-weight:700">−</button>
@@ -429,12 +419,12 @@ service cloud.firestore {
             <button class="ib" onclick="chZoom(10)" style="width:26px;height:26px;font-size:15px;font-weight:700">+</button>
             <button class="ib" onclick="resetZoom()" style="width:26px;height:26px;font-size:10px;font-weight:700">1:1</button>
           </div>
-          <button class="ib" id="btnMaxInner" onclick="toggleMax()" style="width:28px;height:28px;display:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg></button>
+          <button class="ib" id="btnMaxInner" onclick="toggleMax()" style="width:28px;height:28px;display:none"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg></button>
         </div>
         <div class="ifw" id="iframeWrap"><div class="ifph"><div class="bi">🖥️</div><p>Pilih modul untuk mulai belajar.</p></div></div>
       </div>
       <!-- MANAGE -->
-      <div class="mv visible" id="manageView">
+      <div class="mv" id="manageView">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
           <h2 style="font-size:17px;font-weight:800">⚙️ Kelola Modul</h2>
           <span class="tag" style="color:var(--ac3);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.07)">Admin Mode</span>
@@ -452,7 +442,7 @@ service cloud.firestore {
             <div class="di">📁</div>
             <p>Klik atau <strong style="color:var(--ac)">seret file HTML</strong> ke sini<br><span style="font-size:11px">Pilih mata pelajaran di bawah setelah upload • Maks ±700KB/file</span></p>
           </div>
-          <input type="file" id="fileInput" accept=".html,.htm" multiple="" style="display:none" onchange="handleUpload(this.files)">
+          <input type="file" id="fileInput" accept=".html,.htm" multiple style="display:none" onchange="handleUpload(this.files)">
           <div class="upr" id="uploadProg"><p id="upText">Menyimpan…</p><div class="upb"><div class="upf" id="upFill"></div></div></div>
         </div>
         <!-- Add URL -->
@@ -465,79 +455,7 @@ service cloud.firestore {
           <div style="margin-bottom:10px"><label class="flbl">URL File HTML *</label><input type="text" class="fi" id="inUrl" placeholder="https://..."></div>
           <!-- Subject Picker -->
           <label class="flbl" style="margin-bottom:7px">Pilih Mata Pelajaran</label>
-          <div class="subj-grid" id="subjGrid">
-    <div class="subj-item" data-cat="Matematika" data-icon="📐" data-color="#6366f1" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">📐</div>
-      <div class="subj-nm">Matematika</div>
-    </div>
-    <div class="subj-item" data-cat="Fisika" data-icon="⚡" data-color="#f59e0b" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">⚡</div>
-      <div class="subj-nm">Fisika</div>
-    </div>
-    <div class="subj-item" data-cat="Kimia" data-icon="🧪" data-color="#10b981" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🧪</div>
-      <div class="subj-nm">Kimia</div>
-    </div>
-    <div class="subj-item" data-cat="Biologi" data-icon="🧬" data-color="#34d399" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🧬</div>
-      <div class="subj-nm">Biologi</div>
-    </div>
-    <div class="subj-item" data-cat="IPA" data-icon="🔬" data-color="#06b6d4" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🔬</div>
-      <div class="subj-nm">IPA</div>
-    </div>
-    <div class="subj-item" data-cat="IPS" data-icon="🗺️" data-color="#f97316" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🗺️</div>
-      <div class="subj-nm">IPS</div>
-    </div>
-    <div class="subj-item" data-cat="B. Indonesia" data-icon="📝" data-color="#8b5cf6" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">📝</div>
-      <div class="subj-nm">B. Indonesia</div>
-    </div>
-    <div class="subj-item" data-cat="B. Inggris" data-icon="🌍" data-color="#3b82f6" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🌍</div>
-      <div class="subj-nm">B. Inggris</div>
-    </div>
-    <div class="subj-item" data-cat="Sejarah" data-icon="🏛️" data-color="#d97706" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🏛️</div>
-      <div class="subj-nm">Sejarah</div>
-    </div>
-    <div class="subj-item" data-cat="Geografi" data-icon="🌐" data-color="#0891b2" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🌐</div>
-      <div class="subj-nm">Geografi</div>
-    </div>
-    <div class="subj-item" data-cat="Ekonomi" data-icon="💰" data-color="#059669" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">💰</div>
-      <div class="subj-nm">Ekonomi</div>
-    </div>
-    <div class="subj-item" data-cat="PKN" data-icon="🏅" data-color="#dc2626" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🏅</div>
-      <div class="subj-nm">PKN</div>
-    </div>
-    <div class="subj-item" data-cat="Agama" data-icon="🕌" data-color="#7c3aed" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🕌</div>
-      <div class="subj-nm">Agama</div>
-    </div>
-    <div class="subj-item" data-cat="Seni Budaya" data-icon="🎨" data-color="#db2777" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🎨</div>
-      <div class="subj-nm">Seni Budaya</div>
-    </div>
-    <div class="subj-item" data-cat="PJOK" data-icon="⚽" data-color="#16a34a" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">⚽</div>
-      <div class="subj-nm">PJOK</div>
-    </div>
-    <div class="subj-item" data-cat="Informatika" data-icon="💻" data-color="#2563eb" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">💻</div>
-      <div class="subj-nm">Informatika</div>
-    </div>
-    <div class="subj-item" data-cat="Prakarya" data-icon="🔧" data-color="#78716c" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">🔧</div>
-      <div class="subj-nm">Prakarya</div>
-    </div>
-    <div class="subj-item" data-cat="Lainnya" data-icon="📚" data-color="#6b7280" onclick="selectSubj(this,'subjGrid')">
-      <div class="subj-ico">📚</div>
-      <div class="subj-nm">Lainnya</div>
-    </div></div>
+          <div class="subj-grid" id="subjGrid"></div>
           <div style="margin-bottom:12px"><label class="flbl">Deskripsi</label><textarea class="fi fita" id="inDesc" placeholder="Opsional…"></textarea></div>
           <div style="display:flex;gap:7px">
             <button class="mbtn" onclick="addModule()">+ Tambah Modul</button>
@@ -545,14 +463,14 @@ service cloud.firestore {
           </div>
         </div>
         <div class="sectit">Daftar Modul</div>
-        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#4f8ef718">📄</div><span>biologi_ekosistem</span></div><div><span class="tag" style="color:#4f8ef7;border-color:#4f8ef730;background:#4f8ef710">📄 Upload</span></div><div><span class="tag" style="color:var(--ac)">🔄 Progress</span></div><div class="ra"><button class="mb2" onclick="openModule('Kz4UyK1BoLwc849qDxf6')" title="Buka">▶</button><button class="mb2" onclick="markDone('Kz4UyK1BoLwc849qDxf6')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('Kz4UyK1BoLwc849qDxf6')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#4f8ef718">📄</div><span>informatika_2</span></div><div><span class="tag" style="color:#4f8ef7;border-color:#4f8ef730;background:#4f8ef710">📄 Upload</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('DskLfzLRSkQGsxvpghEV')" title="Buka">▶</button><button class="mb2" onclick="markDone('DskLfzLRSkQGsxvpghEV')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('DskLfzLRSkQGsxvpghEV')" title="Hapus">🗑</button></div></div></div></div>
+        <div id="tblWrap"><div class="empty"><div class="ei">📂</div><p>Belum ada modul.</p></div></div>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-<div class="toast" id="toast"><span id="tIco">✅</span>&nbsp;<span id="tMsg">✅ Login berhasil! Selamat datang, Admin.</span></div>
+<div class="toast" id="toast"><span id="tIco">✅</span>&nbsp;<span id="tMsg"></span></div>
 
 <!-- Firebase -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
@@ -560,16 +478,7 @@ service cloud.firestore {
 
 <script>
 // ══ FIREBASE CONFIG (diisi otomatis saat download) ══
-const FIREBASE_CONFIG = {
-  "apiKey": "AIzaSyAF7StvptG77QZCPobAJ7g-5geCZTeYx6w",
-  "authDomain": "mari-jadi-pintar.firebaseapp.com",
-  "databaseURL": "https://mari-jadi-pintar-default-rtdb.asia-southeast1.firebasedatabase.app",
-  "projectId": "mari-jadi-pintar",
-  "storageBucket": "mari-jadi-pintar.firebasestorage.app",
-  "messagingSenderId": "416675371358",
-  "appId": "1:416675371358:web:8c3ca35d8d0b8b103ad7cf",
-  "measurementId": "G-FWTG0KSP8E"
-}; // Configured
+const FIREBASE_CONFIG = null; // <<< AUTO-FILLED
 
 // ══ SUBJECT CATEGORIES ══
 const SUBJECTS = [
@@ -867,6 +776,5 @@ window.addEventListener('load',function(){
   }
 });
 </script>
-
-
-</body></html>
+</body>
+</html>
