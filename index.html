@@ -223,7 +223,33 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 .app.max .sidebar,.app.max .topbar{display:none}
 .app.max .ifv{position:fixed;inset:0;z-index:500;background:var(--bg)}
 
-/* ══ MANAGE ══ */
+/* ══ SUBJECT ROOMS — Halaman per mata pelajaran ══ */
+/* Cards di dashboard */
+.subj-rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:22px}
+.room-card{border-radius:18px;padding:20px 16px;cursor:pointer;transition:.25s;position:relative;overflow:hidden;border:1px solid transparent}
+.room-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent);pointer-events:none}
+.room-card::after{content:attr(data-icon);position:absolute;right:-4px;bottom:-8px;font-size:56px;opacity:.18;line-height:1;pointer-events:none}
+.room-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+.room-ico{font-size:30px;margin-bottom:10px;display:block;position:relative;z-index:1}
+.room-name{font-size:13px;font-weight:800;margin-bottom:3px;position:relative;z-index:1}
+.room-count{font-size:11px;font-weight:600;opacity:.75;position:relative;z-index:1;margin-bottom:8px}
+.room-prog{height:3px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden;position:relative;z-index:1}
+.room-prog-fill{height:100%;border-radius:3px;background:rgba(255,255,255,.7);transition:width .4s}
+/* Subject view (halaman isi mapel) */
+.sv-view{flex:1;display:none;flex-direction:column;overflow:hidden}
+.sv-view.visible{display:flex}
+.sv-header{flex-shrink:0;padding:20px 22px 0}
+.sv-back{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--mu);cursor:pointer;background:var(--su2);border:1px solid var(--bo2);border-radius:9px;padding:7px 13px;transition:.2s;margin-bottom:16px;user-select:none}
+.sv-back:hover{color:var(--tx2);border-color:var(--ac)}
+.sv-hero{border-radius:18px;padding:22px;margin-bottom:18px;position:relative;overflow:hidden}
+.sv-hero::after{content:attr(data-icon);position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:72px;opacity:.12;line-height:1}
+.sv-hero-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:8px}
+.sv-hero h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:3px}
+.sv-hero p{font-size:12.5px;color:rgba(255,255,255,.6)}
+.sv-body{flex:1;overflow-y:auto;padding:0 22px 22px;scrollbar-width:thin;scrollbar-color:var(--bo2) transparent}
+/* Admin mode room cards shimmer */
+.app.admin-mode .room-card{box-shadow:0 0 0 1px rgba(245,158,11,.15)}
+.app.admin-mode .room-card:hover{box-shadow:0 16px 40px rgba(0,0,0,.45),0 0 0 1px rgba(245,158,11,.3)}
 .mv{flex:1;overflow-y:auto;padding:20px;display:none;scrollbar-width:thin;scrollbar-color:var(--bo2) transparent}
 .mv.visible{display:block}
 .aform{background:var(--su);border:1px solid var(--bo2);border-radius:16px;padding:18px;margin-bottom:14px}
@@ -379,7 +405,7 @@ service cloud.firestore {
 <div class="mc">
   <div class="mh"><h3>🔐 Login Admin</h3><button class="xbtn" onclick="closeLogin()">×</button></div>
   <div class="mb">
-    <div class="serr" id="loginErr"></div>
+    <div class="serr" id="loginErr">❌ Password salah.</div>
     <div class="fg" style="margin-bottom:0"><label>Password Admin</label><input type="password" id="loginPw" placeholder="Masukkan password…" onkeydown="if(event.key==='Enter')doLogin()"></div>
   </div>
   <div class="mf"><button class="btn" style="width:100%" onclick="doLogin()" id="loginBtn">Masuk sebagai Admin</button></div>
@@ -414,7 +440,15 @@ service cloud.firestore {
     <nav class="nl">
       <div class="ni" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
       <div class="ni active" onclick="showManage()" id="navManage" style=""><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
-      <div id="dynNav"><div class="cl">🧬 Biologi</div><div class="ni" id="mod-pAd2X5fHHA1Q14tzT2Tm" data-label="Biologi kelas X" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')"><span class="nico">🧬</span><span class="nlbl">Biologi kelas X</span></div><div class="cl">💻 Informatika</div><div class="ni" id="mod-hwnWdrjk2gGSgmm1UR88" data-label="Informatika kelas X" onclick="openModule('hwnWdrjk2gGSgmm1UR88')"><span class="nico">💻</span><span class="nlbl">Informatika kelas X</span></div></div>
+      <div id="dynNav"><div class="cl">📚 Mata Pelajaran</div><div class="ni" id="nav-cat-Informatika" data-label="Informatika" onclick="openSubject('Informatika')">
+        <span class="nico">💻</span>
+        <span class="nlbl">Informatika</span>
+        <span class="nbdg" style="background:#2563eb22;color:#2563eb;border:1px solid #2563eb40">1</span>
+      </div><div class="ni" id="nav-cat-Biologi" data-label="Biologi" onclick="openSubject('Biologi')">
+        <span class="nico">🧬</span>
+        <span class="nlbl">Biologi</span>
+        <span class="nbdg" style="background:#34d39922;color:#34d399;border:1px solid #34d39940">1</span>
+      </div></div>
     </nav>
     <div class="sft"><button class="albtn" onclick="openLogin()" id="adminLoginBtn" style="display: none;"><span style="font-size:14px">🔑</span><span class="albx">Login Admin</span></button></div>
   </aside>
@@ -457,20 +491,37 @@ service cloud.firestore {
           <div class="scard" style="--sc:#10b981"><div class="si">✅</div><div class="sv" id="stDone">0</div><div class="slb">Selesai</div></div>
           <div class="scard" style="--sc:#f59e0b"><div class="si">🕐</div><div class="sv" id="stProg">0</div><div class="slb">Sedang Belajar</div></div>
         </div>
-        <div class="sectit">Semua Modul</div>
-        <div class="mg" id="modGrid"><div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">🧬 Biologi</div></div><div class="mcard" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')">
-      <div class="mcat" style="background:#34d39918;color:#34d399;border:1px solid #34d39930">🧬 Biologi</div>
-      <div class="mth" style="background:#34d39915">🧬</div>
-      <div class="mn">Biologi kelas X</div>
-      <div class="md">https://abi151220072-ai.github.io/abi/</div>
-      <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#34d399"></div></div><div class="mp">0%</div></div>
-    </div><div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">💻 Informatika</div></div><div class="mcard" onclick="openModule('hwnWdrjk2gGSgmm1UR88')">
-      <div class="mcat" style="background:#2563eb18;color:#2563eb;border:1px solid #2563eb30">💻 Informatika</div>
-      <div class="mth" style="background:#2563eb15">💻</div>
-      <div class="mn">Informatika kelas X</div>
-      <div class="md">Bab 6-9</div>
-      <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#2563eb"></div></div><div class="mp">0%</div></div>
+        <div class="sectit">Ruang Belajar</div>
+        <div class="subj-rooms" id="subjRooms"><div class="room-card" data-icon="💻" onclick="openSubject('Informatika')" style="background:linear-gradient(135deg,#2563ebdd,#2563eb99);border-color:#2563eb44;color:#fff">
+      <span class="room-ico">💻</span>
+      <div class="room-name">Informatika</div>
+      <div class="room-count">1 modul · 0 selesai</div>
+      <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
+    </div><div class="room-card" data-icon="🧬" onclick="openSubject('Biologi')" style="background:linear-gradient(135deg,#34d399dd,#34d39999);border-color:#34d39944;color:#fff">
+      <span class="room-ico">🧬</span>
+      <div class="room-name">Biologi</div>
+      <div class="room-count">1 modul · 0 selesai</div>
+      <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
     </div></div>
+      </div>
+
+      <!-- SUBJECT VIEW — isi per mata pelajaran -->
+      <div class="sv-view" id="subjView">
+        <div class="sv-header">
+          <div class="sv-back" onclick="backToHome()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            Kembali ke Ruang Belajar
+          </div>
+          <div class="sv-hero" id="svHero" data-icon="📚">
+            <div class="sv-hero-badge" id="svBadge">📚 Mapel</div>
+            <h2 id="svTitle">Nama Mapel</h2>
+            <p id="svDesc">0 modul tersedia</p>
+          </div>
+        </div>
+        <div class="sv-body">
+          <div class="sectit" style="margin-bottom:12px">Modul Tersedia</div>
+          <div class="mg" id="svModGrid"></div>
+        </div>
       </div>
       <!-- IFRAME -->
       <div class="ifv" id="iframeView">
@@ -599,7 +650,7 @@ service cloud.firestore {
           </div>
         </div>
         <div class="sectit">Daftar Modul</div>
-        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi kelas X</span></div><div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')" title="Buka">▶</button><button class="mb2" onclick="markDone('pAd2X5fHHA1Q14tzT2Tm')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('pAd2X5fHHA1Q14tzT2Tm')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika kelas X</span></div><div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('hwnWdrjk2gGSgmm1UR88')" title="Buka">▶</button><button class="mb2" onclick="markDone('hwnWdrjk2gGSgmm1UR88')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('hwnWdrjk2gGSgmm1UR88')" title="Hapus">🗑</button></div></div></div></div>
+        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika kelas X</span></div><div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('hwnWdrjk2gGSgmm1UR88')" title="Buka">▶</button><button class="mb2" onclick="markDone('hwnWdrjk2gGSgmm1UR88')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('hwnWdrjk2gGSgmm1UR88')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi kelas X</span></div><div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('0DMk4mSYPqOCPvSmoYlw')" title="Buka">▶</button><button class="mb2" onclick="markDone('0DMk4mSYPqOCPvSmoYlw')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('0DMk4mSYPqOCPvSmoYlw')" title="Hapus">🗑</button></div></div></div></div>
       </div>
     </div>
   </div>
@@ -815,10 +866,11 @@ function updateAdminUI(){
 function showHome(){
   if(isMax)toggleMax();
   document.getElementById('homeView').style.display='';
+  document.getElementById('subjView').classList.remove('visible');
   document.getElementById('iframeView').classList.remove('visible');
   document.getElementById('manageView').classList.remove('visible');
   const ttl=document.getElementById('ttl');
-  ttl.textContent='Dashboard';
+  ttl.textContent='Dashboard'; ttl.style.color='';
   if(isDev){ttl.style.background='linear-gradient(135deg,#fbbf24,#f59e0b)';ttl.style.webkitBackgroundClip='text';ttl.style.webkitTextFillColor='transparent';ttl.style.backgroundClip='text';}
   ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
   setNav('navHome');
@@ -835,13 +887,23 @@ function showManage(){
   ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
   setNav('navManage');
 }
+let _lastSubject=null;
 function openModule(id){
   const m=modules.find(x=>x.id===id);if(!m)return;
   const p=getProg();if(!p[id]){p[id]='progress';saveProg(p);}
-  document.getElementById('homeView').style.display='none';document.getElementById('manageView').classList.remove('visible');document.getElementById('iframeView').classList.add('visible');
-  document.getElementById('ttl').textContent=m.name;document.getElementById('btnReload').style.display='';document.getElementById('btnExt').style.display=m.url?'':'none';document.getElementById('btnMax').style.display='';
-  document.getElementById('urlBar').textContent=m.url||'[File Upload]';curUrl=m.url||null;zoom=100;document.getElementById('zoomVal').textContent='100%';
-  setNav('mod-'+id);loadFrame(m);
+  _lastSubject=m.cat;
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('subjView').classList.remove('visible');
+  document.getElementById('manageView').classList.remove('visible');
+  document.getElementById('iframeView').classList.add('visible');
+  const ttl=document.getElementById('ttl');
+  ttl.textContent=m.name; ttl.style.background=''; ttl.style.webkitBackgroundClip=''; ttl.style.webkitTextFillColor=''; ttl.style.backgroundClip=''; ttl.style.color='';
+  document.getElementById('btnReload').style.display='';
+  document.getElementById('btnExt').style.display=m.url?'':'none';
+  document.getElementById('btnMax').style.display='';
+  document.getElementById('urlBar').textContent=m.url||'[File Upload]';
+  curUrl=m.url||null; zoom=100; document.getElementById('zoomVal').textContent='100%';
+  loadFrame(m);
 }
 async function loadFrame(m){
   const wrap=document.getElementById('iframeWrap');
@@ -853,7 +915,7 @@ async function loadFrame(m){
     wrap.innerHTML='';const f=document.createElement('iframe');f.id='mainFrame';f.src=src;f.style.cssText='width:100%;height:100%;border:none;display:block;background:#fff';wrap.appendChild(f);
   }catch(e){wrap.innerHTML=`<div class="ifph"><div class="bi">⚠️</div><p>Gagal memuat.<br><a href="${m.url||'#'}" target="_blank" style="color:var(--ac)">Buka di tab baru</a></p></div>`;}
 }
-function goBack(){showHome();}function reloadFrame(){const f=document.getElementById('mainFrame');if(f){const s=f.src;f.src='';f.src=s;}}function openExternal(){if(curUrl)window.open(curUrl,'_blank');}
+function goBack(){ if(_lastSubject){ openSubject(_lastSubject); } else { showHome(); } }function reloadFrame(){const f=document.getElementById('mainFrame');if(f){const s=f.src;f.src='';f.src=s;}}function openExternal(){if(curUrl)window.open(curUrl,'_blank');}
 
 // ══ MAXIMIZE ══
 function toggleMax(){isMax=!isMax;document.getElementById('appInner').classList.toggle('max',isMax);const ico=document.getElementById('maxIco'),btn=document.getElementById('btnMax'),inn=document.getElementById('btnMaxInner');if(isMax){ico.innerHTML='<path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>';btn.classList.add('on');inn.style.display='';}else{ico.innerHTML='<path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>';btn.classList.remove('on');inn.style.display='none';}}
@@ -907,31 +969,91 @@ async function processQueue(arr,idx,subjInfo){
 function renderAll(){renderStats();renderGrid();renderNav();renderTable();}
 function renderStats(){const p=getProg();document.getElementById('stTotal').textContent=modules.length;document.getElementById('stCat').textContent=new Set(modules.map(m=>m.cat)).size;document.getElementById('stDone').textContent=modules.filter(m=>p[m.id]==='selesai').length;document.getElementById('stProg').textContent=modules.filter(m=>p[m.id]==='progress').length;}
 function renderGrid(){
-  const g=document.getElementById('modGrid'),p=getProg();
-  if(!modules.length){g.innerHTML='<div class="empty"><div class="ei">📂</div><p>Belum ada modul ditambahkan.</p></div>';return;}
+  const g=document.getElementById('subjRooms'), p=getProg();
+  if(!modules.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">📂</div><p>Belum ada modul ditambahkan.</p></div>';return;}
   const cats={};modules.forEach(m=>{(cats[m.cat]=cats[m.cat]||[]).push(m)});
   g.innerHTML=Object.entries(cats).map(([cat,list])=>{
     const ref=SUBJECTS.find(s=>s.cat===cat)||{icon:'📚',color:'#6b7280'};
-    return `<div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">${ref.icon} ${cat}</div></div>`+
-    list.map(m=>{const st=p[m.id]||'belum',pct=st==='selesai'?100:st==='progress'?50:0;
-    return `<div class="mcard${st==='progress'?' inp':''}" onclick="openModule('${m.id}')">
-      <div class="mcat" style="background:${m.color}18;color:${m.color};border:1px solid ${m.color}30">${m.icon} ${m.cat}</div>
-      <div class="mth" style="background:${m.color}15">${m.icon}</div>
-      <div class="mn">${m.name}${st==='selesai'?' ✅':st==='progress'?' 🔄':''}</div>
-      <div class="md">${m.desc||m.url||'File upload'}</div>
-      <div class="mft"><div class="pb"><div class="pf" style="width:${pct}%;background:${m.color}"></div></div><div class="mp">${pct}%</div></div>
-    </div>`;}).join('');
+    const done=list.filter(m=>p[m.id]==='selesai').length;
+    const pct=list.length?Math.round(done/list.length*100):0;
+    const bg=ref.color;
+    // darken for background
+    return `<div class="room-card" data-icon="${ref.icon}" onclick="openSubject('${cat}')"
+      style="background:linear-gradient(135deg,${bg}dd,${bg}99);border-color:${bg}44;color:#fff">
+      <span class="room-ico">${ref.icon}</span>
+      <div class="room-name">${cat}</div>
+      <div class="room-count">${list.length} modul · ${done} selesai</div>
+      <div class="room-prog"><div class="room-prog-fill" style="width:${pct}%"></div></div>
+    </div>`;
   }).join('');
+}
+
+// Buka halaman khusus per mata pelajaran
+function openSubject(cat){
+  const list=modules.filter(m=>m.cat===cat);
+  const ref=SUBJECTS.find(s=>s.cat===cat)||{icon:'📚',color:'#6b7280'};
+  const p=getProg();
+  const done=list.filter(m=>p[m.id]==='selesai').length;
+
+  // Update header subject view
+  const hero=document.getElementById('svHero');
+  hero.style.background=`linear-gradient(135deg,${ref.color}dd,${ref.color}88)`;
+  hero.setAttribute('data-icon',ref.icon);
+  document.getElementById('svBadge').textContent=ref.icon+' '+cat;
+  document.getElementById('svTitle').textContent=cat;
+  document.getElementById('svDesc').textContent=`${list.length} modul tersedia · ${done} selesai`;
+
+  // Render modul untuk kategori ini
+  const grid=document.getElementById('svModGrid');
+  if(!list.length){grid.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">📭</div><p>Belum ada modul di kategori ini.</p></div>';
+  }else{
+    grid.innerHTML=list.map(m=>{
+      const st=p[m.id]||'belum',pct=st==='selesai'?100:st==='progress'?50:0;
+      return `<div class="mcard${st==='progress'?' inp':''}" onclick="openModule('${m.id}')">
+        <div class="mth" style="background:${m.color}15">${m.icon}</div>
+        <div class="mn">${m.name}${st==='selesai'?' ✅':st==='progress'?' 🔄':''}</div>
+        <div class="md">${m.desc||m.url||'File upload'}</div>
+        <div class="mft"><div class="pb"><div class="pf" style="width:${pct}%;background:${m.color}"></div></div><div class="mp">${pct}%</div></div>
+      </div>`;
+    }).join('');
+  }
+
+  // Tampilkan subject view
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('subjView').classList.add('visible');
+  document.getElementById('iframeView').classList.remove('visible');
+  document.getElementById('manageView').classList.remove('visible');
+  document.getElementById('ttl').textContent=ref.icon+' '+cat;
+
+  // Set gold title jika admin
+  const ttl=document.getElementById('ttl');
+  if(isDev){ttl.style.background='linear-gradient(135deg,#fbbf24,#f59e0b)';ttl.style.webkitBackgroundClip='text';ttl.style.webkitTextFillColor='transparent';ttl.style.backgroundClip='text';}
+  else{ttl.style.color=ref.color;ttl.style.background='none';ttl.style.webkitTextFillColor='';}
+
+  ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
+  setNav('nav-cat-'+cat.replace(/\s/g,'_'));
+}
+
+function backToHome(){
+  document.getElementById('subjView').classList.remove('visible');
+  showHome();
 }
 function renderNav(){
   const nav=document.getElementById('dynNav'),p=getProg();
   if(!modules.length){nav.innerHTML='';return;}
   const cats={};modules.forEach(m=>{(cats[m.cat]=cats[m.cat]||[]).push(m)});
-  nav.innerHTML=Object.entries(cats).map(([cat,list])=>{
-    const ref=SUBJECTS.find(s=>s.cat===cat)||{icon:'📚'};
-    return `<div class="cl">${ref.icon} ${cat}</div>`+
-    list.map(m=>`<div class="ni" id="mod-${m.id}" data-label="${m.name}" onclick="openModule('${m.id}')"><span class="nico">${m.icon}</span><span class="nlbl">${m.name}</span>${p[m.id]==='selesai'?'<span class="nbdg" style="background:var(--ac3)">✓</span>':''}</div>`).join('');
-  }).join('');
+  nav.innerHTML='<div class="cl">📚 Mata Pelajaran</div>'+
+    Object.entries(cats).map(([cat,list])=>{
+      const ref=SUBJECTS.find(s=>s.cat===cat)||{icon:'📚',color:'#6b7280'};
+      const p2=getProg();
+      const done=list.filter(m=>p2[m.id]==='selesai').length;
+      const badge=done>0?`<span class="nbdg" style="background:${ref.color}">${done}✓</span>`:'';
+      return `<div class="ni" id="nav-cat-${cat.replace(/\s/g,'_')}" data-label="${cat}" onclick="openSubject('${cat}')">
+        <span class="nico">${ref.icon}</span>
+        <span class="nlbl">${cat}</span>
+        <span class="nbdg" style="background:${ref.color}22;color:${ref.color};border:1px solid ${ref.color}40">${list.length}</span>
+      </div>`;
+    }).join('');
 }
 function renderTable(){
   const w=document.getElementById('tblWrap');
