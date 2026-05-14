@@ -223,7 +223,27 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 .app.max .sidebar,.app.max .topbar{display:none}
 .app.max .ifv{position:fixed;inset:0;z-index:500;background:var(--bg)}
 
-/* ══ SUBJECT ROOMS — Halaman per mata pelajaran ══ */
+/* ══ PROFILE PHOTO ══ */
+.profile-wrap{display:flex;flex-direction:column;align-items:center;padding:22px 0 4px;margin-bottom:4px}
+.profile-avatar{width:88px;height:88px;border-radius:50%;border:3px solid var(--bo2);background:var(--su2);display:grid;place-items:center;position:relative;overflow:hidden;transition:.25s;flex-shrink:0}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-avatar .ava-placeholder{font-size:34px;opacity:.5}
+.profile-avatar .ava-overlay{position:absolute;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;border-radius:50%;flex-direction:column;gap:3px}
+.profile-avatar .ava-overlay span{font-size:18px}
+.profile-avatar .ava-overlay p{font-size:10px;color:#fff;font-weight:700}
+.profile-avatar.editable{cursor:pointer}
+.profile-avatar.editable:hover .ava-overlay{display:flex}
+.profile-avatar.editable:hover{border-color:var(--ac);box-shadow:0 0 0 4px rgba(99,102,241,.15)}
+.app.admin-mode .profile-avatar.editable:hover{border-color:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.15)}
+.app.admin-mode .profile-avatar{border-color:rgba(245,158,11,.4);box-shadow:0 0 20px rgba(245,158,11,.1)}
+.profile-name{font-size:16px;font-weight:800;margin-top:10px;text-align:center}
+.profile-role{font-size:11.5px;color:var(--mu);margin-top:2px;font-weight:500;display:flex;align-items:center;gap:5px}
+.profile-role .role-badge{background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);color:#a5b4fc;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700}
+.app.admin-mode .profile-role .role-badge{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:#fbbf24}
+.app.admin-mode .profile-name{background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.profile-edit-hint{font-size:10.5px;color:var(--mu);margin-top:4px;opacity:.7;display:none}
+.app.admin-mode .profile-edit-hint{display:block}
+.profile-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,var(--bo2),transparent);margin-top:14px}
 /* Cards di dashboard */
 .subj-rooms{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;margin-bottom:22px}
 .room-card{border-radius:18px;padding:20px 16px;cursor:pointer;transition:.25s;position:relative;overflow:hidden;border:1px solid transparent}
@@ -405,7 +425,7 @@ service cloud.firestore {
 <div class="mc">
   <div class="mh"><h3>🔐 Login Admin</h3><button class="xbtn" onclick="closeLogin()">×</button></div>
   <div class="mb">
-    <div class="serr" id="loginErr">❌ Password salah.</div>
+    <div class="serr" id="loginErr"></div>
     <div class="fg" style="margin-bottom:0"><label>Password Admin</label><input type="password" id="loginPw" placeholder="Masukkan password…" onkeydown="if(event.key==='Enter')doLogin()"></div>
   </div>
   <div class="mf"><button class="btn" style="width:100%" onclick="doLogin()" id="loginBtn">Masuk sebagai Admin</button></div>
@@ -466,6 +486,25 @@ service cloud.firestore {
     <div class="content">
       <!-- HOME -->
       <div class="hv" id="homeView" style="display: none;">
+
+        <!-- PROFILE PHOTO -->
+        <div class="profile-wrap">
+          <div class="profile-avatar editable" id="profileAvatar" onclick="handleAvatarClick()">
+            <div class="ava-placeholder" id="avaPlaceholder">👤</div>
+            <img id="avaImg" src="" style="display:none" alt="Foto Profil">
+            <div class="ava-overlay">
+              <span>📷</span>
+              <p>Ganti Foto</p>
+            </div>
+          </div>
+          <div class="profile-name" id="profileName">Portal Belajar</div>
+          <div class="profile-role">
+            <span class="role-badge" id="profileRoleBadge">👑 Admin</span>
+          </div>
+          <div class="profile-edit-hint">Klik foto untuk mengganti</div>
+          <div class="profile-divider"></div>
+        </div>
+        <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(this.files[0])">
 
         <!-- HERO ADMIN (hanya muncul saat login admin) -->
         <div class="admin-hero">
@@ -650,7 +689,7 @@ service cloud.firestore {
           </div>
         </div>
         <div class="sectit">Daftar Modul</div>
-        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika kelas X</span></div><div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('hwnWdrjk2gGSgmm1UR88')" title="Buka">▶</button><button class="mb2" onclick="markDone('hwnWdrjk2gGSgmm1UR88')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('hwnWdrjk2gGSgmm1UR88')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi kelas X</span></div><div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('0DMk4mSYPqOCPvSmoYlw')" title="Buka">▶</button><button class="mb2" onclick="markDone('0DMk4mSYPqOCPvSmoYlw')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('0DMk4mSYPqOCPvSmoYlw')" title="Hapus">🗑</button></div></div></div></div>
+        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika</span></div><div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('5AAPmomTOQNFIMtj20rJ')" title="Buka">▶</button><button class="mb2" onclick="markDone('5AAPmomTOQNFIMtj20rJ')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('5AAPmomTOQNFIMtj20rJ')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi</span></div><div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('R5JCnRZ2Ba4dCtJn0f6Y')" title="Buka">▶</button><button class="mb2" onclick="markDone('R5JCnRZ2Ba4dCtJn0f6Y')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('R5JCnRZ2Ba4dCtJn0f6Y')" title="Hapus">🗑</button></div></div></div></div>
       </div>
     </div>
   </div>
@@ -826,7 +865,9 @@ function startApp(asDev=false){
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('appRoot').classList.add('visible');
   if(asDev){isDev=true;sessionStorage.setItem('pb_dev','1');}
-  updateAdminUI();startSync();
+  updateAdminUI();
+  startSync();
+  loadProfile();
 }
 function startSync(){
   if(unsub)unsub();
@@ -859,6 +900,7 @@ function updateAdminUI(){
     ttl.style.backgroundClip = '';
   }
   if(!isDev&&document.getElementById('manageView').classList.contains('visible'))showHome();
+  updateProfileRole();
   renderAll();
 }
 
@@ -1068,7 +1110,82 @@ function toggleSidebar(){sCol=!sCol;document.getElementById('sidebar').classList
 function showE(el,msg){el.textContent=msg;el.classList.add('show');}
 function toast(msg,type='success'){const t=document.getElementById('toast');document.getElementById('tMsg').textContent=msg;document.getElementById('tIco').textContent=type==='success'?'✅':type==='error'?'❌':'ℹ️';t.className='toast show';clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),4500);}
 
-// ══ BOOT ══
+// ══ PROFILE PHOTO ══
+async function loadProfile(){
+  try{
+    const doc=await db.collection('_config').doc('profile').get();
+    if(doc.exists){
+      const data=doc.data();
+      if(data.photo){ setAvaImg(data.photo); }
+      if(data.name){ document.getElementById('profileName').textContent=data.name; }
+    }
+  }catch(e){ console.log('Profile load:',e); }
+}
+
+function setAvaImg(src){
+  const img=document.getElementById('avaImg');
+  const ph=document.getElementById('avaPlaceholder');
+  img.src=src; img.style.display='block'; ph.style.display='none';
+}
+
+function handleAvatarClick(){
+  if(!isDev){ return; } // teman tidak bisa ganti foto
+  document.getElementById('avatarInput').click();
+}
+
+async function uploadAvatar(file){
+  if(!file||!isDev) return;
+  if(file.size > 2*1024*1024){ toast('Foto terlalu besar (maks 2MB).','error'); return; }
+  toast('Menyimpan foto…','info');
+  const reader=new FileReader();
+  reader.onload=async(e)=>{
+    const base64=e.target.result;
+    try{
+      await db.collection('_config').doc('profile').set({photo:base64},{ merge:true });
+      setAvaImg(base64);
+      toast('✅ Foto profil berhasil diperbarui!','success');
+    }catch(err){ toast('Gagal simpan foto: '+err.message,'error'); }
+  };
+  reader.readAsDataURL(file);
+}
+
+// Panel edit nama profil (double click nama)
+document.addEventListener('DOMContentLoaded',()=>{
+  const nameEl=document.getElementById('profileName');
+  if(nameEl){
+    nameEl.addEventListener('dblclick',()=>{
+      if(!isDev) return;
+      const cur=nameEl.textContent;
+      const inp=document.createElement('input');
+      inp.value=cur; inp.style.cssText='background:var(--su2);border:1px solid var(--ac);border-radius:8px;padding:4px 10px;color:var(--tx);font-size:15px;font-weight:800;text-align:center;font-family:"Plus Jakarta Sans",sans-serif;outline:none;width:200px;max-width:90vw';
+      nameEl.replaceWith(inp); inp.focus(); inp.select();
+      async function saveN(){
+        const val=inp.value.trim()||'Portal Belajar';
+        const newEl=document.createElement('div');
+        newEl.id='profileName'; newEl.className='profile-name'; newEl.textContent=val;
+        newEl.addEventListener('dblclick',arguments.callee||function(){});
+        inp.replaceWith(newEl);
+        // re-attach dblclick
+        newEl.addEventListener('dblclick',()=>{
+          if(!isDev) return;
+          newEl.dispatchEvent(new Event('dblclick_custom'));
+        });
+        try{ await db.collection('_config').doc('profile').set({name:val},{merge:true}); toast('✅ Nama diperbarui!','success');}
+        catch(e){ toast('Gagal: '+e.message,'error'); }
+      }
+      inp.addEventListener('blur',saveN);
+      inp.addEventListener('keydown',e=>{ if(e.key==='Enter') inp.blur(); if(e.key==='Escape'){inp.value=cur;inp.blur();} });
+    });
+  }
+});
+
+// Update role badge saat login/logout admin
+function updateProfileRole(){
+  const badge=document.getElementById('profileRoleBadge');
+  if(!badge) return;
+  if(isDev){ badge.textContent='👑 Admin'; }
+  else { badge.textContent='🎓 Pelajar'; }
+}
 window.addEventListener('load',function(){
   if(typeof firebase==='undefined'){document.body.innerHTML=`<div style="font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:16px;background:#07080f;color:#eef0f8;text-align:center;padding:24px"><div style="font-size:52px">📡</div><h2 style="font-size:18px">Firebase gagal dimuat</h2><p style="color:#6b7394;max-width:340px;font-size:13px;line-height:1.6">Pastikan ada koneksi internet saat membuka file ini. Firebase SDK diunduh dari CDN.</p><button onclick="location.reload()" style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:sans-serif">🔄 Coba Lagi</button></div>`;return;}
   const saved=loadCfg();
