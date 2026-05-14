@@ -15,6 +15,46 @@
 }
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
 
+/* ══ ADMIN MODE — tampilan gold/premium saat login admin ══ */
+.app.admin-mode .sidebar{border-right-color:#b45309;box-shadow:inset -1px 0 0 rgba(251,191,36,.15)}
+.app.admin-mode .topbar{border-bottom-color:#b45309;background:linear-gradient(180deg,#13100a,var(--su));box-shadow:0 1px 0 rgba(251,191,36,.12)}
+.app.admin-mode .topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#f59e0b,#fbbf24,#f59e0b,transparent)}
+.topbar{position:relative}
+.app.admin-mode .lm{background:linear-gradient(135deg,#d97706,#f59e0b)!important;box-shadow:0 0 16px rgba(245,158,11,.4)}
+.app.admin-mode .lt{background:linear-gradient(135deg,#fbbf24,#f59e0b)!important;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.app.admin-mode .ni.active{background:linear-gradient(90deg,rgba(245,158,11,.15),rgba(251,191,36,.04))!important;color:#fbbf24!important}
+.app.admin-mode .ni.active::before{background:linear-gradient(180deg,#f59e0b,#fbbf24)!important}
+.app.admin-mode .dbadge{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25)}
+.app.admin-mode .ddot{background:#f59e0b}
+.app.admin-mode .dtx{color:#fbbf24}
+.app.admin-mode .dlo{color:rgba(245,158,11,.6)}.app.admin-mode .dlo:hover{color:#fbbf24;background:rgba(245,158,11,.1)}
+.app.admin-mode .sync{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.2);color:#fbbf24}
+.app.admin-mode .sdot2{background:#f59e0b}
+.app.admin-mode .scard{border-color:rgba(245,158,11,.2);background:linear-gradient(135deg,#0e0c06,var(--su))}
+.app.admin-mode .scard::after{opacity:.15}
+.app.admin-mode .aform{border-color:rgba(245,158,11,.2);background:linear-gradient(135deg,#0e0c06,var(--su))}
+.app.admin-mode .aform-title{color:#fbbf24}
+.app.admin-mode .tbl{border-color:rgba(245,158,11,.2)}
+.app.admin-mode .tblh{background:linear-gradient(135deg,#13100a,var(--su2));border-bottom-color:rgba(245,158,11,.15)}
+.app.admin-mode .mbtn{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.app.admin-mode .mbtn:hover{opacity:.88}
+.app.admin-mode .dl-banner{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(251,191,36,.05));border-color:rgba(245,158,11,.25)}
+.app.admin-mode .dl-banner h3{color:#fbbf24}
+.app.admin-mode .btn{background:linear-gradient(135deg,#d97706,#f59e0b)}
+.admin-hero{display:none;background:linear-gradient(135deg,#1a1200,#130e00);border:1px solid rgba(245,158,11,.25);border-radius:18px;padding:22px;margin-bottom:18px;position:relative;overflow:hidden}
+.admin-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 10% 50%,rgba(245,158,11,.12),transparent 60%),radial-gradient(ellipse at 90% 20%,rgba(251,191,36,.06),transparent 50%)}
+.admin-hero::after{content:'👑';position:absolute;right:20px;top:50%;transform:translateY(-50%);font-size:52px;opacity:.12}
+.admin-hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:#fbbf24;margin-bottom:10px}
+.admin-hero h2{font-size:20px;font-weight:800;color:#fef3c7;margin-bottom:5px}
+.admin-hero p{font-size:13px;color:#92400e;margin-bottom:14px}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+.admin-act-btn{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.25);color:#fbbf24;border-radius:9px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:6px}
+.admin-act-btn:hover{background:rgba(245,158,11,.2);border-color:rgba(245,158,11,.5);transform:translateY(-1px)}
+/* User hero — tampilan normal */
+.user-hero{display:block}
+.app.admin-mode .admin-hero{display:block}
+.app.admin-mode .user-hero{display:none}
+
 /* ══ SETUP ══ */
 #setupOverlay{position:fixed;inset:0;z-index:1000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto}
 .sc{background:var(--su);border:1px solid var(--bo2);border-radius:22px;width:100%;max-width:520px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.5)}
@@ -243,7 +283,7 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 <body>
 
 <!-- ══ SETUP OVERLAY ══ -->
-<div id="setupOverlay">
+<div id="setupOverlay" style="display: none;">
 <div class="sc">
   <div class="sh">
     <div class="logo-wrap">📚</div>
@@ -252,13 +292,13 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
   </div>
   <div class="sb">
     <div class="sdots">
-      <div class="sdot done" id="dot0"></div>
-      <div class="sdot done" id="dot1"></div>
-      <div class="sdot done" id="dot2"></div>
-      <div class="sdot active" id="dot3"></div>
+      <div class="sdot active" id="dot0"></div>
+      <div class="sdot" id="dot1"></div>
+      <div class="sdot" id="dot2"></div>
+      <div class="sdot" id="dot3"></div>
     </div>
     <!-- Step 0 -->
-    <div class="ss" id="step0">
+    <div class="ss active" id="step0">
       <div class="stitle">⚡ Persiapan Firebase</div>
       <div class="sdesc">Buat proyek Firebase gratis — hanya butuh <strong>Firestore</strong> saja.</div>
       <ol class="slist">
@@ -286,7 +326,7 @@ service cloud.firestore {
       <div class="stitle">🔧 Konfigurasi Firebase</div>
       <div class="sdesc">Salin seluruh isi <code>{ ... }</code> dari <strong>firebaseConfig</strong> di Firebase Console.</div>
       <div class="serr" id="cfgErr"></div>
-      <div class="ssucc show" id="cfgOk">✅ Terhubung! Project: mari-jadi-pintar</div>
+      <div class="ssucc" id="cfgOk"></div>
       <div class="fg">
         <label>Firebase Config</label>
         <textarea id="cfgJson" placeholder="Tempel di sini:
@@ -308,7 +348,7 @@ service cloud.firestore {
       <div class="stitle">🔐 Buat Password Admin</div>
       <div class="sdesc">Password untuk kamu saja. Teman yang buka portal <strong>tidak perlu password</strong> — langsung lihat materi.</div>
       <div class="serr" id="pwErr"></div>
-      <div class="ssucc show" id="pwOk">✅ Password tersimpan!</div>
+      <div class="ssucc" id="pwOk"></div>
       <div class="fg"><label>Password Admin (min 6 karakter)</label><input type="password" id="devPw" placeholder="Buat password kuat…"></div>
       <div class="fg" style="margin-bottom:14px"><label>Konfirmasi Password</label><input type="password" id="devPw2" placeholder="Ulangi password…"></div>
       <div class="br">
@@ -317,7 +357,7 @@ service cloud.firestore {
       </div>
     </div>
     <!-- Step 3 -->
-    <div class="ss active" id="step3">
+    <div class="ss" id="step3">
       <div class="stitle">🎉 Setup Selesai!</div>
       <div class="sdesc">Download file portal yang sudah dikonfigurasi untuk dibagikan ke teman atau diupload ke GitHub Pages.</div>
       <div class="dl-banner">
@@ -332,10 +372,10 @@ service cloud.firestore {
 </div>
 
 <!-- LOADING -->
-<div id="loadingScreen"><div class="spin"></div><p style="font-size:13px;color:var(--mu);font-weight:500">Menghubungkan…</p></div>
+<div id="loadingScreen" style="display: none;"><div class="spin"></div><p style="font-size:13px;color:var(--mu);font-weight:500">Menghubungkan…</p></div>
 
 <!-- LOGIN MODAL -->
-<div id="loginModal">
+<div id="loginModal" class="">
 <div class="mc">
   <div class="mh"><h3>🔐 Login Admin</h3><button class="xbtn" onclick="closeLogin()">×</button></div>
   <div class="mb">
@@ -359,29 +399,29 @@ service cloud.firestore {
 </div>
 
 <!-- APP -->
-<div id="appRoot">
-<div class="app" id="appInner">
+<div id="appRoot" class="visible">
+<div class="app admin-mode" id="appInner">
   <aside class="sidebar" id="sidebar">
     <div class="sdh">
       <div class="lm">P</div>
-      <div class="lt">Portal Belajar</div>
+      <div class="lt">👑 Portal Belajar</div>
       <button class="tb" onclick="toggleSidebar()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
       </button>
     </div>
-    <div class="dbadge" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
+    <div class="dbadge show" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
     <div class="sw"><div class="sb2"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><input type="text" id="searchInput" placeholder="Cari materi…" oninput="filterNav()"></div></div>
     <nav class="nl">
-      <div class="ni active" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
-      <div class="ni" onclick="showManage()" id="navManage" style="display:none"><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
-      <div id="dynNav"></div>
+      <div class="ni" onclick="showHome()" id="navHome"><span class="nico">🏠</span><span class="nlbl">Dashboard</span></div>
+      <div class="ni active" onclick="showManage()" id="navManage" style=""><span class="nico">⚙️</span><span class="nlbl">Kelola Modul</span></div>
+      <div id="dynNav"><div class="cl">🧬 Biologi</div><div class="ni" id="mod-pAd2X5fHHA1Q14tzT2Tm" data-label="Biologi kelas X" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')"><span class="nico">🧬</span><span class="nlbl">Biologi kelas X</span></div><div class="cl">💻 Informatika</div><div class="ni" id="mod-hwnWdrjk2gGSgmm1UR88" data-label="Informatika kelas X" onclick="openModule('hwnWdrjk2gGSgmm1UR88')"><span class="nico">💻</span><span class="nlbl">Informatika kelas X</span></div></div>
     </nav>
-    <div class="sft"><button class="albtn" onclick="openLogin()" id="adminLoginBtn"><span style="font-size:14px">🔑</span><span class="albx">Login Admin</span></button></div>
+    <div class="sft"><button class="albtn" onclick="openLogin()" id="adminLoginBtn" style="display: none;"><span style="font-size:14px">🔑</span><span class="albx">Login Admin</span></button></div>
   </aside>
 
   <div class="main">
     <div class="topbar">
-      <div id="ttl" class="ttl">Dashboard</div>
+      <div id="ttl" class="ttl" style="background: linear-gradient(135deg, rgb(251, 191, 36), rgb(245, 158, 11)) text; -webkit-text-fill-color: transparent;">⚙️ Kelola Modul</div>
       <div class="tact">
         <div class="sync" id="syncInd"><div class="sdot2"></div><span>Live</span></div>
         <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg></button>
@@ -391,20 +431,46 @@ service cloud.firestore {
     </div>
     <div class="content">
       <!-- HOME -->
-      <div class="hv" id="homeView">
-        <div class="hv-hero">
+      <div class="hv" id="homeView" style="display: none;">
+
+        <!-- HERO ADMIN (hanya muncul saat login admin) -->
+        <div class="admin-hero">
+          <div class="admin-hero-badge">👑 Mode Admin</div>
+          <h2>Halo Tuan,</h2>
+          <p>Ada yang ingin ditambahkan atau ingin dihapus hari ini?</p>
+          <div class="admin-actions">
+            <button class="admin-act-btn" onclick="showManage()">✨ Tambah Modul Baru</button>
+            <button class="admin-act-btn" onclick="showManage();setTimeout(()=&gt;document.getElementById('tblWrap').scrollIntoView({behavior:'smooth'}),300)">🗑️ Kelola &amp; Hapus Modul</button>
+            <button class="admin-act-btn" onclick="downloadConfiguredFile()">📥 Download File Portal</button>
+          </div>
+        </div>
+
+        <!-- HERO USER (tampilan biasa untuk teman) -->
+        <div class="hv-hero user-hero">
           <div class="hero-badge">🔴 Live</div>
           <h2 id="greet">Selamat Datang! 👋</h2>
           <p>Pilih modul dari sidebar atau kartu di bawah untuk mulai belajar.</p>
         </div>
         <div class="srow">
-          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">0</div><div class="slb">Total Modul</div></div>
-          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">0</div><div class="slb">Kategori</div></div>
+          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">2</div><div class="slb">Total Modul</div></div>
+          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">2</div><div class="slb">Kategori</div></div>
           <div class="scard" style="--sc:#10b981"><div class="si">✅</div><div class="sv" id="stDone">0</div><div class="slb">Selesai</div></div>
           <div class="scard" style="--sc:#f59e0b"><div class="si">🕐</div><div class="sv" id="stProg">0</div><div class="slb">Sedang Belajar</div></div>
         </div>
         <div class="sectit">Semua Modul</div>
-        <div class="mg" id="modGrid"><div class="empty"><div class="ei">📂</div><p>Belum ada modul.<br>Admin perlu menambahkan modul terlebih dahulu.</p></div></div>
+        <div class="mg" id="modGrid"><div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">🧬 Biologi</div></div><div class="mcard" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')">
+      <div class="mcat" style="background:#34d39918;color:#34d399;border:1px solid #34d39930">🧬 Biologi</div>
+      <div class="mth" style="background:#34d39915">🧬</div>
+      <div class="mn">Biologi kelas X</div>
+      <div class="md">https://abi151220072-ai.github.io/abi/</div>
+      <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#34d399"></div></div><div class="mp">0%</div></div>
+    </div><div style="grid-column:1/-1"><div class="sectit" style="font-size:11px;margin-bottom:10px">💻 Informatika</div></div><div class="mcard" onclick="openModule('hwnWdrjk2gGSgmm1UR88')">
+      <div class="mcat" style="background:#2563eb18;color:#2563eb;border:1px solid #2563eb30">💻 Informatika</div>
+      <div class="mth" style="background:#2563eb15">💻</div>
+      <div class="mn">Informatika kelas X</div>
+      <div class="md">Bab 6-9</div>
+      <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#2563eb"></div></div><div class="mp">0%</div></div>
+    </div></div>
       </div>
       <!-- IFRAME -->
       <div class="ifv" id="iframeView">
@@ -422,7 +488,7 @@ service cloud.firestore {
         <div class="ifw" id="iframeWrap"><div class="ifph"><div class="bi">🖥️</div><p>Pilih modul untuk mulai belajar.</p></div></div>
       </div>
       <!-- MANAGE -->
-      <div class="mv" id="manageView">
+      <div class="mv visible" id="manageView">
         <div style="display:flex;align-items:center;gap:9px;margin-bottom:16px">
           <h2 style="font-size:17px;font-weight:800">⚙️ Kelola Modul</h2>
           <span class="tag" style="color:var(--ac3);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.07)">Admin Mode</span>
@@ -533,14 +599,14 @@ service cloud.firestore {
           </div>
         </div>
         <div class="sectit">Daftar Modul</div>
-        <div id="tblWrap"><div class="empty"><div class="ei">📂</div><p>Belum ada modul.</p></div></div>
+        <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi kelas X</span></div><div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('pAd2X5fHHA1Q14tzT2Tm')" title="Buka">▶</button><button class="mb2" onclick="markDone('pAd2X5fHHA1Q14tzT2Tm')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('pAd2X5fHHA1Q14tzT2Tm')" title="Hapus">🗑</button></div></div><div class="tblr"><div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika kelas X</span></div><div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div><div><span class="tag" style="color:var(--mu)">⏳ Belum</span></div><div class="ra"><button class="mb2" onclick="openModule('hwnWdrjk2gGSgmm1UR88')" title="Buka">▶</button><button class="mb2" onclick="markDone('hwnWdrjk2gGSgmm1UR88')" title="Selesai">✓</button><button class="mb2 del" onclick="promptDelete('hwnWdrjk2gGSgmm1UR88')" title="Hapus">🗑</button></div></div></div></div>
       </div>
     </div>
   </div>
 </div>
 </div>
 
-<div class="toast" id="toast"><span id="tIco">✅</span>&nbsp;<span id="tMsg"></span></div>
+<div class="toast" id="toast"><span id="tIco">✅</span>&nbsp;<span id="tMsg">✅ Login berhasil! Selamat datang, Admin.</span></div>
 
 <!-- Firebase -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
@@ -721,17 +787,54 @@ function startSync(){
   },e=>{si.innerHTML='<div class="sdot2" style="background:var(--da)"></div><span>Error</span>';console.error(e);});
 }
 function updateAdminUI(){
+  const app = document.getElementById('appInner');
+  app.classList.toggle('admin-mode', isDev);
   document.getElementById('devBadge').classList.toggle('show',isDev);
   document.getElementById('navManage').style.display=isDev?'':'none';
   document.getElementById('adminLoginBtn').style.display=isDev?'none':'';
-  document.getElementById('greet').textContent=isDev?'Halo, Admin! 👨‍💻':'Selamat Datang! 👋';
+  // Update title portal
+  document.querySelector('.lt').textContent = isDev ? '👑 Portal Belajar' : 'Portal Belajar';
+  // Topbar title style
+  const ttl = document.getElementById('ttl');
+  if (isDev) {
+    ttl.style.background = 'linear-gradient(135deg,#fbbf24,#f59e0b)';
+    ttl.style.webkitBackgroundClip = 'text';
+    ttl.style.webkitTextFillColor = 'transparent';
+    ttl.style.backgroundClip = 'text';
+  } else {
+    ttl.style.background = '';
+    ttl.style.webkitBackgroundClip = '';
+    ttl.style.webkitTextFillColor = '';
+    ttl.style.backgroundClip = '';
+  }
   if(!isDev&&document.getElementById('manageView').classList.contains('visible'))showHome();
   renderAll();
 }
 
 // ══ VIEWS ══
-function showHome(){if(isMax)toggleMax();document.getElementById('homeView').style.display='';document.getElementById('iframeView').classList.remove('visible');document.getElementById('manageView').classList.remove('visible');document.getElementById('ttl').textContent='Dashboard';['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');setNav('navHome');}
-function showManage(){if(!isDev){openLogin();return;}if(isMax)toggleMax();document.getElementById('homeView').style.display='none';document.getElementById('iframeView').classList.remove('visible');document.getElementById('manageView').classList.add('visible');document.getElementById('ttl').textContent='Kelola Modul';['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');setNav('navManage');}
+function showHome(){
+  if(isMax)toggleMax();
+  document.getElementById('homeView').style.display='';
+  document.getElementById('iframeView').classList.remove('visible');
+  document.getElementById('manageView').classList.remove('visible');
+  const ttl=document.getElementById('ttl');
+  ttl.textContent='Dashboard';
+  if(isDev){ttl.style.background='linear-gradient(135deg,#fbbf24,#f59e0b)';ttl.style.webkitBackgroundClip='text';ttl.style.webkitTextFillColor='transparent';ttl.style.backgroundClip='text';}
+  ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
+  setNav('navHome');
+}
+function showManage(){
+  if(!isDev){openLogin();return;}
+  if(isMax)toggleMax();
+  document.getElementById('homeView').style.display='none';
+  document.getElementById('iframeView').classList.remove('visible');
+  document.getElementById('manageView').classList.add('visible');
+  const ttl=document.getElementById('ttl');
+  ttl.textContent='⚙️ Kelola Modul';
+  ttl.style.background='linear-gradient(135deg,#fbbf24,#f59e0b)';ttl.style.webkitBackgroundClip='text';ttl.style.webkitTextFillColor='transparent';ttl.style.backgroundClip='text';
+  ['btnReload','btnExt','btnMax'].forEach(id=>document.getElementById(id).style.display='none');
+  setNav('navManage');
+}
 function openModule(id){
   const m=modules.find(x=>x.id===id);if(!m)return;
   const p=getProg();if(!p[id]){p[id]='progress';saveProg(p);}
