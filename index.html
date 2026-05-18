@@ -1,4 +1,4 @@
-<html lang="id" data-theme="light"><head>
+<html lang="id" data-theme="dark"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portal Belajar</title>
@@ -427,7 +427,58 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-thumb{background:var(--bo2);border-radius:4px}
 
-/* ══ LATIHAN SOAL ══ */
+/* ══ BULK UPLOAD SOAL ══ */
+.bulk-upload-area{border:2px dashed var(--bo2);border-radius:14px;padding:28px 20px;text-align:center;cursor:pointer;transition:.3s;background:var(--su2);position:relative}
+.bulk-upload-area:hover,.bulk-upload-area.drag{border-color:var(--ac);background:rgba(99,102,241,.05)}
+.bulk-upload-area .bui{font-size:38px;margin-bottom:10px}
+.bulk-upload-area h4{font-size:14px;font-weight:700;margin-bottom:5px}
+.bulk-upload-area p{font-size:12px;color:var(--mu);line-height:1.6}
+.bulk-upload-area .ext-badges{display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.ext-badge{background:var(--su);border:1px solid var(--bo2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--mu)}
+.tpl-btn{background:linear-gradient(135deg,rgba(16,185,129,.15),rgba(6,182,212,.1));border:1px solid rgba(16,185,129,.3);color:var(--ac3);border-radius:10px;padding:9px 16px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:7px}
+.tpl-btn:hover{background:rgba(16,185,129,.2);transform:translateY(-1px)}
+/* Preview modal */
+.preview-modal-overlay{position:fixed;inset:0;z-index:900;background:rgba(0,0,0,.8);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.preview-modal-overlay.open{display:flex}
+.preview-modal{background:var(--su);border:1px solid var(--bo2);border-radius:20px;width:100%;max-width:680px;overflow:hidden;margin:auto;box-shadow:0 24px 64px rgba(0,0,0,.5)}
+.preview-hd{padding:16px 20px;border-bottom:1px solid var(--bo);display:flex;align-items:center;justify-content:space-between;background:var(--su2)}
+.preview-hd h3{font-size:15px;font-weight:700}
+.preview-body{padding:18px;max-height:60vh;overflow-y:auto}
+.preview-table{width:100%;border-collapse:collapse;font-size:12px}
+.preview-table th{background:var(--su2);padding:9px 12px;text-align:left;font-size:10.5px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--bo)}
+.preview-table td{padding:10px 12px;border-bottom:1px solid var(--bo);color:var(--tx2);vertical-align:top;line-height:1.5}
+.preview-table tr:last-child td{border-bottom:none}
+.preview-table tr:hover td{background:var(--su2)}
+.preview-err{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.25);border-radius:10px;padding:11px 14px;font-size:12.5px;color:var(--da);margin-bottom:13px;display:none}
+.preview-err.show{display:block}
+.preview-ok-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--ac3)}
+.preview-foot{padding:14px 18px;border-top:1px solid var(--bo);display:flex;gap:8px;background:var(--su2)}
+.preview-foot .mbtn{flex:1;padding:11px}
+.ans-cell{font-weight:700;color:var(--ac3)}
+.row-valid{}.row-err td{background:rgba(248,113,113,.04)!important;color:var(--da)}
+/* Step indicator for upload flow */
+.upload-steps{display:flex;gap:0;margin-bottom:18px;border-radius:12px;overflow:hidden;border:1px solid var(--bo2)}
+.upload-step{flex:1;padding:10px 8px;text-align:center;font-size:11.5px;font-weight:700;color:var(--mu);background:var(--su2);border-right:1px solid var(--bo2);transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.upload-step:last-child{border-right:none}
+.upload-step.active{background:rgba(99,102,241,.12);color:#a5b4fc}
+.upload-step.done{background:rgba(16,185,129,.08);color:var(--ac3)}
+
+/* ══ CO-ADMIN ══ */
+.app.coadmin-mode .topbar::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#3b82f6,#60a5fa,#3b82f6,transparent)}
+.app.coadmin-mode .lm{background:linear-gradient(135deg,#1d4ed8,#3b82f6)!important;box-shadow:0 0 14px rgba(59,130,246,.3)}
+.app.coadmin-mode .lt{background:linear-gradient(135deg,#60a5fa,#3b82f6)!important;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.app.coadmin-mode .sidebar{border-right-color:rgba(59,130,246,.35)}
+.coadmin-badge{margin:6px 8px;background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2);border-radius:10px;padding:6px 9px;display:none;align-items:center;gap:7px;flex-shrink:0}
+.coadmin-badge.show{display:flex}
+.coadmin-dot{width:6px;height:6px;border-radius:50%;background:#3b82f6;flex-shrink:0;animation:pulse 2s infinite}
+.coadmin-tx{font-size:11px;color:#60a5fa;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;transition:opacity .2s}
+.coadmin-lo{background:none;border:none;color:rgba(59,130,246,.5);cursor:pointer;font-size:11px;padding:2px 6px;border-radius:5px;font-family:'Plus Jakarta Sans',sans-serif;transition:.2s;flex-shrink:0}
+.coadmin-lo:hover{color:#60a5fa;background:rgba(59,130,246,.1)}
+.sidebar.col .coadmin-tx,.sidebar.col .coadmin-lo{opacity:0;pointer-events:none}
+</style>
+
+<!-- QUIZ CSS - must be inside a style tag -->
+<style>
 .qhv{flex:1;overflow-y:auto;padding:20px;display:none;scrollbar-width:thin;scrollbar-color:var(--bo2) transparent}
 .qhv.visible{display:block}
 .quiz-hero{background:linear-gradient(135deg,rgba(99,102,241,.14),rgba(139,92,246,.08));border:1px solid rgba(99,102,241,.22);border-radius:18px;padding:22px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
@@ -569,10 +620,26 @@ code{background:var(--su2);border:1px solid var(--bo2);border-radius:5px;padding
 <!-- ══ MODALS ══ -->
 <!-- Login -->
 <div id="loginModal" class="modal-overlay">
-<div class="modal-card" style="max-width:340px">
-  <div class="modal-hd"><h3>🔐 Login Admin</h3><button class="xbtn" onclick="closeModal('loginModal')">×</button></div>
-  <div class="modal-body"><div class="serr" id="loginErr"></div><div class="fg" style="margin-bottom:0"><label>Password</label><input type="password" id="loginPw" placeholder="Password admin…" onkeydown="if(event.key==='Enter')doLogin()"></div></div>
-  <div class="modal-foot"><button class="btn" onclick="doLogin()" id="loginBtn">Masuk sebagai Admin</button></div>
+<div class="modal-card" style="max-width:360px">
+  <div class="modal-hd"><h3>🔐 Login Akun</h3><button class="xbtn" onclick="closeModal('loginModal')">×</button></div>
+  <div class="modal-body">
+    <div class="serr" id="loginErr"></div>
+    <!-- Role selector -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+      <div id="roleAdmin" onclick="selectRole('admin')" style="border:2px solid var(--ac);background:rgba(99,102,241,.1);border-radius:11px;padding:11px 10px;text-align:center;cursor:pointer;transition:.2s">
+        <div style="font-size:22px;margin-bottom:4px">👑</div>
+        <div style="font-size:12px;font-weight:700;color:#a5b4fc">Admin</div>
+        <div style="font-size:10px;color:var(--mu);margin-top:2px">Akses penuh</div>
+      </div>
+      <div id="roleCoAdmin" onclick="selectRole('coadmin')" style="border:2px solid var(--bo2);background:var(--su2);border-radius:11px;padding:11px 10px;text-align:center;cursor:pointer;transition:.2s">
+        <div style="font-size:22px;margin-bottom:4px">👤</div>
+        <div style="font-size:12px;font-weight:700;color:var(--mu)">Rekan Kerja</div>
+        <div style="font-size:10px;color:var(--mu);margin-top:2px">Tambah soal saja</div>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:0"><label>Password</label><input type="password" id="loginPw" placeholder="Masukkan password…" onkeydown="if(event.key==='Enter')doLogin()"></div>
+  </div>
+  <div class="modal-foot"><button class="btn" onclick="doLogin()" id="loginBtn">Masuk</button></div>
 </div>
 </div>
 
@@ -671,9 +738,10 @@ Catatan tersimpan otomatis di browser ini."></textarea>
       </button>
     </div>
     <div class="dbadge show" id="devBadge"><div class="ddot"></div><span class="dtx">Admin</span><button class="dlo" onclick="doLogout()">Keluar</button></div>
+    <div class="coadmin-badge" id="coAdminBadge"><div class="coadmin-dot"></div><span class="coadmin-tx">Rekan Kerja</span><button class="coadmin-lo" onclick="doLogout()">Keluar</button></div>
     <div class="streak-bar" id="sidebarStreak">
       <span class="streak-fire">🔥</span>
-      <div class="streak-info"><div class="streak-num" id="sideStrNum">2</div><div class="streak-lbl">Hari Berturut</div></div>
+      <div class="streak-info"><div class="streak-num" id="sideStrNum">3</div><div class="streak-lbl">Hari Berturut</div></div>
     </div>
     <div class="sw"><div class="sb2">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -688,12 +756,12 @@ Catatan tersimpan otomatis di browser ini."></textarea>
       <div id="dynNav"><div class="cl">📚 Mata Pelajaran</div><div class="ni" id="nav-cat-Informatika" data-label="Informatika" onclick="openSubject('Informatika')">
       <span class="nico">💻</span><span class="nlbl">Informatika</span>
       <span class="nbdg" style="background:#2563eb22;color:#2563eb;border:1px solid #2563eb40">0/1</span>
-    </div><div class="ni" id="nav-cat-Biologi" data-label="Biologi" onclick="openSubject('Biologi')">
-      <span class="nico">🧬</span><span class="nlbl">Biologi</span>
-      <span class="nbdg" style="background:#34d39922;color:#34d399;border:1px solid #34d39940">0/1</span>
     </div><div class="ni" id="nav-cat-Ekonomi" data-label="Ekonomi" onclick="openSubject('Ekonomi')">
       <span class="nico">💰</span><span class="nlbl">Ekonomi</span>
       <span class="nbdg" style="background:#05966922;color:#059669;border:1px solid #05966940">0/1</span>
+    </div><div class="ni" id="nav-cat-Biologi" data-label="Biologi" onclick="openSubject('Biologi')">
+      <span class="nico">🧬</span><span class="nlbl">Biologi</span>
+      <span class="nbdg" style="background:#34d39922;color:#34d399;border:1px solid #34d39940">0/2</span>
     </div></div>
     </nav>
     <div class="sft"><button class="albtn" onclick="openModal('loginModal')" id="adminLoginBtn" style="display: none;"><span style="font-size:13px">🔑</span><span class="albx">Login Admin</span></button></div>
@@ -723,7 +791,7 @@ Catatan tersimpan otomatis di browser ini."></textarea>
         </div>
         <!-- Theme toggle -->
         <button class="ib" onclick="toggleTheme()" id="themeBtn" title="Light/Dark mode">
-          <svg id="themeIco" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="themeIco" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
         </button>
         <button class="ib" onclick="reloadFrame()" id="btnReload" style="display:none" title="Reload">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
@@ -747,7 +815,8 @@ Catatan tersimpan otomatis di browser ini."></textarea>
 
       <!-- HOME VIEW -->
       <div class="hv" id="homeView" style="display: none;">
-        <!-- Profile -->
+
+        <!-- Profile compact -->
         <div class="profile-wrap">
           <div class="profile-avatar editable" id="profileAvatar" onclick="handleAvatarClick()">
             <div class="ava-placeholder" id="avaPlaceholder" style="display: none;">👤</div>
@@ -757,47 +826,34 @@ Catatan tersimpan otomatis di browser ini."></textarea>
           <div class="profile-name" id="profileName">By ABI SAAD</div>
           <div class="profile-sub">
             <span class="role-badge" id="roleBadge" style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); color: rgb(251, 191, 36); border-radius: 20px; padding: 2px 9px; font-size: 10px; font-weight: 700;">👑 Admin</span>
+            <span style="color:var(--ac4);font-size:11px;font-weight:700">🔥 <span id="streakNumTop">3</span> hari</span>
           </div>
           <div class="profile-edit-hint">Klik foto • Tap dua kali nama untuk edit</div>
         </div>
         <input type="file" id="avatarInput" accept="image/*" style="display:none" onchange="uploadAvatar(this.files[0])">
 
-        <!-- Admin Hero -->
+        <!-- Admin quick actions (compact bar, no big hero) -->
         <div class="admin-hero">
-          <div class="admin-hero-badge">👑 Mode Admin</div>
-          <h2>Halo Tuan,</h2>
-          <p>Ada yang ingin ditambahkan atau ingin dihapus hari ini?</p>
-          <div class="admin-actions">
-            <button class="aab" onclick="showManage()">✨ Tambah Modul</button>
-            <button class="aab" onclick="openModal('annModal')">📢 Pengumuman</button>
-            <button class="aab" onclick="openModal('wallModal')">🖼️ Wallpaper</button>
-            <button class="aab" onclick="downloadConfiguredFile()">📥 Download File</button>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div class="admin-hero-badge" style="margin-bottom:5px">👑 Mode Admin</div>
+              <div style="font-size:15px;font-weight:800;color:#fef3c7">Halo Tuan, mau tambah atau hapus hari ini?</div>
+            </div>
+            <div class="admin-actions">
+              <button class="aab" onclick="showManage()">✨ Tambah</button>
+              <button class="aab" onclick="openModal('annModal')">📢 Pengumuman</button>
+              <button class="aab" onclick="openModal('wallModal')">🖼️ Wallpaper</button>
+              <button class="aab" onclick="downloadConfiguredFile()">📥 Download</button>
+            </div>
           </div>
         </div>
 
-        <!-- User Hero -->
-        <div class="hv-hero user-hero" style="background:radial-gradient(ellipse at 20% 50%,rgba(99,102,241,.12),transparent 60%),radial-gradient(ellipse at 80% 50%,rgba(139,92,246,.08),transparent 60%),var(--su);border:1px solid var(--bo2);border-radius:17px;padding:18px;margin-bottom:14px;position:relative;overflow:hidden">
-          <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.22);border-radius:20px;padding:3px 10px;font-size:10.5px;font-weight:700;color:#a5b4fc;margin-bottom:8px">🔴 Live Sync</div>
-          <h2 id="greet" style="font-size:19px;font-weight:800;margin-bottom:3px">Selamat Datang! 👋</h2>
-          <p style="font-size:12.5px;color:var(--mu)">Pilih mata pelajaran untuk mulai belajar.</p>
-        </div>
-
-        <!-- Streak Card -->
-        <div class="streak-card">
-          <div class="streak-big">🔥</div>
-          <div class="streak-info2">
-            <div class="streak-num2" id="streakNum">2</div>
-            <div class="streak-lbl2">hari berturut-turut belajar</div>
-            <div class="streak-days" id="streakDays"><div class="streak-day done">M</div><div class="streak-day done">S</div><div class="streak-day">S</div><div class="streak-day">R</div><div class="streak-day">K</div><div class="streak-day">J</div><div class="streak-day">S</div></div>
-          </div>
-        </div>
-
-        <!-- Stats -->
+        <!-- Stats row compact -->
         <div class="srow">
-          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">3</div><div class="slb">Total Modul</div></div>
-          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">3</div><div class="slb">Mata Pelajaran</div></div>
+          <div class="scard" style="--sc:#6366f1"><div class="si">📚</div><div class="sv" id="stTotal">4</div><div class="slb">Modul</div></div>
+          <div class="scard" style="--sc:#8b5cf6"><div class="si">📂</div><div class="sv" id="stCat">3</div><div class="slb">Mapel</div></div>
           <div class="scard" style="--sc:#10b981"><div class="si">✅</div><div class="sv" id="stDone">0</div><div class="slb">Selesai</div></div>
-          <div class="scard" style="--sc:#f59e0b"><div class="si">🔥</div><div class="sv" id="stStreak">2</div><div class="slb">Streak</div></div>
+          <div class="scard" style="--sc:#f59e0b"><div class="si">🔥</div><div class="sv" id="stStreak">3</div><div class="slb">Streak</div></div>
         </div>
 
         <!-- Recently Viewed -->
@@ -813,15 +869,15 @@ Catatan tersimpan otomatis di browser ini."></textarea>
       <div class="room-name">Informatika</div>
       <div class="room-count">1 modul · 0 selesai</div>
       <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
-    </div><div class="room-card" data-icon="🧬" onclick="openSubject('Biologi')" style="background:linear-gradient(135deg,#34d399dd,#34d39988);border-color:#34d39944;color:#fff">
-      <span class="room-ico">🧬</span>
-      <div class="room-name">Biologi</div>
-      <div class="room-count">1 modul · 0 selesai</div>
-      <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
     </div><div class="room-card" data-icon="💰" onclick="openSubject('Ekonomi')" style="background:linear-gradient(135deg,#059669dd,#05966988);border-color:#05966944;color:#fff">
       <span class="room-ico">💰</span>
       <div class="room-name">Ekonomi</div>
       <div class="room-count">1 modul · 0 selesai</div>
+      <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
+    </div><div class="room-card" data-icon="🧬" onclick="openSubject('Biologi')" style="background:linear-gradient(135deg,#34d399dd,#34d39988);border-color:#34d39944;color:#fff">
+      <span class="room-ico">🧬</span>
+      <div class="room-name">Biologi</div>
+      <div class="room-count">2 modul · 0 selesai</div>
       <div class="room-prog"><div class="room-prog-fill" style="width:0%"></div></div>
     </div></div>
       </div>
@@ -833,15 +889,27 @@ Catatan tersimpan otomatis di browser ini."></textarea>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
             Kembali
           </div>
-          <div class="sv-hero" id="svHero" data-icon="📚">
-            <div class="sv-hero-badge" id="svBadge">📚 Mapel</div>
-            <h2 id="svTitle">Mapel</h2>
-            <p id="svDesc">0 modul</p>
+          <div class="sv-hero" id="svHero" data-icon="🧬" style="background: linear-gradient(135deg, rgba(52, 211, 153, 0.867), rgba(52, 211, 153, 0.533));">
+            <div class="sv-hero-badge" id="svBadge">🧬 Biologi</div>
+            <h2 id="svTitle">Biologi</h2>
+            <p id="svDesc">2 modul · 0 selesai</p>
           </div>
         </div>
         <div class="sv-body">
           <div class="sectit" style="margin-bottom:11px">Modul Tersedia</div>
-          <div class="mg" id="svModGrid"></div>
+          <div class="mg" id="svModGrid"><div class="mcard" onclick="openModule('KXZIVeS9bOQGjZ8XjYZH')">
+    <div style="display:inline-flex;align-items:center;gap:3px;border-radius:20px;padding:2px 7px;font-size:9.5px;font-weight:700;margin-bottom:6px;background:#10b98118;color:#10b981;border:1px solid #10b98130">😊 Mudah</div>
+    <div class="mth" style="background:#34d39915">🧬</div>
+    <div class="mn">Biologi perubahan lingkungan</div>
+    <div class="md">Tentang perubahan lingkungan</div>
+    <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#34d399"></div></div><div class="mp">0%</div></div>
+  </div><div class="mcard" onclick="openModule('0RFXzdUuLHvHZab8ymyG')">
+    <div style="display:inline-flex;align-items:center;gap:3px;border-radius:20px;padding:2px 7px;font-size:9.5px;font-weight:700;margin-bottom:6px;background:#f59e0b18;color:#f59e0b;border:1px solid #f59e0b30">🤔 Sedang</div>
+    <div class="mth" style="background:#34d39915">🧬</div>
+    <div class="mn">biologi ekosistem</div>
+    <div class="md">biologi ekosistem.html (31.3KB)</div>
+    <div class="mft"><div class="pb"><div class="pf" style="width:0%;background:#34d399"></div></div><div class="mp">0%</div></div>
+  </div></div>
         </div>
       </div>
 
@@ -870,7 +938,7 @@ Catatan tersimpan otomatis di browser ini."></textarea>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
           <h2 style="font-size:17px;font-weight:800">🔖 Tersimpan</h2>
         </div>
-        <div class="mg" id="bkGrid"><div class="empty"><div class="ei">🔖</div><p>Belum ada modul yang disimpan.<br>Klik 🔖 saat membuka modul untuk menyimpannya.</p></div></div>
+        <div class="mg" id="bkGrid"><div class="empty"><div class="ei">🔖</div><p>Belum ada modul tersimpan.</p></div></div>
       </div>
 
       <!-- LEADERBOARD VIEW -->
@@ -888,7 +956,7 @@ Catatan tersimpan otomatis di browser ini."></textarea>
         </div>
         <button class="mbtn" onclick="openModal('nickModal')" id="lbJoinBtn" style="width:100%;margin-bottom:14px;padding:12px">🏆 Ikut Leaderboard</button>
         <div class="sectit">Peringkat</div>
-        <div id="lbList"><div class="empty"><div class="ei">🏆</div><p>Belum ada peserta.<br>Jadilah yang pertama!</p></div></div>
+        <div id="lbList"><div class="empty"><div class="ei">🏆</div><p>Belum ada peserta.</p></div></div>
       </div>
 
       <!-- ══ QUIZ HOME ══ -->
@@ -900,12 +968,17 @@ Catatan tersimpan otomatis di browser ini."></textarea>
         </div>
         <!-- My quiz stats -->
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px">
-          <div class="scard" style="--sc:#6366f1"><div class="si">📝</div><div class="sv" id="qStatTotal">0</div><div class="slb">Total Soal</div></div>
+          <div class="scard" style="--sc:#6366f1"><div class="si">📝</div><div class="sv" id="qStatTotal">5</div><div class="slb">Total Soal</div></div>
           <div class="scard" style="--sc:#10b981"><div class="si">🎯</div><div class="sv" id="qStatDone">0</div><div class="slb">Sudah Dikerjakan</div></div>
           <div class="scard" style="--sc:#f59e0b"><div class="si">⭐</div><div class="sv" id="qStatAvg">0%</div><div class="slb">Rata-rata Skor</div></div>
         </div>
         <div class="sectit">Pilih Mata Pelajaran</div>
-        <div class="quiz-mapel-grid" id="quizMapelGrid"><div class="empty" style="grid-column:1/-1"><div class="ei">📝</div><p>Belum ada soal.<br>Admin perlu menambahkan soal latihan.</p></div></div>
+        <div class="quiz-mapel-grid" id="quizMapelGrid"><div class="qm-card" data-icon="💰" onclick="startQuiz('Ekonomi')" style="background:linear-gradient(135deg,#059669dd,#05966988);border-color:#05966944">
+      <div class="qm-ico">💰</div>
+      <div class="qm-name">Ekonomi</div>
+      <div class="qm-count">5 soal</div>
+      <div class="qm-best">🏅 Skor terbaik: Belum pernah</div>
+    </div></div>
       </div>
 
       <!-- ══ QUIZ SESSION ══ -->
@@ -972,13 +1045,15 @@ Catatan tersimpan otomatis di browser ini."></textarea>
           <h2 style="font-size:17px;font-weight:800">⚙️ Kelola Modul</h2>
           <span class="tag" style="color:var(--ac3);border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.07)">Admin</span>
         </div>
+        <div id="dlBannerWrap">
         <div class="dl-banner" style="margin-bottom:13px">
           <h3>📥 Bagikan ke Teman</h3>
           <p>Download file portal → upload ke GitHub sebagai index.html → share linknya.</p>
           <button class="btn" onclick="downloadConfiguredFile()" style="max-width:240px;margin:0 auto;font-size:12px;padding:8px">📥 Download File Portal</button>
         </div>
+        </div>
         <!-- Upload -->
-        <div class="aform">
+        <div id="moduleUploadWrap"><div class="aform">
           <div class="aform-title">📤 Upload File HTML</div>
           <label class="flbl" style="margin-bottom:7px">Pilih Mata Pelajaran Dulu</label>
           <div class="subj-grid" id="upSubjGrid"><div class="subj-item" data-cat="Matematika" data-icon="📐" data-color="#6366f1" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">📐</div><div class="subj-nm">Matematika</div></div><div class="subj-item" data-cat="Fisika" data-icon="⚡" data-color="#f59e0b" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">⚡</div><div class="subj-nm">Fisika</div></div><div class="subj-item" data-cat="Kimia" data-icon="🧪" data-color="#10b981" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🧪</div><div class="subj-nm">Kimia</div></div><div class="subj-item" data-cat="Biologi" data-icon="🧬" data-color="#34d399" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🧬</div><div class="subj-nm">Biologi</div></div><div class="subj-item" data-cat="IPA" data-icon="🔬" data-color="#06b6d4" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🔬</div><div class="subj-nm">IPA</div></div><div class="subj-item" data-cat="IPS" data-icon="🗺️" data-color="#f97316" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🗺️</div><div class="subj-nm">IPS</div></div><div class="subj-item" data-cat="B. Indonesia" data-icon="📝" data-color="#8b5cf6" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">📝</div><div class="subj-nm">B. Indonesia</div></div><div class="subj-item" data-cat="B. Inggris" data-icon="🌍" data-color="#3b82f6" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🌍</div><div class="subj-nm">B. Inggris</div></div><div class="subj-item" data-cat="Sejarah" data-icon="🏛️" data-color="#d97706" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🏛️</div><div class="subj-nm">Sejarah</div></div><div class="subj-item" data-cat="Geografi" data-icon="🌐" data-color="#0891b2" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🌐</div><div class="subj-nm">Geografi</div></div><div class="subj-item" data-cat="Ekonomi" data-icon="💰" data-color="#059669" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">💰</div><div class="subj-nm">Ekonomi</div></div><div class="subj-item" data-cat="PKN" data-icon="🏅" data-color="#dc2626" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🏅</div><div class="subj-nm">PKN</div></div><div class="subj-item" data-cat="Agama" data-icon="🕌" data-color="#7c3aed" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🕌</div><div class="subj-nm">Agama</div></div><div class="subj-item" data-cat="Seni Budaya" data-icon="🎨" data-color="#db2777" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🎨</div><div class="subj-nm">Seni Budaya</div></div><div class="subj-item" data-cat="PJOK" data-icon="⚽" data-color="#16a34a" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">⚽</div><div class="subj-nm">PJOK</div></div><div class="subj-item" data-cat="Informatika" data-icon="💻" data-color="#2563eb" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">💻</div><div class="subj-nm">Informatika</div></div><div class="subj-item" data-cat="Prakarya" data-icon="🔧" data-color="#78716c" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">🔧</div><div class="subj-nm">Prakarya</div></div><div class="subj-item" data-cat="Lainnya" data-icon="📚" data-color="#6b7280" onclick="selectSubj(this,'upSubjGrid','up')"><div class="subj-ico">📚</div><div class="subj-nm">Lainnya</div></div></div>
@@ -988,9 +1063,9 @@ Catatan tersimpan otomatis di browser ini."></textarea>
           </div>
           <input type="file" id="fileInput" accept=".html,.htm" multiple="" style="display:none" onchange="handleUpload(this.files)">
           <div class="upr" id="uploadProg"><p id="upText">Menyimpan…</p><div class="upb"><div class="upf" id="upFill"></div></div></div>
-        </div>
+        </div></div><!-- /moduleUploadWrap -->
         <!-- Add URL -->
-        <div class="aform">
+        <div id="moduleUrlWrap"><div class="aform">
           <div class="aform-title">✏️ Tambah via URL</div>
           <div class="frow">
             <div><label class="flbl">Nama Modul *</label><input type="text" class="fi" id="inName" placeholder="Nama modul…"></div>
@@ -1013,8 +1088,9 @@ Catatan tersimpan otomatis di browser ini."></textarea>
             <button class="mbtn" onclick="addModule()">+ Tambah</button>
             <button class="mbtn sec" onclick="clearForm()">Bersih</button>
           </div>
-        </div>
-        <div class="sectit">Daftar Modul (<span id="modCount">3</span>)</div>
+        </div></div>
+        <div id="moduleTblWrap">
+        <div class="sectit">Daftar Modul (<span id="modCount">4</span>)</div>
         <div id="tblWrap"><div class="tbl"><div class="tblh"><div>Nama</div><div>Kategori</div><div>Status</div><div>Aksi</div></div><div class="tblr">
     <div class="nc"><div class="tsm" style="background:#2563eb18">💻</div><span>Informatika</span></div>
     <div><span class="tag" style="color:#2563eb;border-color:#2563eb30;background:#2563eb10">💻 Informatika</span></div>
@@ -1026,16 +1102,6 @@ Catatan tersimpan otomatis di browser ini."></textarea>
       <button class="mb2 del" onclick="promptDelete('5AAPmomTOQNFIMtj20rJ')" title="Hapus">🗑</button>
     </div>
   </div><div class="tblr">
-    <div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi</span></div>
-    <div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div>
-    <div><span class="tag" style="font-size:9px;color:#f59e0b">🤔 Sedang</span></div>
-    <div class="ra">
-      <button class="mb2" onclick="moveModule('R5JCnRZ2Ba4dCtJn0f6Y',-1)" title="Naik">↑</button>
-      <button class="mb2" onclick="moveModule('R5JCnRZ2Ba4dCtJn0f6Y',1)" title="Turun">↓</button>
-      <button class="mb2 hide-btn" onclick="toggleHide('R5JCnRZ2Ba4dCtJn0f6Y')" title="Sembunyikan">🚫</button>
-      <button class="mb2 del" onclick="promptDelete('R5JCnRZ2Ba4dCtJn0f6Y')" title="Hapus">🗑</button>
-    </div>
-  </div><div class="tblr">
     <div class="nc"><div class="tsm" style="background:#05966918">💰</div><span>Ekonomi  kelas X</span></div>
     <div><span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span></div>
     <div><span class="tag" style="font-size:9px;color:#f59e0b">🤔 Sedang</span></div>
@@ -1045,55 +1111,179 @@ Catatan tersimpan otomatis di browser ini."></textarea>
       <button class="mb2 hide-btn" onclick="toggleHide('Y4tnPuvBHx2MIdppE8Cs')" title="Sembunyikan">🚫</button>
       <button class="mb2 del" onclick="promptDelete('Y4tnPuvBHx2MIdppE8Cs')" title="Hapus">🗑</button>
     </div>
+  </div><div class="tblr">
+    <div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>Biologi perubahan lingkungan</span></div>
+    <div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div>
+    <div><span class="tag" style="font-size:9px;color:#10b981">😊 Mudah</span></div>
+    <div class="ra">
+      <button class="mb2" onclick="moveModule('KXZIVeS9bOQGjZ8XjYZH',-1)" title="Naik">↑</button>
+      <button class="mb2" onclick="moveModule('KXZIVeS9bOQGjZ8XjYZH',1)" title="Turun">↓</button>
+      <button class="mb2 hide-btn" onclick="toggleHide('KXZIVeS9bOQGjZ8XjYZH')" title="Sembunyikan">🚫</button>
+      <button class="mb2 del" onclick="promptDelete('KXZIVeS9bOQGjZ8XjYZH')" title="Hapus">🗑</button>
+    </div>
+  </div><div class="tblr">
+    <div class="nc"><div class="tsm" style="background:#34d39918">🧬</div><span>biologi ekosistem</span></div>
+    <div><span class="tag" style="color:#34d399;border-color:#34d39930;background:#34d39910">🧬 Biologi</span></div>
+    <div><span class="tag" style="font-size:9px;color:#f59e0b">🤔 Sedang</span></div>
+    <div class="ra">
+      <button class="mb2" onclick="moveModule('0RFXzdUuLHvHZab8ymyG',-1)" title="Naik">↑</button>
+      <button class="mb2" onclick="moveModule('0RFXzdUuLHvHZab8ymyG',1)" title="Turun">↓</button>
+      <button class="mb2 hide-btn" onclick="toggleHide('0RFXzdUuLHvHZab8ymyG')" title="Sembunyikan">🚫</button>
+      <button class="mb2 del" onclick="promptDelete('0RFXzdUuLHvHZab8ymyG')" title="Hapus">🗑</button>
+    </div>
   </div></div></div>
+        </div>
 
-        <!-- ══ BANK SOAL (ADMIN) ══ -->
+        <!-- ══ BANK SOAL ══ -->
         <div style="margin-top:22px">
           <div class="sectit">📝 Bank Soal Latihan</div>
           <div class="aform">
-            <div class="aform-title">➕ Tambah Soal Baru</div>
-            <div style="margin-bottom:9px">
-              <label class="flbl">Mata Pelajaran *</label>
-              <div class="subj-grid" id="qSubjGrid"><div class="subj-item" data-cat="Matematika" data-icon="📐" data-color="#6366f1" onclick="selectQSubj(this)"><div class="subj-ico">📐</div><div class="subj-nm">Matematika</div></div><div class="subj-item" data-cat="Fisika" data-icon="⚡" data-color="#f59e0b" onclick="selectQSubj(this)"><div class="subj-ico">⚡</div><div class="subj-nm">Fisika</div></div><div class="subj-item" data-cat="Kimia" data-icon="🧪" data-color="#10b981" onclick="selectQSubj(this)"><div class="subj-ico">🧪</div><div class="subj-nm">Kimia</div></div><div class="subj-item" data-cat="Biologi" data-icon="🧬" data-color="#34d399" onclick="selectQSubj(this)"><div class="subj-ico">🧬</div><div class="subj-nm">Biologi</div></div><div class="subj-item" data-cat="IPA" data-icon="🔬" data-color="#06b6d4" onclick="selectQSubj(this)"><div class="subj-ico">🔬</div><div class="subj-nm">IPA</div></div><div class="subj-item" data-cat="IPS" data-icon="🗺️" data-color="#f97316" onclick="selectQSubj(this)"><div class="subj-ico">🗺️</div><div class="subj-nm">IPS</div></div><div class="subj-item" data-cat="B. Indonesia" data-icon="📝" data-color="#8b5cf6" onclick="selectQSubj(this)"><div class="subj-ico">📝</div><div class="subj-nm">B. Indonesia</div></div><div class="subj-item" data-cat="B. Inggris" data-icon="🌍" data-color="#3b82f6" onclick="selectQSubj(this)"><div class="subj-ico">🌍</div><div class="subj-nm">B. Inggris</div></div><div class="subj-item" data-cat="Sejarah" data-icon="🏛️" data-color="#d97706" onclick="selectQSubj(this)"><div class="subj-ico">🏛️</div><div class="subj-nm">Sejarah</div></div><div class="subj-item" data-cat="Geografi" data-icon="🌐" data-color="#0891b2" onclick="selectQSubj(this)"><div class="subj-ico">🌐</div><div class="subj-nm">Geografi</div></div><div class="subj-item" data-cat="Ekonomi" data-icon="💰" data-color="#059669" onclick="selectQSubj(this)"><div class="subj-ico">💰</div><div class="subj-nm">Ekonomi</div></div><div class="subj-item" data-cat="PKN" data-icon="🏅" data-color="#dc2626" onclick="selectQSubj(this)"><div class="subj-ico">🏅</div><div class="subj-nm">PKN</div></div><div class="subj-item" data-cat="Agama" data-icon="🕌" data-color="#7c3aed" onclick="selectQSubj(this)"><div class="subj-ico">🕌</div><div class="subj-nm">Agama</div></div><div class="subj-item" data-cat="Seni Budaya" data-icon="🎨" data-color="#db2777" onclick="selectQSubj(this)"><div class="subj-ico">🎨</div><div class="subj-nm">Seni Budaya</div></div><div class="subj-item" data-cat="PJOK" data-icon="⚽" data-color="#16a34a" onclick="selectQSubj(this)"><div class="subj-ico">⚽</div><div class="subj-nm">PJOK</div></div><div class="subj-item" data-cat="Informatika" data-icon="💻" data-color="#2563eb" onclick="selectQSubj(this)"><div class="subj-ico">💻</div><div class="subj-nm">Informatika</div></div><div class="subj-item" data-cat="Prakarya" data-icon="🔧" data-color="#78716c" onclick="selectQSubj(this)"><div class="subj-ico">🔧</div><div class="subj-nm">Prakarya</div></div><div class="subj-item" data-cat="Lainnya" data-icon="📚" data-color="#6b7280" onclick="selectQSubj(this)"><div class="subj-ico">📚</div><div class="subj-nm">Lainnya</div></div></div>
+            <div class="aform-title">📤 Upload Soal dari Excel / CSV</div>
+            <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+              <button class="tpl-btn" onclick="downloadTemplate('xlsx')">📊 Template Excel</button>
+              <button class="tpl-btn" onclick="downloadTemplate('csv')" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.25);color:#a5b4fc">📄 Template CSV</button>
             </div>
-            <div style="margin-bottom:9px"><label class="flbl">Pertanyaan *</label><textarea class="fi fita" id="qText" placeholder="Tulis pertanyaan di sini…" style="min-height:70px"></textarea></div>
-            <div class="frow" style="margin-bottom:9px">
-              <div><label class="flbl">A. Pilihan Pertama *</label><input type="text" class="fi" id="qOpt0" placeholder="Jawaban A…"></div>
-              <div><label class="flbl">B. Pilihan Kedua *</label><input type="text" class="fi" id="qOpt1" placeholder="Jawaban B…"></div>
-            </div>
-            <div class="frow" style="margin-bottom:9px">
-              <div><label class="flbl">C. Pilihan Ketiga *</label><input type="text" class="fi" id="qOpt2" placeholder="Jawaban C…"></div>
-              <div><label class="flbl">D. Pilihan Keempat *</label><input type="text" class="fi" id="qOpt3" placeholder="Jawaban D…"></div>
-            </div>
-            <div class="frow" style="margin-bottom:9px">
-              <div>
-                <label class="flbl">Jawaban Benar *</label>
-                <select class="fi" id="qAnswer">
-                  <option value="0">A — Pilihan Pertama</option>
-                  <option value="1">B — Pilihan Kedua</option>
-                  <option value="2">C — Pilihan Ketiga</option>
-                  <option value="3">D — Pilihan Keempat</option>
-                </select>
-              </div>
-              <div>
-                <label class="flbl">Tingkat Kesulitan</label>
-                <select class="fi" id="qDiff">
-                  <option value="mudah">😊 Mudah</option>
-                  <option value="sedang" selected="">🤔 Sedang</option>
-                  <option value="sulit">🔥 Sulit</option>
-                </select>
+            <div class="bulk-upload-area" id="bulkDropZone" onclick="document.getElementById('bulkFileInput').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="event.preventDefault();this.classList.remove('drag');handleBulkFile(event.dataTransfer.files[0])">
+              <div class="bui">📂</div>
+              <h4>Klik atau Seret File</h4>
+              <p>Upload file Excel/CSV yang sudah diisi</p>
+              <div class="ext-badges">
+                <span class="ext-badge">📊 .xlsx</span>
+                <span class="ext-badge">📄 .csv</span>
               </div>
             </div>
-            <div style="margin-bottom:13px"><label class="flbl">Penjelasan (opsional)</label><textarea class="fi fita" id="qExpl" placeholder="Jelaskan mengapa jawaban itu benar…"></textarea></div>
-            <button class="mbtn" onclick="addQuestion()">+ Tambah Soal</button>
+            <input type="file" id="bulkFileInput" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleBulkFile(this.files[0])">
           </div>
 
-          <!-- Filter & list -->
-          <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-            <select class="fi" id="qFilterSubj" onchange="renderQuestionBank()" style="max-width:180px"><option value="">— Semua Mapel —</option></select>
-            <span class="tag" style="padding:7px 12px;font-size:12px" id="qBankCount">0 soal</span>
+          <details style="margin-bottom:12px">
+            <summary style="cursor:pointer;font-size:13px;font-weight:700;color:var(--mu);padding:11px 15px;background:var(--su);border:1px solid var(--bo2);border-radius:12px;list-style:none;display:flex;align-items:center;gap:8px">
+              <span>✏️</span> Tambah Soal Manual <span style="margin-left:auto;font-size:10px">▼</span>
+            </summary>
+            <div style="background:var(--su);border:1px solid var(--bo2);border-top:none;border-radius:0 0 12px 12px;padding:15px">
+              <div style="margin-bottom:9px"><label class="flbl">Mata Pelajaran *</label><div class="subj-grid" id="qSubjGrid"><div class="subj-item" data-cat="Matematika" data-icon="📐" data-color="#6366f1" onclick="selectQSubj(this)"><div class="subj-ico">📐</div><div class="subj-nm">Matematika</div></div><div class="subj-item" data-cat="Fisika" data-icon="⚡" data-color="#f59e0b" onclick="selectQSubj(this)"><div class="subj-ico">⚡</div><div class="subj-nm">Fisika</div></div><div class="subj-item" data-cat="Kimia" data-icon="🧪" data-color="#10b981" onclick="selectQSubj(this)"><div class="subj-ico">🧪</div><div class="subj-nm">Kimia</div></div><div class="subj-item" data-cat="Biologi" data-icon="🧬" data-color="#34d399" onclick="selectQSubj(this)"><div class="subj-ico">🧬</div><div class="subj-nm">Biologi</div></div><div class="subj-item" data-cat="IPA" data-icon="🔬" data-color="#06b6d4" onclick="selectQSubj(this)"><div class="subj-ico">🔬</div><div class="subj-nm">IPA</div></div><div class="subj-item" data-cat="IPS" data-icon="🗺️" data-color="#f97316" onclick="selectQSubj(this)"><div class="subj-ico">🗺️</div><div class="subj-nm">IPS</div></div><div class="subj-item" data-cat="B. Indonesia" data-icon="📝" data-color="#8b5cf6" onclick="selectQSubj(this)"><div class="subj-ico">📝</div><div class="subj-nm">B. Indonesia</div></div><div class="subj-item" data-cat="B. Inggris" data-icon="🌍" data-color="#3b82f6" onclick="selectQSubj(this)"><div class="subj-ico">🌍</div><div class="subj-nm">B. Inggris</div></div><div class="subj-item" data-cat="Sejarah" data-icon="🏛️" data-color="#d97706" onclick="selectQSubj(this)"><div class="subj-ico">🏛️</div><div class="subj-nm">Sejarah</div></div><div class="subj-item" data-cat="Geografi" data-icon="🌐" data-color="#0891b2" onclick="selectQSubj(this)"><div class="subj-ico">🌐</div><div class="subj-nm">Geografi</div></div><div class="subj-item" data-cat="Ekonomi" data-icon="💰" data-color="#059669" onclick="selectQSubj(this)"><div class="subj-ico">💰</div><div class="subj-nm">Ekonomi</div></div><div class="subj-item" data-cat="PKN" data-icon="🏅" data-color="#dc2626" onclick="selectQSubj(this)"><div class="subj-ico">🏅</div><div class="subj-nm">PKN</div></div><div class="subj-item" data-cat="Agama" data-icon="🕌" data-color="#7c3aed" onclick="selectQSubj(this)"><div class="subj-ico">🕌</div><div class="subj-nm">Agama</div></div><div class="subj-item" data-cat="Seni Budaya" data-icon="🎨" data-color="#db2777" onclick="selectQSubj(this)"><div class="subj-ico">🎨</div><div class="subj-nm">Seni Budaya</div></div><div class="subj-item" data-cat="PJOK" data-icon="⚽" data-color="#16a34a" onclick="selectQSubj(this)"><div class="subj-ico">⚽</div><div class="subj-nm">PJOK</div></div><div class="subj-item" data-cat="Informatika" data-icon="💻" data-color="#2563eb" onclick="selectQSubj(this)"><div class="subj-ico">💻</div><div class="subj-nm">Informatika</div></div><div class="subj-item" data-cat="Prakarya" data-icon="🔧" data-color="#78716c" onclick="selectQSubj(this)"><div class="subj-ico">🔧</div><div class="subj-nm">Prakarya</div></div><div class="subj-item" data-cat="Lainnya" data-icon="📚" data-color="#6b7280" onclick="selectQSubj(this)"><div class="subj-ico">📚</div><div class="subj-nm">Lainnya</div></div></div></div>
+              <div style="margin-bottom:9px"><label class="flbl">Pertanyaan *</label><textarea class="fi fita" id="qText" placeholder="Tulis pertanyaan…" style="min-height:65px"></textarea></div>
+              <div class="frow" style="margin-bottom:9px">
+                <div><label class="flbl">A *</label><input type="text" class="fi" id="qOpt0" placeholder="Pilihan A…"></div>
+                <div><label class="flbl">B *</label><input type="text" class="fi" id="qOpt1" placeholder="Pilihan B…"></div>
+              </div>
+              <div class="frow" style="margin-bottom:9px">
+                <div><label class="flbl">C *</label><input type="text" class="fi" id="qOpt2" placeholder="Pilihan C…"></div>
+                <div><label class="flbl">D *</label><input type="text" class="fi" id="qOpt3" placeholder="Pilihan D…"></div>
+              </div>
+              <div class="frow" style="margin-bottom:9px">
+                <div><label class="flbl">Jawaban Benar *</label>
+                  <select class="fi" id="qAnswer"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
+                </div>
+                <div><label class="flbl">Tingkat</label>
+                  <select class="fi" id="qDiff"><option value="mudah">😊 Mudah</option><option value="sedang" selected="">🤔 Sedang</option><option value="sulit">🔥 Sulit</option></select>
+                </div>
+              </div>
+              <div style="margin-bottom:12px"><label class="flbl">Penjelasan</label><textarea class="fi fita" id="qExpl" placeholder="Opsional…"></textarea></div>
+              <button class="mbtn" onclick="addQuestion()">+ Tambah Soal</button>
+            </div>
+          </details>
+
+          <div style="display:flex;gap:8px;margin-bottom:11px;align-items:center;flex-wrap:wrap">
+            <select class="fi" id="qFilterSubj" onchange="renderQuestionBank()" style="max-width:180px"><option value="">— Semua Mapel —</option><option value="Ekonomi">Ekonomi</option></select>
+            <span class="tag" style="padding:6px 12px;font-size:12px" id="qBankCount">5 soal</span>
+            <button onclick="deleteAllQuestions()" style="margin-left:auto;background:none;border:1px solid rgba(248,113,113,.3);color:var(--da);border-radius:8px;padding:5px 11px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s" onmouseover="this.style.background='rgba(248,113,113,.08)'" onmouseout="this.style.background='none'">🗑 Hapus Semua</button>
           </div>
-          <div id="questionBankList"><div class="empty"><div class="ei">📝</div><p>Belum ada soal.</p></div></div>
+          <div id="questionBankList"><div class="qbank-item">
+      <div class="qbank-meta" style="margin-bottom:6px">
+        <span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span>
+        <span class="tag" style="color:#10b981">😊 Mudah</span>
+        <button onclick="deleteQuestion('JdfXJN6dWKJ7vKy3gNcZ')" style="margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0;transition:.2s" onmouseover="this.style.color='var(--da)'" onmouseout="this.style.color='var(--mu)'">🗑</button>
+      </div>
+      <div class="qbank-q">Harga barang naik dari Rp10.000 menjadi Rp12.000. Jumlah permintaan turun dari 200 menjadi 160 unit. Nilai elastisitas permintaannya adalah ....</div>
+      <div class="qbank-opts"><div class="qbank-opt">A. -0,5</div><div class="qbank-opt ans">B. -1</div><div class="qbank-opt">C. 1</div><div class="qbank-opt">D. 0,5</div></div>
+      <div style="font-size:11px;color:var(--mu);margin-top:5px">💡 Gunakan rumus elastisitas permintaan:
+Ed = Q2-Q1/Q1/P2-P1/P1
+=160-200/200/12.000-10.000/10.000
+=-40/200/2.000/10.000
+=-0,2/0,2
+=-1</div>
+    </div><div class="qbank-item">
+      <div class="qbank-meta" style="margin-bottom:6px">
+        <span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span>
+        <span class="tag" style="color:#f59e0b">🤔 Sedang</span>
+        <button onclick="deleteQuestion('FHfdhz6WnA7amQgR6RBR')" style="margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0;transition:.2s" onmouseover="this.style.color='var(--da)'" onmouseout="this.style.color='var(--mu)'">🗑</button>
+      </div>
+      <div class="qbank-q">2.
+Harga kopi turun 20%, permintaan naik 40%. Elastisitas permintaan adalah ....</div>
+      <div class="qbank-opts"><div class="qbank-opt ans">A. 2</div><div class="qbank-opt">B. -1</div><div class="qbank-opt">C. 1</div><div class="qbank-opt">D. -2</div></div>
+      <div style="font-size:11px;color:var(--mu);margin-top:5px">💡 Kita bisa menyelesaikan ini dengan cara berikut 
+Ed= Q/P
+Kita bisa menganggap Q itu permintaan sedangkan P tetap harga
+Ed= 40/20
+        = 2
+Tanda % dihilangkan agar lebih mudah</div>
+    </div><div class="qbank-item">
+      <div class="qbank-meta" style="margin-bottom:6px">
+        <span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span>
+        <span class="tag" style="color:#f59e0b">🤔 Sedang</span>
+        <button onclick="deleteQuestion('OGFyrKUp5T7DEB0VOrNt')" style="margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0;transition:.2s" onmouseover="this.style.color='var(--da)'" onmouseout="this.style.color='var(--mu)'">🗑</button>
+      </div>
+      <div class="qbank-q">Harga sepatu naik 10%, permintaan turun 5%. Nilai elastisitasnya adalah ....</div>
+      <div class="qbank-opts"><div class="qbank-opt ans">A. 0,5</div><div class="qbank-opt">B. 1</div><div class="qbank-opt">C. -1</div><div class="qbank-opt">D. -2</div></div>
+      <div style="font-size:11px;color:var(--mu);margin-top:5px">💡 Kita bisa menyelesaikan ini dengan cara berikut:
+Ed=Q/P
+Q bisa dianggap permintaan 
+Ed=5/10
+Ed=0,5
+Tanda % dihilangkan agar lebih mudah</div>
+    </div><div class="qbank-item">
+      <div class="qbank-meta" style="margin-bottom:6px">
+        <span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span>
+        <span class="tag" style="color:#f59e0b">🤔 Sedang</span>
+        <button onclick="deleteQuestion('6gHkAL35owPabSzizv8v')" style="margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0;transition:.2s" onmouseover="this.style.color='var(--da)'" onmouseout="this.style.color='var(--mu)'">🗑</button>
+      </div>
+      <div class="qbank-q">Harga gula turun 25%, jumlah permintaan naik 50%. Elastisitas permintaan sebesar ....</div>
+      <div class="qbank-opts"><div class="qbank-opt">A. 5</div><div class="qbank-opt">B. -2</div><div class="qbank-opt">C. 0,5</div><div class="qbank-opt ans">D. 2</div></div>
+      <div style="font-size:11px;color:var(--mu);margin-top:5px">💡 Kita bisa menyelesaikan ini dengan cara berikut:
+Ed = Q/P
+Q bisa dianggap permintaan 
+Ed = 50/25
+Ed = 2
+Tanda % bisa dihilangkan agar lebih mudah</div>
+    </div><div class="qbank-item">
+      <div class="qbank-meta" style="margin-bottom:6px">
+        <span class="tag" style="color:#059669;border-color:#05966930;background:#05966910">💰 Ekonomi</span>
+        <span class="tag" style="color:#10b981">😊 Mudah</span>
+        <button onclick="deleteQuestion('z9pL2OsAu9Nu3nwsjlUb')" style="margin-left:auto;background:none;border:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0;transition:.2s" onmouseover="this.style.color='var(--da)'" onmouseout="this.style.color='var(--mu)'">🗑</button>
+      </div>
+      <div class="qbank-q">Harga tas naik dari Rp80.000 menjadi Rp100.000. Permintaan turun dari 60 menjadi 45 unit. Nilai elastisitasnya adalah ....</div>
+      <div class="qbank-opts"><div class="qbank-opt">A. 1</div><div class="qbank-opt">B. 2</div><div class="qbank-opt ans">C. -1</div><div class="qbank-opt">D. -0,25</div></div>
+      <div style="font-size:11px;color:var(--mu);margin-top:5px">💡 Cara cepat nya:
+Ed = Q2-Q1/Q1/P2-P1/P1
+Ed = 45-60/60/10-8/8
+Ed = -15/60/2/8
+Ed = -0,25/0,25
+Ed = -1
+0 bisa dihilangkan agar lebih mudah untuk di selesaikan</div>
+    </div></div>
+
+          <!-- KELOLA AKUN REKAN KERJA (admin only) -->
+          <div style="margin-top: 22px; display: block;" id="coAdminSection">
+            <div class="sectit">👥 Akun Rekan Kerja</div>
+            <div class="aform">
+              <div class="aform-title">👤 Atur Password Rekan Kerja</div>
+              <p style="font-size:12px;color:var(--mu);margin-bottom:12px;line-height:1.6">Rekan kerja hanya bisa <strong style="color:var(--tx2)">menambah soal latihan</strong>. Untuk mengubah modul, pengumuman, atau pengaturan lainnya butuh izin Admin.</p>
+              <div class="serr" id="coAdminErr"></div>
+              <div class="ssucc" id="coAdminOk"></div>
+              <div class="fg" style="margin-bottom:10px">
+                <label>Password Rekan Kerja Baru</label>
+                <input type="password" id="coAdminPw" placeholder="Min 6 karakter…">
+              </div>
+              <div class="fg" style="margin-bottom:13px">
+                <label>Konfirmasi Password</label>
+                <input type="password" id="coAdminPw2" placeholder="Ulangi password…">
+              </div>
+              <div style="display:flex;gap:8px">
+                <button class="mbtn" onclick="saveCoAdminPassword()">💾 Simpan Password</button>
+                <button class="mbtn sec" onclick="removeCoAdmin()">🗑 Hapus Akun Rekan</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1103,11 +1293,44 @@ Catatan tersimpan otomatis di browser ini."></textarea>
 </div><!-- /appRoot -->
 
 <!-- TOAST STACK -->
-<div class="toast-stack" id="toastStack"></div>
+<div class="toast-stack" id="toastStack"><div class="toast"><span>✅</span> <span>✅ Login berhasil! Selamat datang, Admin 👑</span></div></div>
+
+<!-- PREVIEW MODAL (Bulk Upload Soal) -->
+<div class="preview-modal-overlay" id="previewModal">
+  <div class="preview-modal">
+    <div class="preview-hd">
+      <h3>👀 Preview Soal — Sebelum Disimpan</h3>
+      <button class="xbtn" onclick="closePreviewModal()">×</button>
+    </div>
+    <div class="preview-body">
+      <div class="preview-err" id="previewErr"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;flex-wrap:wrap;gap:8px">
+        <div style="font-size:13px;color:var(--mu)">Periksa data sebelum menyimpan ke Firestore.</div>
+        <div class="preview-ok-badge" id="previewBadge">0 soal valid</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="preview-table" id="previewTable">
+          <thead><tr>
+            <th>#</th><th>Mapel</th><th>Pertanyaan</th><th>A</th><th>B</th><th>C</th><th>D</th><th>Jawaban</th><th>Tingkat</th>
+          </tr></thead>
+          <tbody id="previewTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="preview-foot">
+      <button class="mbtn sec" onclick="closePreviewModal()">Batal</button>
+      <button class="mbtn" id="confirmUploadBtn" onclick="confirmBulkUpload()">
+        💾 Simpan Semua ke Portal
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- Firebase -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-app-compat.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/12.3.0/firebase-firestore-compat.min.js"></script>
+<!-- SheetJS untuk baca file Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 const FIREBASE_CONFIG = {
   "apiKey": "AIzaSyAF7StvptG77QZCPobAJ7g-5geCZTeYx6w",
@@ -1172,13 +1395,10 @@ function updateStreak(){
     localStorage.setItem('pb_streak',JSON.stringify(s));
   }
   const c=s.count||0;
-  document.getElementById('streakNum').textContent=c;
-  document.getElementById('stStreak').textContent=c;
-  document.getElementById('sideStrNum').textContent=c;
+  ['streakNum','stStreak','sideStrNum','streakNumTop'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=c;});
   // render 7 day dots
   const wrap=document.getElementById('streakDays');
-  const wd=['M','S','S','R','K','J','S'];
-  wrap.innerHTML=wd.map((_,i)=>`<div class="streak-day${i<c&&c<=7?' done':''}">${wd[i]}</div>`).join('');
+  if(wrap){const wd=['M','S','S','R','K','J','S'];wrap.innerHTML=wd.map((_,i)=>`<div class="streak-day${i<c&&c<=7?' done':''}">${wd[i]}</div>`).join('');}
 }
 
 // ══ CONFETTI ══
@@ -1463,20 +1683,91 @@ function downloadConfiguredFile(){
   toast('✅ File didownload! Upload ke GitHub sebagai index.html','success');
 }
 
-// ══ AUTH ══
+// ══ CO-ADMIN STATE ══
+let isCoAdmin = false;
+let _loginRole = 'admin'; // 'admin' | 'coadmin'
+
+function selectRole(role) {
+  _loginRole = role;
+  const adminEl = document.getElementById('roleAdmin');
+  const coEl = document.getElementById('roleCoAdmin');
+  if (role === 'admin') {
+    adminEl.style.border = '2px solid var(--ac)';
+    adminEl.style.background = 'rgba(99,102,241,.1)';
+    adminEl.querySelector('div:nth-child(2)').style.color = '#a5b4fc';
+    coEl.style.border = '2px solid var(--bo2)';
+    coEl.style.background = 'var(--su2)';
+    coEl.querySelector('div:nth-child(2)').style.color = 'var(--mu)';
+  } else {
+    coEl.style.border = '2px solid #3b82f6';
+    coEl.style.background = 'rgba(59,130,246,.1)';
+    coEl.querySelector('div:nth-child(2)').style.color = '#60a5fa';
+    adminEl.style.border = '2px solid var(--bo2)';
+    adminEl.style.background = 'var(--su2)';
+    adminEl.querySelector('div:nth-child(2)').style.color = 'var(--mu)';
+  }
+}
+
+// ══ CO-ADMIN AUTH ══
+async function saveCoAdminPassword() {
+  const pw = document.getElementById('coAdminPw').value;
+  const pw2 = document.getElementById('coAdminPw2').value;
+  const err = document.getElementById('coAdminErr');
+  const ok = document.getElementById('coAdminOk');
+  err.classList.remove('show'); ok.classList.remove('show');
+  if (pw.length < 6) { showE(err, 'Password minimal 6 karakter.'); return; }
+  if (pw !== pw2) { showE(err, 'Password tidak cocok.'); return; }
+  try {
+    await db.collection('_config').doc('coAdminAuth').set({ hash: await hashPw(pw) });
+    ok.textContent = '✅ Password rekan kerja berhasil disimpan!';
+    ok.classList.add('show');
+    document.getElementById('coAdminPw').value = '';
+    document.getElementById('coAdminPw2').value = '';
+    toast('✅ Akun rekan kerja siap digunakan.', 'success');
+  } catch(e) { showE(err, '❌ Gagal: ' + e.message); }
+}
+
+async function removeCoAdmin() {
+  if (!confirm('Hapus akun rekan kerja? Mereka tidak bisa login lagi.')) return;
+  try {
+    await db.collection('_config').doc('coAdminAuth').delete();
+    toast('Akun rekan kerja dihapus.', 'success');
+  } catch(e) { toast('Gagal: ' + e.message, 'error'); }
+}
+
+// ══ UPDATED LOGIN ══
 function openModal(id){document.getElementById(id).classList.add('open');const inp=document.querySelector('#'+id+' input[type="password"],#'+id+' input[type="text"],#'+id+' textarea');if(inp)setTimeout(()=>inp.focus(),100);}
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 async function doLogin(){
   const pw=document.getElementById('loginPw').value,err=document.getElementById('loginErr'),btn=document.getElementById('loginBtn');
   err.classList.remove('show');if(!pw){showE(err,'Masukkan password.');return;}
   btn.textContent='Memeriksa…';btn.disabled=true;
-  try{const hash=await hashPw(pw),doc=await db.collection('_config').doc('devAuth').get();
-    if(doc.exists&&doc.data().hash===hash){isDev=true;sessionStorage.setItem('pb_dev','1');closeModal('loginModal');document.getElementById('loginPw').value='';updateAdminUI();toast('✅ Login berhasil! Halo, Admin.','success');}
-    else showE(err,'❌ Password salah.');}
-  catch(e){showE(err,'❌ '+e.message);}
-  finally{btn.textContent='Masuk sebagai Admin';btn.disabled=false;}
+  try{
+    const hash=await hashPw(pw);
+    if(_loginRole==='admin'){
+      const doc=await db.collection('_config').doc('devAuth').get();
+      if(doc.exists&&doc.data().hash===hash){
+        isDev=true;isCoAdmin=false;sessionStorage.setItem('pb_role','admin');
+        closeModal('loginModal');document.getElementById('loginPw').value='';
+        updateAdminUI();toast('✅ Login berhasil! Selamat datang, Admin 👑','success');
+      } else showE(err,'❌ Password admin salah.');
+    } else {
+      const doc=await db.collection('_config').doc('coAdminAuth').get();
+      if(!doc.exists){showE(err,'❌ Akun rekan kerja belum dibuat. Hubungi Admin.');return;}
+      if(doc.data().hash===hash){
+        isCoAdmin=true;isDev=false;sessionStorage.setItem('pb_role','coadmin');
+        closeModal('loginModal');document.getElementById('loginPw').value='';
+        updateAdminUI();toast('✅ Login berhasil! Selamat datang, Rekan Kerja 👤','success');
+      } else showE(err,'❌ Password rekan kerja salah.');
+    }
+  }catch(e){showE(err,'❌ '+e.message);}
+  finally{btn.textContent='Masuk';btn.disabled=false;}
 }
-function doLogout(){isDev=false;sessionStorage.removeItem('pb_dev');updateAdminUI();showHome();toast('Berhasil logout.','info');}
+function doLogout(){
+  isDev=false;isCoAdmin=false;
+  sessionStorage.removeItem('pb_role');
+  updateAdminUI();showHome();toast('Berhasil logout.','info');
+}
 
 // ══ DELETE FLOW ══
 function promptDelete(id){const m=modules.find(x=>x.id===id);if(!m)return;_pendingDel=id;document.getElementById('delModName').textContent=m.icon+' '+m.name;openModal('deleteModal');}
@@ -1503,11 +1794,14 @@ async function moveModule(id,dir){
 }
 
 // ══ APP START ══
-function startApp(asDev=false){
+function startApp(role=null){
   document.getElementById('setupOverlay').style.display='none';
   document.getElementById('loadingScreen').style.display='none';
   document.getElementById('appRoot').classList.add('visible');
-  if(asDev){isDev=true;sessionStorage.setItem('pb_dev','1');}
+  // Restore session role
+  const savedRole = role || sessionStorage.getItem('pb_role');
+  if(savedRole==='admin'){isDev=true;isCoAdmin=false;}
+  else if(savedRole==='coadmin'){isCoAdmin=true;isDev=false;}
   initTheme();updateAdminUI();updateStreak();startSync();
   loadProfile();loadAnnouncement();loadWallpaper();renderBkCount();renderNotifs();buildWallGrid();initProfileEdit();buildSubjGrids();buildQSubjGrid();startQuizSync();
 }
@@ -1526,14 +1820,36 @@ function startSync(){
   },e=>{si.innerHTML='<div class="sdot2" style="background:var(--da)"></div><span>Error</span>';});
 }
 function updateAdminUI(){
-  const app=document.getElementById('appInner');app.classList.toggle('admin-mode',isDev);
-  document.getElementById('devBadge').classList.toggle('show',isDev);
-  document.getElementById('navManage').style.display=isDev?'':'none';
-  document.getElementById('adminLoginBtn').style.display=isDev?'none':'';
-  document.getElementById('roleBadge').textContent=isDev?'👑 Admin':'🎓 Pelajar';
-  document.getElementById('roleBadge').style.cssText=isDev?'background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fbbf24;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700':'background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);color:#a5b4fc;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700';
-  document.getElementById('profile-edit-hint')&&(document.getElementById('profile-edit-hint').style.display=isDev?'block':'none');
-  if(!isDev&&document.getElementById('manageView').classList.contains('visible'))showHome();
+  const app=document.getElementById('appInner');
+  app.classList.toggle('admin-mode', isDev);
+  app.classList.toggle('coadmin-mode', isCoAdmin);
+
+  // Badges
+  document.getElementById('devBadge').classList.toggle('show', isDev);
+  document.getElementById('coAdminBadge').classList.toggle('show', isCoAdmin);
+
+  // Sidebar nav
+  document.getElementById('navManage').style.display = (isDev||isCoAdmin) ? '' : 'none';
+  document.getElementById('adminLoginBtn').style.display = (isDev||isCoAdmin) ? 'none' : '';
+
+  // Co-admin section only visible to full admin
+  const cas = document.getElementById('coAdminSection');
+  if(cas) cas.style.display = isDev ? 'block' : 'none';
+
+  // Profile display
+  const rb = document.getElementById('roleBadge');
+  if(isDev){
+    rb.textContent='👑 Admin';
+    rb.style.cssText='background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:#fbbf24;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700';
+  } else if(isCoAdmin){
+    rb.textContent='👤 Rekan Kerja';
+    rb.style.cssText='background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.25);color:#60a5fa;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700';
+  } else {
+    rb.textContent='🎓 Pelajar';
+    rb.style.cssText='background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.25);color:#a5b4fc;border-radius:20px;padding:2px 9px;font-size:10px;font-weight:700';
+  }
+
+  if(!isDev&&!isCoAdmin&&document.getElementById('manageView').classList.contains('visible'))showHome();
   renderAll();
 }
 
@@ -1556,7 +1872,32 @@ function setTtl(t,gold=false){
   else{el.style.background='';el.style.webkitBackgroundClip='';el.style.webkitTextFillColor='';el.style.backgroundClip='';el.style.color='';}
 }
 function showHome(){setAllHidden();document.getElementById('homeView').style.display='';setTtl('Dashboard');setNav('navHome');renderRecent();}
-function showManage(){if(!isDev){openModal('loginModal');return;}setAllHidden();document.getElementById('manageView').classList.add('visible');setTtl('⚙️ Kelola Modul',true);setNav('navManage');}
+function showManage(){
+  if(!isDev&&!isCoAdmin){openModal('loginModal');return;}
+  setAllHidden();
+  document.getElementById('manageView').classList.add('visible');
+  setNav('navManage');
+
+  if(isCoAdmin){
+    // Co-admin: hanya akses bank soal
+    setTtl('📝 Bank Soal');
+    // Sembunyikan bagian modul, tampilkan hanya soal
+    ['moduleUploadWrap','moduleUrlWrap','moduleTblWrap','dlBannerWrap'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.style.display='none';
+    });
+    // Tampilkan bank soal
+    setTimeout(()=>{
+      const qs=document.querySelector('.sectit');
+      if(qs) qs.scrollIntoView({behavior:'smooth',block:'start'});
+    },150);
+  } else {
+    // Admin: akses penuh
+    setTtl('⚙️ Kelola Modul', true);
+    ['moduleUploadWrap','moduleUrlWrap','moduleTblWrap','dlBannerWrap'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.style.display='';
+    });
+  }
+}
 function openSubject(cat){
   const list=modules.filter(m=>m.cat===cat&&!m.hidden);
   const ref=SUBJECTS.find(s=>s.cat===cat)||{icon:'📚',color:'#6b7280'};
@@ -1617,7 +1958,7 @@ function resetZoom(){zoom=100;const f=document.getElementById('mainFrame');if(f)
 // ══ MODULES CRUD ══
 function getSubjInfo(type){const sel=type==='up'?_selSubjUp:_selSubjUrl;if(sel)return sel;const c=document.getElementById('inCustomCat')?.value.trim();if(c){const f=SUBJECTS.find(s=>s.cat.toLowerCase()===c.toLowerCase());return f||{cat:c,icon:'📚',color:'#6b7280'};}return{cat:'Umum',icon:'📚',color:'#6b7280'};}
 async function addModule(){
-  if(!isDev){toast('Login admin dulu.','error');return;}
+  if(!isDev){toast('Hanya Admin yang bisa menambah modul.','error');return;}
   const name=document.getElementById('inName').value.trim(),url=document.getElementById('inUrl').value.trim();
   if(!name){toast('Nama modul wajib!','error');return;}if(!url){toast('URL wajib!','error');return;}
   const s=getSubjInfo('url');const diff=document.getElementById('inDiff').value;
@@ -2025,7 +2366,7 @@ function selectQSubj(el) {
 }
 
 async function addQuestion() {
-  if (!isDev) { toast('Login admin dulu.','error'); return; }
+  if (!isDev && !isCoAdmin) { toast('Login Admin atau Rekan Kerja dulu.','error'); return; }
   if (!_qSubjSel) { toast('Pilih mata pelajaran dulu!','error'); return; }
   const text = document.getElementById('qText').value.trim();
   if (!text) { toast('Pertanyaan tidak boleh kosong!','error'); return; }
@@ -2038,9 +2379,9 @@ async function addQuestion() {
     await db.collection('questions').add({
       subject: _qSubjSel.cat, subjectIcon: _qSubjSel.icon,
       question: text, options: opts, answer, diff, explanation: expl,
+      addedBy: isDev ? 'admin' : 'coadmin',
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    // Clear form
     ['qText','qOpt0','qOpt1','qOpt2','qOpt3','qExpl'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
     document.getElementById('qAnswer').value='0';
     document.getElementById('qSubjGrid').querySelectorAll('.subj-item').forEach(x=>x.classList.remove('selected'));
@@ -2050,7 +2391,7 @@ async function addQuestion() {
 }
 
 async function deleteQuestion(id) {
-  if (!isDev) return;
+  if (!isDev) { toast('Hanya Admin yang bisa menghapus soal.','error'); return; }
   if (!confirm('Hapus soal ini?')) return;
   try { await db.collection('questions').doc(id).delete(); toast('Soal dihapus.','success'); }
   catch(e) { toast('Gagal: '+e.message,'error'); }
@@ -2086,12 +2427,264 @@ function updateQFilterOptions() {
   sel.innerHTML = '<option value="">— Semua Mapel —</option>' + cats.map(c=>`<option value="${c}"${c===cur?' selected':''}>${c}</option>`).join('');
 }
 
+
+// ══════════════════════════════════════════
+// BULK UPLOAD SOAL — EXCEL / CSV
+// ══════════════════════════════════════════
+
+let _bulkParsed = []; // parsed questions waiting for confirm
+
+// ── TEMPLATE DOWNLOAD ──
+function downloadTemplate(format) {
+  const headers = ['Mata Pelajaran','Pertanyaan','Pilihan A','Pilihan B','Pilihan C','Pilihan D','Jawaban Benar (A/B/C/D)','Penjelasan (opsional)','Tingkat (mudah/sedang/sulit)'];
+  const examples = [
+    ['Matematika','Berapakah hasil dari 5 × 8?','35','40','45','50','B','5 × 8 = 40','mudah'],
+    ['Fisika','Satuan kecepatan dalam SI adalah?','meter','km/jam','m/s','cm/s','C','Satuan SI kecepatan adalah meter per detik (m/s)','sedang'],
+    ['B. Indonesia','Imbuhan "me-" pada kata "menulis" berfungsi sebagai?','Awalan verba aktif','Akhiran','Sisipan','Klitika','A','Imbuhan me- membentuk kata kerja aktif','mudah'],
+  ];
+
+  if (format === 'csv') {
+    const rows = [headers, ...examples];
+    const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    triggerDownload(blob, 'template-soal.csv');
+    toast('📄 Template CSV didownload!', 'success');
+  } else {
+    if (typeof XLSX === 'undefined') { toast('Library Excel belum dimuat. Coba lagi sebentar.', 'error'); return; }
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...examples]);
+    // Style header row width
+    ws['!cols'] = [14,30,20,20,20,20,18,30,16].map(w => ({wch:w}));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Soal Latihan');
+    XLSX.writeFile(wb, 'template-soal.xlsx');
+    toast('📊 Template Excel didownload!', 'success');
+    // Update step indicator
+    document.getElementById('qStep1').classList.remove('active');
+    document.getElementById('qStep1').classList.add('done');
+    document.getElementById('qStep2').classList.add('active');
+  }
+}
+
+function triggerDownload(blob, filename) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename; a.click();
+}
+
+// ── HANDLE FILE INPUT ──
+function handleBulkFile(file) {
+  if (!file) return;
+  if (!isDev) { toast('Login admin dulu.', 'error'); return; }
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['xlsx','xls','csv'].includes(ext)) { toast('Hanya file Excel (.xlsx/.xls) atau CSV yang didukung.', 'error'); return; }
+  toast('Membaca file…', 'info');
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      let rows;
+      if (ext === 'csv') {
+        rows = parseCSV(e.target.result);
+      } else {
+        if (typeof XLSX === 'undefined') { toast('Library Excel belum dimuat. Gunakan CSV.', 'error'); return; }
+        const wb = XLSX.read(e.target.result, { type: 'array' });
+        const ws = wb.Sheets[wb.SheetNames[0]];
+        rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+      }
+      processUploadedRows(rows, file.name);
+    } catch (err) {
+      toast('Gagal membaca file: ' + err.message, 'error');
+    }
+  };
+  if (ext === 'csv') reader.readAsText(file, 'UTF-8');
+  else reader.readAsArrayBuffer(file);
+  // Reset input
+  document.getElementById('bulkFileInput').value = '';
+}
+
+// ── PARSE CSV ──
+function parseCSV(text) {
+  const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+  return lines.map(line => {
+    const cells = []; let cur = '', inQ = false;
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (c === '"' && !inQ) { inQ = true; }
+      else if (c === '"' && inQ && line[i+1] === '"') { cur += '"'; i++; }
+      else if (c === '"' && inQ) { inQ = false; }
+      else if (c === ',' && !inQ) { cells.push(cur.trim()); cur = ''; }
+      else { cur += c; }
+    }
+    cells.push(cur.trim());
+    return cells;
+  }).filter(r => r.some(c => c));
+}
+
+// ── PROCESS ROWS ──
+function processUploadedRows(rows, filename) {
+  if (rows.length < 2) { toast('File kosong atau hanya ada header.', 'error'); return; }
+
+  // Skip header row
+  const dataRows = rows.slice(1).filter(r => r.some(c => String(c).trim()));
+  if (!dataRows.length) { toast('Tidak ada data soal di file.', 'error'); return; }
+
+  const ansMap = { 'A':0,'B':1,'C':2,'D':3,'a':0,'b':1,'c':2,'d':3,'0':0,'1':1,'2':2,'3':3 };
+  const diffMap = { 'mudah':'mudah','sedang':'sedang','sulit':'sulit','easy':'mudah','medium':'sedang','hard':'sulit','' :'sedang' };
+  const parsed = [], errors = [];
+
+  dataRows.forEach((row, i) => {
+    const lineNum = i + 2;
+    const [mapel='',pertanyaan='',A='',B='',C='',D='',jwb='',expl='',diff=''] = row.map(c=>String(c).trim());
+
+    // Validate
+    const errs = [];
+    if (!mapel) errs.push('Mata pelajaran kosong');
+    if (!pertanyaan) errs.push('Pertanyaan kosong');
+    if (!A||!B||!C||!D) errs.push('Ada pilihan jawaban kosong');
+    const ansIdx = ansMap[jwb.toUpperCase()];
+    if (ansIdx === undefined) errs.push(`Jawaban benar "${jwb}" tidak valid (harus A/B/C/D)`);
+
+    const ref = SUBJECTS.find(s => s.cat.toLowerCase() === mapel.toLowerCase()) || { icon:'📚', color:'#6b7280', cat: mapel };
+    const diffVal = diffMap[diff.toLowerCase()] || 'sedang';
+
+    parsed.push({
+      lineNum, mapel: ref.cat || mapel, icon: ref.icon, color: ref.color,
+      pertanyaan, options: [A,B,C,D], answer: ansIdx ?? -1,
+      explanation: expl, diff: diffVal,
+      errors: errs, valid: errs.length === 0
+    });
+    if (errs.length) errors.push(`Baris ${lineNum}: ${errs.join(', ')}`);
+  });
+
+  const validCount = parsed.filter(q => q.valid).length;
+  showPreview(parsed, filename, validCount, errors);
+}
+
+// ── SHOW PREVIEW MODAL ──
+function showPreview(parsed, filename, validCount, errors) {
+  _bulkParsed = parsed;
+  const labels = ['A','B','C','D'];
+  const DIFF_L = {mudah:'😊 Mudah',sedang:'🤔 Sedang',sulit:'🔥 Sulit'};
+
+  // Error banner
+  const errEl = document.getElementById('previewErr');
+  if (errors.length) {
+    errEl.textContent = `⚠️ ${errors.length} baris bermasalah: ${errors.slice(0,3).join(' | ')}${errors.length>3?` (+${errors.length-3} lainnya)` :''}`;
+    errEl.classList.add('show');
+  } else {
+    errEl.classList.remove('show');
+  }
+
+  // Badge
+  document.getElementById('previewBadge').textContent = `✅ ${validCount} soal valid${errors.length ? ` · ⚠️ ${errors.length} gagal`:''} — dari ${filename}`;
+
+  // Table
+  document.getElementById('previewTbody').innerHTML = parsed.map((q,i) => {
+    const ansLabel = q.answer >= 0 ? labels[q.answer]+'. '+q.options[q.answer] : '❌ Tidak valid';
+    const ref = SUBJECTS.find(s=>s.cat===q.mapel)||{icon:'📚',color:'#6b7280'};
+    return `<tr class="${q.valid?'row-valid':'row-err'}" title="${q.valid?'':'Error: '+q.errors.join(', ')}">
+      <td style="color:var(--mu)">${q.lineNum}</td>
+      <td><span style="font-size:12px">${ref.icon} ${q.mapel}</span>${!q.valid?'<br><span style="font-size:10px;color:var(--da)">⚠️ '+q.errors.join(' | ')+'</span>':''}</td>
+      <td style="max-width:200px">${q.pertanyaan}</td>
+      <td>${q.options[0]}</td><td>${q.options[1]}</td><td>${q.options[2]}</td><td>${q.options[3]}</td>
+      <td class="ans-cell">${ansLabel}</td>
+      <td><span style="font-size:10.5px">${DIFF_L[q.diff]||'🤔 Sedang'}</span></td>
+    </tr>`;
+  }).join('');
+
+  // Confirm button
+  const btn = document.getElementById('confirmUploadBtn');
+  if (validCount === 0) { btn.disabled = true; btn.textContent = '⚠️ Tidak ada soal valid'; btn.style.opacity = '0.5'; }
+  else { btn.disabled = false; btn.textContent = `💾 Simpan ${validCount} Soal ke Portal`; btn.style.opacity = '1'; }
+
+  document.getElementById('previewModal').classList.add('open');
+}
+
+function closePreviewModal() {
+  document.getElementById('previewModal').classList.remove('open');
+  _bulkParsed = [];
+}
+
+// ── CONFIRM BULK SAVE ──
+async function confirmBulkUpload() {
+  if (!isDev && !isCoAdmin) { toast('Login Admin atau Rekan Kerja dulu.', 'error'); return; }
+  const valid = _bulkParsed.filter(q => q.valid);
+  if (!valid.length) { toast('Tidak ada soal valid untuk disimpan.', 'error'); return; }
+
+  const btn = document.getElementById('confirmUploadBtn');
+  btn.disabled = true; btn.textContent = '⏳ Menyimpan…';
+
+  try {
+    // Save in batches of 20 (Firestore limit)
+    const batch_size = 20;
+    for (let i = 0; i < valid.length; i += batch_size) {
+      const batch = db.batch();
+      const chunk = valid.slice(i, i + batch_size);
+      chunk.forEach(q => {
+        const ref = db.collection('questions').doc();
+        batch.set(ref, {
+          subject: q.mapel, subjectIcon: q.icon,
+          question: q.pertanyaan, options: q.options,
+          answer: q.answer, explanation: q.explanation, diff: q.diff,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      });
+      await batch.commit();
+      btn.textContent = `⏳ Menyimpan ${Math.min(i+batch_size, valid.length)}/${valid.length}…`;
+    }
+
+    closePreviewModal();
+    toast(`🎉 ${valid.length} soal berhasil disimpan ke portal!`, 'success');
+    launchConfetti();
+
+    // Update step indicator
+    document.getElementById('qStep2').classList.remove('active');
+    document.getElementById('qStep2').classList.add('done');
+    document.getElementById('qStep3').classList.add('done');
+    setTimeout(() => {
+      ['qStep1','qStep2','qStep3'].forEach(id => {
+        document.getElementById(id).classList.remove('done','active');
+      });
+      document.getElementById('qStep1').classList.add('active');
+    }, 4000);
+
+  } catch (err) {
+    toast('Gagal menyimpan: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '💾 Simpan Semua ke Portal';
+  }
+}
+
+// ── DELETE ALL QUESTIONS ──
+async function deleteAllQuestions() {
+  if (!isDev) return;
+  const filter = document.getElementById('qFilterSubj')?.value;
+  const target = filter || 'SEMUA';
+  if (!confirm(`Hapus ${target === 'SEMUA' ? 'SEMUA' : 'soal mapel '+target}? Tindakan ini tidak bisa dibatalkan!`)) return;
+  const list = filter ? allQuestions.filter(q=>q.subject===filter) : allQuestions;
+  if (!list.length) { toast('Tidak ada soal untuk dihapus.', 'info'); return; }
+  try {
+    const batchSize = 20;
+    for (let i = 0; i < list.length; i += batchSize) {
+      const batch = db.batch();
+      list.slice(i, i+batchSize).forEach(q => batch.delete(db.collection('questions').doc(q.id)));
+      await batch.commit();
+    }
+    toast(`🗑 ${list.length} soal dihapus.`, 'success');
+  } catch(e) { toast('Gagal: '+e.message, 'error'); }
+}
+
 // ══ BOOT ══
 window.addEventListener('load',function(){
   if(typeof firebase==='undefined'){document.body.innerHTML=`<div style="font-family:sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;gap:14px;background:#07080f;color:#eef0f8;text-align:center;padding:24px"><div style="font-size:52px">📡</div><h2>Firebase gagal dimuat</h2><p style="color:#6b7394;font-size:13px;max-width:320px;line-height:1.6">Pastikan ada koneksi internet saat membuka file ini.</p><button onclick="location.reload()" style="background:#6366f1;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-size:13px;font-weight:700;cursor:pointer">🔄 Coba Lagi</button></div>`;return;}
   initTheme();
   const saved=loadCfg();
-  if(saved){document.getElementById('setupOverlay').style.display='none';document.getElementById('loadingScreen').style.display='flex';if(!initFB(saved)){localStorage.removeItem(CFG);document.getElementById('loadingScreen').style.display='none';document.getElementById('setupOverlay').style.display='flex';return;}startApp(sessionStorage.getItem('pb_dev')==='1');}
+  if(saved){
+    document.getElementById('setupOverlay').style.display='none';
+    document.getElementById('loadingScreen').style.display='flex';
+    if(!initFB(saved)){localStorage.removeItem(CFG);document.getElementById('loadingScreen').style.display='none';document.getElementById('setupOverlay').style.display='flex';return;}
+    startApp(sessionStorage.getItem('pb_role'));
+  }
 });
 </script>
 
